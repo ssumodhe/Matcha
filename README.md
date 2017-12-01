@@ -27,27 +27,27 @@ Python 3.6
 > - confirmed (*boolean*)
 <!-- > - token (*string*) -->
 <!-- > - expired_at (*date*) -->
-> - sex (*string*)
-> - orientation (*string*)
+> - sex (*integer*)
+> - orientation (*integer*)
 > - bio (*string*)
 > - interests (*id*)
-> - main_picture (*string*)
-> - pop_score (*string*)
-> - last_connexion (*date*)
+> - main_picture (*id*)
+> - pop_score (*integer*)
 > - created_at (*date*)
+> - last_connexion (*date*)
  
 > **Picture**
 > - id (*integer*) -> unique
-> - user_id (*string*) -> unique
+> - user_id (*id*) -> unique
 > - data (*string*)
 > - created_at (*date*)
 
 > **Like**
 > - id (*integer*) -> unique
-> - user_id (*integer*)
-> - picture_id (*integer*)
-> - user_id X picture_id -> unique
+> - stalker_id (*id*)
+> - victim_id (*id*)
 > - created_at (*date*)
+> - stalker_id X victime_id -> unique
 
 > **Dialog**
 > - id (*integer*) -> unique
@@ -58,12 +58,12 @@ Python 3.6
 
 > **Message**
 > - id (*integer*) -> unique
-> - dialog_id (*integer*)
-> - from (*string*)
+> - dialog_id (*id*)
+> - from (*id*)
 > - content (*string*)
 > - created_at (*date*)
 
-> **Vue**
+> **View**
 > - id (*integer*) -> unique
 > - stalker (*id*)
 > - victim (*id*)
@@ -72,3 +72,7 @@ Python 3.6
 > - id (*integer*)
 > - value (*string*)
 
+> **Interest / User**
+> - id (*integer*)
+> - user_id (*id*)
+> - interest_id (*id*)
