@@ -1,2 +1,0 @@
-box
-__pycache__/
