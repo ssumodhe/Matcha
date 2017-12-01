@@ -1,6 +1,9 @@
 # Matcha
 Find your soul_match ! ;)
 
+# Usage 
+Python 3.6
+
 ### Routes
 - `/signup-in`
 - `/logout`
@@ -10,7 +13,8 @@ Find your soul_match ! ;)
 - `/search`
 
 #### TODO
-All has been done ! :muscle::skin-tone-4:
+- Everything! :scream:
+- Geoloc
 
 #### DB Models
 > **User**
