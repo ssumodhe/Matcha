@@ -13,5 +13,7 @@ def passer_titre():
 def accueil():
     return RootController.view()
 
+
+
 if __name__ == '__main__':
    app.run(debug=True)
