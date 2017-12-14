@@ -25,7 +25,7 @@ class Model():
         db.commit()
         id = cursor.lastrowid
         cursor.close()
-        infos['id'] = id
+        infos['id'] = str(id)
         return eval(cls.__name__ + "(infos)")
 
     @classmethod
@@ -35,39 +35,63 @@ class Model():
 
     def save(self):
         selfData = vars(self)
-        dbData = fetchall(SELECT * FROM cls.get_table_name() WHERE 'id' = self.id)
+
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+        request = "SELECT * FROM " + self.get_table_name() + " WHERE id = " + self.id + ";"
+        cursor.execute(request)
+        dbData = cursor.fetchone()
+        db.commit()
+        cursor.close()
+        # print("self.get_table_name : ", self.get_table_name())
+        # print("self.id : ", self.id)
+        # print("selfData : ", selfData)
+        # print("dbData", dbData)
         for key, value in dbData.items():
-            if selfData[key] != value:
-                db = sqlite3.connect('Matcha.db')
-                cursor = db.cursor()
-                request = "UPDATE " + cls.get_table_name() + " SET '" + key + "' = '" + selfData[key] + "' WHERE 'id' = '" + self.id + "';"
-                cursor.execute(request)
-                db.commit()
-                cursor.close()
+            # print("key = ", key)
+            # print("value = ", value)
+            if key in selfData.keys():
+                if str(selfData[key]) != str(value):
+                    # print("not the same data =", selfData[key])
+                    # print("because of this value =", value)
+                    db = sqlite3.connect('Matcha.db')
+                    cursor = db.cursor()
+                    request = "UPDATE " + self.get_table_name() + " SET '" + key + "' = '" + selfData[key] + "' WHERE id = " + self.id + ";"
+                    # print(request)
+                    cursor.execute(request)
+                    db.commit()
+                    cursor.close()
         pass
 
-    def delete(self):
-        db = sqlite3.connect('Matcha.db')
-        cursor = db.cursor()
-        request = "DELETE FROM '" + cls.get_table_name() + "' WHERE 'id' = '" + self.id + "';"
-        cursor.execute(request)
-        db.commit()
-        cursor.close()
+    # def delete(self):
+    #     db = sqlite3.connect('Matcha.db')
+    #     cursor = db.cursor()
+    #     request = "DELETE FROM '" + cls.get_table_name() + "' WHERE id = " + self.id + ";"
+    #     cursor.execute(request)
+    #     db.commit()
+    #     cursor.close()
 
-    def modif(self, key, value):
-        str = "self." + key + " = \"" + value +"\""
-        exec(str)
-        # save()?????
+    # def modif(self, key, value):
+    #     str = "self." + key + " = \"" + value +"\""
+    #     exec(str)
+    #     # save()?????
 
-    def search(self):
-        db = sqlite3.connect('Matcha.db')
-        cursor = db.cursor()
-        request = "SELECT * FROM '" + cls.get_table_name() + "' WHERE 'id' = '" + self.id + "';"
-        cursor.execute(request)
-        db.commit()
-        answer = cursor.fetchone()
-        cursor.close()
-        return answer
+    # def search(self):
+    #     db = sqlite3.connect('Matcha.db')
+    #     cursor = db.cursor()
+    #     request = "SELECT * FROM '" + cls.get_table_name() + "' WHERE id = " + self.id + ";"
+    #     cursor.execute(request)
+    #     db.commit()
+    #     answer = cursor.fetchone()
+    #     cursor.close()
+    #     return answer
 
 
 class User(Model):
@@ -92,6 +116,7 @@ print(new_user.email)
 print(new_user.first_name)
 new_user.email = '1234@mail.re'
 print(new_user.email)
+new_user.save()
 
 # usr  = User.find_by({'name': 'thomas'})
 # usr.email = 'toto@toto.toto'
