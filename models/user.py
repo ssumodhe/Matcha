@@ -70,28 +70,28 @@ class Model():
                     cursor.close()
         pass
 
-    # def delete(self):
-    #     db = sqlite3.connect('Matcha.db')
-    #     cursor = db.cursor()
-    #     request = "DELETE FROM '" + cls.get_table_name() + "' WHERE id = " + self.id + ";"
-    #     cursor.execute(request)
-    #     db.commit()
-    #     cursor.close()
+    def delete(self):
+        db = sqlite3.connect('Matcha.db')
+        cursor = db.cursor()
+        request = "DELETE FROM '" + self.get_table_name() + "' WHERE id = " + self.id + ";"
+        cursor.execute(request)
+        db.commit()
+        cursor.close()
 
-    # def modif(self, key, value):
-    #     str = "self." + key + " = \"" + value +"\""
-    #     exec(str)
-    #     # save()?????
+    def modif(self, key, value):
+        str = "self." + key + " = \"" + value +"\""
+        exec(str)
+        # save()?????
 
-    # def search(self):
-    #     db = sqlite3.connect('Matcha.db')
-    #     cursor = db.cursor()
-    #     request = "SELECT * FROM '" + cls.get_table_name() + "' WHERE id = " + self.id + ";"
-    #     cursor.execute(request)
-    #     db.commit()
-    #     answer = cursor.fetchone()
-    #     cursor.close()
-    #     return answer
+    def search(self):
+        db = sqlite3.connect('Matcha.db')
+        cursor = db.cursor()
+        request = "SELECT * FROM '" + self.get_table_name() + "' WHERE id = " + self.id + ";"
+        cursor.execute(request)
+        db.commit()
+        answer = cursor.fetchone()
+        cursor.close()
+        return answer
 
 
 class User(Model):
@@ -114,9 +114,15 @@ new_user = User.create(infos)
 print(new_user)
 print(new_user.email)
 print(new_user.first_name)
-new_user.email = '1234@mail.re'
+new_user.modif("email", "1234@mail.re")
+# new_user.email = '1234@mail.re'
 print(new_user.email)
+print(new_user.search())
 new_user.save()
+print(new_user.search())
+new_user.delete()
+print(new_user.search())
+
 
 # usr  = User.find_by({'name': 'thomas'})
 # usr.email = 'toto@toto.toto'
