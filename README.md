@@ -12,9 +12,15 @@ Python 3.6
 - `/home`
 - `/search`
 
+#### QST?
+- "faire des fonctions genre: `def get + "getName": return self. + "getname"`" ??
+- "dans la methode 'modif' on doit save?"
+- "on est obligé de faire des getQQCHO si on a deja search(QQCH)? Idem pour setQQCHO avec modif(QQCH)?" 
+
 #### TODO
 - Everything! :scream:
 - Geoloc
+- Instant Notif
 
 #### DB Models
 > **User**
