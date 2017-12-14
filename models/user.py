@@ -83,21 +83,121 @@ class Model():
         exec(str)
         # save()?????
 
-    def search(self):
+    def search(self, column):
         db = sqlite3.connect('Matcha.db')
         cursor = db.cursor()
-        request = "SELECT * FROM '" + self.get_table_name() + "' WHERE id = " + self.id + ";"
+        request = "SELECT " + column +  " FROM '" + self.get_table_name() + "' WHERE id = " + self.id + ";"
         cursor.execute(request)
         db.commit()
         answer = cursor.fetchone()
         cursor.close()
         return answer
 
+    def getId(self):
+        if hasattr(self, 'id'):
+            return self.id
+        else:
+            the_info = self.search('id')
+            return the_info[0]
+
+
 
 class User(Model):
     def __init__(self, infos):
         super().__init__(infos)
         pass
+
+    def getUserName(self):
+        if hasattr(self, 'username'):
+            return self.username
+        else:
+            the_info = self.search('username')
+            return the_info[0]
+
+    def getFirstName(self):
+        if hasattr(self, 'first_name'):
+            return self.first_name
+        else:
+            the_info = self.search('first_name')
+            return the_info[0]
+
+    def getLastName(self):
+        if hasattr(self, 'last_name'):
+            return self.last_name
+        else:
+            the_info = self.search('last_name')
+            return the_info[0]
+
+    def getEmail(self):
+        if hasattr(self, 'email'):
+            return self.email
+        else:
+            the_info = self.search('email')
+            return the_info[0]
+
+    def getConfirmed(self):
+        if hasattr(self, 'confirmed'):
+            return self.confirmed
+        else:
+            the_info = self.search('confirmed')
+            return the_info[0]
+
+    def getSex(self):
+        if hasattr(self, 'sex'):
+            return self.sex
+        else:
+            the_info = self.search('sex')
+            return the_info[0]
+
+    def getOrientation(self):
+        if hasattr(self, 'orientation'):
+            return self.orientation
+        else:
+            the_info = self.search('orientation')
+            return the_info[0]
+
+    def getBio(self):
+        if hasattr(self, 'bio'):
+            return self.bio
+        else:
+            the_info = self.search('bio')
+            return the_info[0]
+
+    def getInterests(self):
+        if hasattr(self, 'interests'):
+            return self.interests
+        else:
+            the_info = self.search('interests')
+            return the_info[0]
+
+    def getMainPicture(self):
+        if hasattr(self, 'main_picture'):
+            return self.main_picture
+        else:
+            the_info = self.search('main_picture')
+            return the_info[0]
+
+    def getPopScore(self):
+        if hasattr(self, 'pop_score'):
+            return self.pop_score
+        else:
+            the_info = self.search('pop_score')
+            return the_info[0]
+
+    def getCreatedAt(self):
+        if hasattr(self, 'created_at'):
+            return self.created_at
+        else:
+            the_info = self.search('created_at')
+            return the_info[0]
+
+    def getLastConnexion(self):
+        if hasattr(self, 'last_connexion'):
+            return self.last_connexion
+        else:
+            the_info = self.search('last_connexion')
+            return the_info[0]
+
 
 infos = {'username': "moi", 
     'first_name': "toi",
@@ -117,13 +217,9 @@ print(new_user.first_name)
 new_user.modif("email", "1234@mail.re")
 # new_user.email = '1234@mail.re'
 print(new_user.email)
-print(new_user.search())
 new_user.save()
-print(new_user.search())
-new_user.delete()
-print(new_user.search())
+print("search : ", new_user.search('*'))
+print("LastCo : ", new_user.getLastConnexion())
+print("User.Id : ", new_user.getId())
+print("PopScore : ", new_user.getPopScore())
 
-
-# usr  = User.find_by({'name': 'thomas'})
-# usr.email = 'toto@toto.toto'
-# usr.save
