@@ -8,7 +8,7 @@ Python 3.6
 - `/signup-in`
 - `/logout`
 - `/messenger`
-- `/profil`
+- `/profile`
 - `/home`
 - `/search`
 
