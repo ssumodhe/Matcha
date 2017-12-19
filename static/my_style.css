@@ -6,8 +6,8 @@ html{
     text-align: center;
     font-family: 'Courier New';
     /*Shore*/
-    /*background: linear-gradient(to right, #70e1f5, #ffd194);*/ 
+    /*background: linear-gradient(to right, #70e1f5, #ffd194); */
     /*Dance To Forget*/
-    background: linear-gradient(to right, #ff4e50, #f9d423); 
-
+    /*background: linear-gradient(to right, #ff4e50, #f9d423); */
+    background-color: #e6ffe6;
 }
