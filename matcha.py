@@ -32,7 +32,6 @@ def page_not_found(error):
 	return render_template('errors/404.html'), 404
 
 # Permet d'executer l'application
-# (Si on execute l'app : run l'appli)
 if __name__ == '__main__':
    app.run(debug=True)
    # host '0.0.0.0' permet à toutes les machines du reseau d'acceder à l'application
