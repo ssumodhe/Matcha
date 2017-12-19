@@ -10,6 +10,6 @@ class RootController:
 	def view():
 		mots = ["bonjour", "à", "toi,", "visiteur."]
 		d = date.today().isoformat()
-		return render_template('index.html', 
+		return render_template('layouts/default.html', 
 			mots=mots,
 			date=d)
