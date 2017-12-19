@@ -82,3 +82,14 @@ Python 3.6
 > - id (*integer*)
 > - user_id (*id*)
 > - interest_id (*id*)
+
+#### Source
+Python
+- https://www.youtube.com/watch?v=ajrfDEi8F7Y (FR - base)
+- https://www.youtube.com/watch?v=ZVGwqnjOKjk (EN - base)
+- https://www.youtube.com/watch?v=KfBiTR_w_Ic (FR - complet)
+
+HTML CSS
+- Emoji : https://afeld.github.io/emoji-css/
+- Normalized Css : <\link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"/>
+- Color in Hex : https://www.w3schools.com/colors/colors_picker.asp
