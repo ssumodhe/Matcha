@@ -2,6 +2,7 @@
 from flask import Flask, request, abort, redirect, url_for, render_template
 from controllers.root_controller import RootController
 from datetime import datetime, date
+from config import setup_db
 
 app = Flask(__name__)
 
@@ -10,7 +11,7 @@ app = Flask(__name__)
 def get_time_now():
     return dict({'now_year': datetime.now().year, 'date': date.today().isoformat()})
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def accueil():
     return RootController.view()
 
@@ -22,9 +23,9 @@ def home():
 def messenger():
     return render_template('messenger.html')
 
-@app.route('/compte')
-def compte():
-    return render_template('compte.html')
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
 
 
 @app.errorhandler(404)

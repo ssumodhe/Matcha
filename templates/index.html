@@ -6,6 +6,44 @@
 	{% block title %}Login &middot; {{ super() }}{% endblock title %}
 
 	{% block body %}
+	<div id='index-login'>
+        
+        <div>
+        <form method="get" action="#">
+            <p>Pas encore inscrit ?</p>
+            Votre pseudo : <input type="text" name="username" placeholder="Pseudo" />
+            <br/>
+            Votre prénom : <input type="text" name="first_name" placeholder="Prénom" />
+            <br/>
+            Votre nom : <input type="text" name="last_name" placeholder="Nom" />
+            <br/>
+            Votre e-mail : <input type="text" name="email" placeholder="Adresse mail" />
+            <br/>
+            Votre mot de passe : <input type="password" name="password" placeholder=" &middot; &middot; &middot;" />
+            <br/>
+            Confirmez votre mot de passe : <input type="password" name="password_2" placeholder=" &middot; &middot; &middot;" />
+            <br/>
+            <input type="submit" name="sign_up" value="Je m'inscris !"/>
+        </form>
+        </div>
+            
+        <div id="index-verti_stick">
+        </div>
+        
+        <div>
+        <form method="get" action="#">
+            <p> Déjà inscrit ?</p>
+            Votre pseudo : <input type="text" name="username" placeholder="Pseudo" />
+            <br/>
+            Votre mot de passe : <input type="password" name="password" placeholder=" &middot; &middot; &middot;" />
+            <br/>
+            <a href="#"> Mot de passe oublié?</a>
+            <br/>
+            <input type="submit" name="sign_in" value="Go !"/>
+        </form>
+        </div>
+    
+    </div>
 	{% endblock body %}
 
         

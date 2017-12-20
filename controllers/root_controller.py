@@ -8,8 +8,4 @@ class RootController:
 
 	@staticmethod
 	def view():
-		mots = ["bonjour", "à", "toi,", "visiteur."]
-		d = date.today().isoformat()
-		return render_template('index.html', 
-			mots=mots,
-			date=d)
+		return render_template('index.html')

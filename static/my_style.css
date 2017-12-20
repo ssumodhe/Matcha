@@ -9,5 +9,24 @@ html{
     /*background: linear-gradient(to right, #70e1f5, #ffd194); */
     /*Dance To Forget*/
     /*background: linear-gradient(to right, #ff4e50, #f9d423); */
-    background-color: #ff9999;
+    background-color: white;
+}
+
+hr{
+    color: black;
+}
+
+#index-login{
+    margin-bottom: 30px;
+    display: inline-flex;
+}
+
+#index-verti_stick{
+    width: 2px;
+    max-height: 100%;
+    padding: 50px 0px 100px 0px;
+    margin-left: 35px;
+    margin-right: 35px;
+    background-color: gainsboro;
+    display: inline-block;
 }

@@ -80,22 +80,22 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS users_interests
     FOREIGN KEY (interest_id) REFERENCES interests(id)
     );''')
 
-cursor.execute('''INSERT INTO users 
-    (username,
-    first_name,
-    last_name ,
-    email,
-    password,
-    created_at
-    ) 
-    VALUES
-    ('coco asticot',
-    'coco',
-    'channel',
-    'coco@channel.com',
-    'thomaiszebest',
-    '2005-06-15'
-    );''')
+# cursor.execute('''INSERT INTO users 
+#     (username,
+#     first_name,
+#     last_name ,
+#     email,
+#     password,
+#     created_at
+#     ) 
+#     VALUES
+#     ('coco asticot',
+#     'coco',
+#     'channel',
+#     'coco@channel.com',
+#     'thomaiszebest',
+#     '2005-06-15'
+#     );''')
 
 db.commit()
 cursor.close()

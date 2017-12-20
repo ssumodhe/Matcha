@@ -15,7 +15,10 @@ Python 3.6
 #### QST?
 - "faire des fonctions genre: `def get + "getName": return self. + "getname"`" ??
 - "dans la methode 'modif' on doit save?"
-- "on est obligé de faire des getQQCHO si on a deja search(QQCH)? Idem pour setQQCHO avec modif(QQCH)?" 
+- "on est obligé de faire des getQQCHO si on a deja search(QQCH)? Idem pour setQQCHO avec modif(QQCH)?"
+
+- Executer le setup_db.py
+- Framework Frontend
 
 #### TODO
 - Everything! :scream:
@@ -96,3 +99,6 @@ HTML CSS
 
 SQLITE
 - DB Browser (Myadmin for sqlite) : http://sqlitebrowser.org/
+
+Bootstrap (Framework Frontend) http://getbootstrap.com/
+- Bootstrap Tutoriels : https://www.youtube.com/watch?v=qIULMnbH2-o
