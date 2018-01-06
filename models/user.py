@@ -50,21 +50,12 @@ class Model():
         dbData = cursor.fetchone()
         db.commit()
         cursor.close()
-        # print("self.get_table_name : ", self.get_table_name())
-        # print("self.id : ", self.id)
-        # print("selfData : ", selfData)
-        # print("dbData", dbData)
         for key, value in dbData.items():
-            # print("key = ", key)
-            # print("value = ", value)
             if key in selfData.keys():
                 if str(selfData[key]) != str(value):
-                    # print("not the same data =", selfData[key])
-                    # print("because of this value =", value)
                     db = sqlite3.connect('Matcha.db')
                     cursor = db.cursor()
                     request = "UPDATE " + self.get_table_name() + " SET '" + key + "' = '" + selfData[key] + "' WHERE id = " + self.id + ";"
-                    # print(request)
                     cursor.execute(request)
                     db.commit()
                     cursor.close()

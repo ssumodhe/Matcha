@@ -1,3 +1,6 @@
 box
 __pycache__/
 Matcha.db
+flask_session
+box_matcha
+box

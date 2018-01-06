@@ -1,5 +1,8 @@
 import sqlite3
 
+# Code qui s'execute a chaque reload de la page : 
+# check si Matcha.db existe avant d'exec les requetes?
+
 db = sqlite3.connect('Matcha.db')
 cursor = db.cursor()
 

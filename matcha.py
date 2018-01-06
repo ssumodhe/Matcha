@@ -1,19 +1,29 @@
 # -*- coding:utf-8 -*-
-from flask import Flask, request, abort, redirect, url_for, render_template
+from flask import Flask, request, abort, redirect, url_for, render_template, session
+from flask.ext.session import Session
 from controllers.root_controller import RootController
 from datetime import datetime, date
 from config import setup_db
 
 app = Flask(__name__)
+sess = Session()
+app.secret_key = 'super secret pswd'
+app.config['SESSION_TYPE'] = 'filesystem'
+sess.init_app(app)
+
 
 # Passera les variables à toutes les pages.
 @app.context_processor
 def get_time_now():
     return dict({'now_year': datetime.now().year, 'date': date.today().isoformat()})
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/')
 def accueil():
     return RootController.view()
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    return RootController.signup(request.form, session)
 
 @app.route('/home')
 def home():
@@ -25,6 +35,7 @@ def messenger():
 
 @app.route('/profile')
 def profile():
+    session['qqch'] = "On est olog"
     return render_template('profile.html')
 
 

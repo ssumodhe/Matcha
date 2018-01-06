@@ -6,10 +6,19 @@
 	{% block title %}Login &middot; {{ super() }}{% endblock title %}
 
 	{% block body %}
+    
+    {% if 'error' != None %}
+    <div id='error'>
+        <p>
+           {{ error }} 
+        </p>
+    </div>
+    {% endif %}
+
 	<div id='index-login'>
         
         <div>
-        <form method="get" action="#">
+        <form method="post" action="/signup">
             <p>Pas encore inscrit ?</p>
             Votre pseudo : <input type="text" name="username" placeholder="Pseudo" />
             <br/>
