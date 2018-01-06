@@ -23,7 +23,7 @@ def accueil():
 
 @app.route('/signup', methods=['POST'])
 def signup():
-    return RootController.signup(request.form, session)
+    return RootController.signup(request.form)
 
 @app.route('/home')
 def home():
@@ -35,7 +35,6 @@ def messenger():
 
 @app.route('/profile')
 def profile():
-    session['qqch'] = "On est olog"
     return render_template('profile.html')
 
 

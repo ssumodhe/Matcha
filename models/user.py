@@ -1,8 +1,9 @@
  # -*- coding:utf-8 -*-
+from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date, datetime
 import sqlite3 
 import pprint
-db = sqlite3.connect('Matcha.db')
+db = sqlite3.connect('Matcha.db', check_same_thread=False)
 cursor = db.cursor()
 
 class Model():
@@ -19,12 +20,12 @@ class Model():
         values = ['"' + item + '"' for item in infos.values()]
         get_keys = ", ".join(keys)
         get_values = ", ".join(values)
-        request = "INSERT INTO " + cls.get_table_name() + " (" + get_keys + ") VALUES (" + get_values + ");"
-        print(request)
-        cursor.execute(request)
+        req = "INSERT INTO " + cls.get_table_name() + " (" + get_keys + ") VALUES (" + get_values + ");"
+        print(req)
+        cursor.execute(req)
         db.commit()
         id = cursor.lastrowid
-        cursor.close()
+        # cursor.close()
         infos['id'] = str(id)
         return eval(cls.__name__ + "(infos)")
 
@@ -98,6 +99,9 @@ class User(Model):
         super().__init__(infos)
         pass
 
+    def check_password(self, password):
+        return check_password_hash(getPassword(), password)
+
     def getUserName(self):
         if hasattr(self, 'username'):
             return self.username
@@ -124,6 +128,13 @@ class User(Model):
             return self.email
         else:
             the_info = self.search('email')
+            return the_info[0]
+
+    def getPassword(self):
+        if hasattr(self, 'password'):
+            return self.password
+        else:
+            the_info = self.search('password')
             return the_info[0]
 
     def getConfirmed(self):
@@ -190,27 +201,27 @@ class User(Model):
             return the_info[0]
 
 
-infos = {'username': "moi", 
-    'first_name': "toi",
-    'last_name': "nous", 
-    'email': "noustoimoi", 
-    'password': "kitty"}
+# infos = {'username': "moi", 
+#     'first_name': "toi",
+#     'last_name': "nous", 
+#     'email': "noustoimoi", 
+#     'password': "kitty"}
     
 
-new_user = User.create(infos)
-# new_user = new User   
-# new_user = User()
-# new_user.create(qqun)
-# new_user.first_name
-print(new_user)
-print(new_user.email)
-print(new_user.first_name)
-new_user.modif("email", "1234@mail.re")
-# new_user.email = '1234@mail.re'
-print(new_user.email)
-new_user.save()
-print("search : ", new_user.search('*'))
-print("LastCo : ", new_user.getLastConnexion())
-print("User.Id : ", new_user.getId())
-print("PopScore : ", new_user.getPopScore())
+# new_user = User.create(infos)
+# # new_user = new User   
+# # new_user = User()
+# # new_user.create(qqun)
+# # new_user.first_name
+# print(new_user)
+# print(new_user.email)
+# print(new_user.first_name)
+# new_user.modif("email", "1234@mail.re")
+# # new_user.email = '1234@mail.re'
+# print(new_user.email)
+# new_user.save()
+# print("search : ", new_user.search('*'))
+# print("LastCo : ", new_user.getLastConnexion())
+# print("User.Id : ", new_user.getId())
+# print("PopScore : ", new_user.getPopScore())
 
