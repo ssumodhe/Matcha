@@ -16,7 +16,6 @@ class RootController:
 
 	@staticmethod
 	def signup(form):
-		pprint(form)
 		for item in form.values():
 			if item == '' or item == None:
 				error = "REMPLIS TOUS LES P***** DE CHAMPS!"
@@ -30,18 +29,13 @@ class RootController:
 			error = "P***** mais ecris bien ton email!"
 			return render_template('index.html', error=error)
 
+		if form['username'] == item
+
 		infos = form.to_dict()
 		infos.pop('password_2')
 		infos.pop('sign_up')
 		infos['password'] = generate_password_hash(infos['password'])
-		pprint(infos)
 		new_user = User.create(infos)
 
 
-		form['username'] 
-		form['first_name']
-		form['last_name']
-		form['email']
-		form['password']
-		form['password_2']
 		return render_template('index.html')

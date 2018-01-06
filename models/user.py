@@ -9,8 +9,8 @@ cursor = db.cursor()
 class Model():
     def __init__(self, infos):
         for key, value in infos.items():
-            str = "self." + key + " = \"" + value +"\""
-            exec(str)
+            string = "self." + str(key) + " = \"" + str(value) +"\""
+            exec(string)
         pass
 
     @classmethod
@@ -28,6 +28,27 @@ class Model():
         # cursor.close()
         infos['id'] = str(id)
         return eval(cls.__name__ + "(infos)")
+
+    @classmethod
+    def find_by(cls, column, value):
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+
+        req = "SELECT * FROM '" + cls.get_table_name() + "' WHERE " + cls.get_table_name() + "." + column + " = '" + value + "';"
+        print(req)
+        cursor.execute(req)
+        db.commit()
+        answer = cursor.fetchone()
+        print(answer)
+        cursor.close()
+        return eval(cls.__name__ + "(answer)")
 
     @classmethod
     def get_table_name(cls):
@@ -200,6 +221,10 @@ class User(Model):
             the_info = self.search('last_connexion')
             return the_info[0]
 
+
+qqchose = User.find_by('username', 'toi')
+print("All Ok so far")
+print(qqchose.getEmail())
 
 # infos = {'username': "moi", 
 #     'first_name': "toi",
