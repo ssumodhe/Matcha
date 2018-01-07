@@ -31,6 +31,29 @@ class Model():
 
     # faire where: qui return un tableau de tous les thomas si on cherche tous les thomas
 
+
+    @classmethod
+    def where(cls, column, value):
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+
+        req = "SELECT * FROM '" + cls.get_table_name() + "' WHERE " + cls.get_table_name() + "." + column + " = '" + value + "';"
+        print(req)
+        cursor.execute(req)
+        db.commit()
+        answer = cursor.fetchall()
+        # print(answer)
+        cursor.close()
+        # if reponse requete vide -> return NULL
+        return answer
+
     @classmethod
     def find_by(cls, column, value):
         def dict_factory(cursor, row):
@@ -43,7 +66,7 @@ class Model():
         db.row_factory = dict_factory
         cursor = db.cursor()
 
-        req = "SELECT * FROM '" + cls.get_table_name() + "' WHERE " + cls.get_table_name() + "." + column + " = '" + value + "';"
+        req = "SELECT * FROM '" + cls.get_table_name() + "' WHERE " + cls.get_table_name() + "." + column + " = '" + value + "' LIMIT 1;"
         print(req)
         cursor.execute(req)
         db.commit()
@@ -229,14 +252,43 @@ class User(Model):
 # print("All Ok so far")
 # print(qqchose.getEmail())
 
-# infos = {'username': "moi", 
-#     'first_name': "toi",
-#     'last_name': "nous", 
-#     'email': "noustoimoi", 
-#     'password': "kitty"}
-    
+infos = {'username': "moi", 
+    'first_name': "toi",
+    'last_name': "nous", 
+    'email': "noustoimoi", 
+    'password': "kitty"}
+new_user1 = User.create(infos)
 
-# new_user = User.create(infos)
+infos = {'username': "hello", 
+    'first_name': "toi",
+    'last_name': "bonjour", 
+    'email': "aloha", 
+    'password': "kitty"}
+new_user2 = User.create(infos)
+
+infos = {'username': "tous", 
+    'first_name': "tous",
+    'last_name': "nous", 
+    'email': "noustous", 
+    'password': "kitty"}
+new_user3 = User.create(infos)
+
+infos = {'username': "coco", 
+    'first_name': "coco",
+    'last_name': "toto", 
+    'email': "totococo", 
+    'password': "kitty"}
+new_user4 = User.create(infos)
+
+qqchose = User.where('first_name', 'toi')
+my_list_len = len(qqchose)
+for i in range(0, my_list_len):
+    print("LIST " + str(i))
+    print(qqchose[i])
+
+# print(qqchose[0]['first_name'])
+
+
 # # new_user = new User   
 # # new_user = User()
 # # new_user.create(qqun)
