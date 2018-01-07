@@ -37,7 +37,7 @@ Python 3.6
 <!-- > - token (*string*) -->
 <!-- > - expired_at (*date*) -->
 > - sex (*integer*)
-> - orientation (*integer*)
+> - orientation (*integer*) 0:homo 1:hetero 2:bi
 > - bio (*string*)
 > - interests (*id*)
 > - main_picture (*id*)

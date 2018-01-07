@@ -15,7 +15,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS users
     password VARCHAR(255) NOT NULL,
     confirmed BOOLEAN DEFAULT 0,
     sex INTEGER,
-    orientation INTEGER,
+    orientation INTEGER DEFAULT 2,
     bio VARCHAR(1024),
     interests INTEGER,
     main_picture INTEGER,

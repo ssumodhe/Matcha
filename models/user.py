@@ -29,6 +29,8 @@ class Model():
         infos['id'] = str(id)
         return eval(cls.__name__ + "(infos)")
 
+    # faire where: qui return un tableau de tous les thomas si on cherche tous les thomas
+
     @classmethod
     def find_by(cls, column, value):
         def dict_factory(cursor, row):
@@ -48,6 +50,7 @@ class Model():
         answer = cursor.fetchone()
         print(answer)
         cursor.close()
+        # if reponse requete vide -> return NULL
         return eval(cls.__name__ + "(answer)")
 
     @classmethod
@@ -222,9 +225,9 @@ class User(Model):
             return the_info[0]
 
 
-qqchose = User.find_by('username', 'toi')
-print("All Ok so far")
-print(qqchose.getEmail())
+# qqchose = User.find_by('username', 'toi')
+# print("All Ok so far")
+# print(qqchose.getEmail())
 
 # infos = {'username': "moi", 
 #     'first_name': "toi",
