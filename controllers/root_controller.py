@@ -29,13 +29,15 @@ class RootController:
 			error = "P***** mais ecris bien ton email!"
 			return render_template('index.html', error=error)
 
-		# if form['username'] == item
+		# Check if form['username'] & form['email'] doesn't already exists avec le find_by de User
+		# Si find_by return NULL, il a rien trouvé c'est good. Otherwise: return error
 
 		infos = form.to_dict()
 		infos.pop('password_2')
 		infos.pop('sign_up')
 		infos['password'] = generate_password_hash(infos['password'])
 		new_user = User.create(infos)
+
 
 
 		return render_template('index.html')
