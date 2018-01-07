@@ -29,7 +29,7 @@ class RootController:
 			error = "P***** mais ecris bien ton email!"
 			return render_template('index.html', error=error)
 
-		if form['username'] == item
+		# if form['username'] == item
 
 		infos = form.to_dict()
 		infos.pop('password_2')

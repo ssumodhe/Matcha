@@ -222,9 +222,9 @@ class User(Model):
             return the_info[0]
 
 
-qqchose = User.find_by('username', 'toi')
-print("All Ok so far")
-print(qqchose.getEmail())
+# qqchose = User.find_by('username', 'toi')
+# print("All Ok so far")
+# print(qqchose.getEmail())
 
 # infos = {'username': "moi", 
 #     'first_name': "toi",
