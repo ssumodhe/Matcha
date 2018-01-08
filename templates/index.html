@@ -2,8 +2,11 @@
 <html>
 
 	{% extends 'layouts/default.html' %}
+
 	
-	{% block title %}Login &middot; {{ super() }}{% endblock title %}
+    {% block title %}Login &middot; {{ super() }}{% endblock title %}
+	{% block script %}<script type="text/javascript" src="static/index-controller.js"></script>{% endblock script %}
+
 
 	{% block body %}
     
@@ -26,21 +29,21 @@
 	<div id='index-login'>
         
         <div>
-        <form method="post" action="/signup">
+        <form name="signup" method="post" action="/signup">
             <p>Pas encore inscrit ?</p>
-            Votre pseudo : <input type="text" name="username" placeholder="Pseudo" />
+            Votre pseudo : <input type="text" name="username" placeholder="Pseudo" required/>
             <br/>
-            Votre prénom : <input type="text" name="first_name" placeholder="Prénom" />
+            Votre prénom : <input type="text" name="first_name" placeholder="Prénom" required/>
             <br/>
-            Votre nom : <input type="text" name="last_name" placeholder="Nom" />
+            Votre nom : <input type="text" name="last_name" placeholder="Nom" required/>
             <br/>
-            Votre e-mail : <input type="text" name="email" placeholder="Adresse mail" />
+            Votre e-mail : <input type="text" name="email" placeholder="Adresse mail" required/>
             <br/>
-            Votre mot de passe : <input type="password" name="password" placeholder=" &middot; &middot; &middot;" />
+            Votre mot de passe : <input type="password" name="password" placeholder=" &middot; &middot; &middot;" required/>
             <br/>
-            Confirmez votre mot de passe : <input type="password" name="password_2" placeholder=" &middot; &middot; &middot;" />
+            Confirmez votre mot de passe : <input type="password" name="password_2" placeholder=" &middot; &middot; &middot;" required/>
             <br/>
-            <input type="submit" name="sign_up" value="Je m'inscris !"/>
+            <input type="submit" name="sign_up" value="Je m'inscris !" disabled />
         </form>
         </div>
             
@@ -48,15 +51,15 @@
         </div>
         
         <div>
-        <form method="post" action="/signin">
+        <form name="signin" method="post" action="/signin">
             <p> Déjà inscrit ?</p>
-            Votre pseudo : <input type="text" name="username" placeholder="Pseudo" />
+            Votre pseudo : <input type="text" name="username" placeholder="Pseudo" required="Veuillez remplir ce champs"/>
             <br/>
-            Votre mot de passe : <input type="password" name="password" placeholder=" &middot; &middot; &middot;" />
+            Votre mot de passe : <input type="password" name="password" placeholder=" &middot; &middot; &middot;" required="Veuillez remplir ce champs"/>
             <br/>
             <a href="#"> Mot de passe oublié?</a>
             <br/>
-            <input type="submit" name="sign_in" value="Go !"/>
+            <input type="submit" name="sign_in" value="Go !" disabled />
         </form>
         </div>
     
