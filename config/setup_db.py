@@ -22,7 +22,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS users
     pop_score INTEGER DEFAULT 0,
     created_at DATETIME NOT NULL,
     last_connexion DATETIME,
-    connected INTEGER DEFAULT 0,
+    status INTEGER DEFAULT 0,
     FOREIGN KEY (main_picture) REFERENCES pictures(id)
     );''')
 

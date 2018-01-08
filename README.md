@@ -44,7 +44,7 @@ Python 3.6
 > - pop_score (*integer*)
 > - created_at (*date*)
 > - last_connexion (*date*)
-> - connected (*integer*) 0:disconnected 1:connected
+> - status (*integer*) 0:offline 1:online
  
 > **Picture**
 > - id (*integer*) -> unique

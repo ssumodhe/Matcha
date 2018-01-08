@@ -1,10 +1,18 @@
 # -*- coding:utf-8 -*-
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import date
+from flask import Flask, request, abort, redirect, url_for, render_template, session
+from flask.ext.session import Session
+from datetime import date, datetime
 from flask import render_template
 from pprint import pprint
 import re
 from models.user import User
+
+app = Flask(__name__)
+sess = Session()
+app.secret_key = 'super secret pswd'
+app.config['SESSION_TYPE'] = 'filesystem'
+sess.init_app(app)
 
 class RootController:
 	def __init__(self):
@@ -12,7 +20,10 @@ class RootController:
 
 	@staticmethod
 	def view():
+		if 'user' in session:
+			return render_template('home.html', user=session['user'])
 		return render_template('index.html')
+
 
 	@staticmethod
 	def signup(form):
@@ -71,4 +82,9 @@ class RootController:
 			error = "Mot de passe incorrect!"
 			return render_template('index.html', error=error)
 
-		return render_template('home.html', form=form, user=auth)
+		# All Good on modifie les infos nécessaires
+		auth.modif('status', '1')
+		auth.modif('last_connexion', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+		auth.save()
+		session['user'] = auth.getUserName()
+		return render_template('home.html', user=session['user'])
