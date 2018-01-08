@@ -50,4 +50,25 @@ class RootController:
 		infos['password'] = generate_password_hash(infos['password'])
 		new_user = User.create(infos)
 
-		return render_template('index.html')
+		all_ok = "C'est Good!"
+		return render_template('index.html', all_ok=all_ok)
+
+	@staticmethod
+	def signin(form):
+		for item in form.values():
+			if item == '' or item == None:
+				error = "REMPLIS TOUS LES P***** DE CHAMPS!"
+				return render_template('index.html', error=error)
+
+		auth = User.find_by('username', form['username'])
+		if auth == None:
+			error = "On ne connait pas ce pseudo!"
+			return render_template('index.html', error=error)
+			
+		actual_pswd = auth.getPassword()
+		hashed_pswd = check_password_hash(actual_pswd, form['password'])
+		if hashed_pswd == False:
+			error = "Mot de passe incorrect!"
+			return render_template('index.html', error=error)
+
+		return render_template('home.html', form=form, user=auth)

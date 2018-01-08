@@ -21,7 +21,6 @@ class Model():
         get_keys = ", ".join(keys)
         get_values = ", ".join(values)
         req = "INSERT INTO " + cls.get_table_name() + " (" + get_keys + ") VALUES (" + get_values + ");"
-        print(req)
         cursor.execute(req)
         db.commit()
         id = cursor.lastrowid

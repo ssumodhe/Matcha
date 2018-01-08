@@ -25,6 +25,10 @@ def accueil():
 def signup():
     return RootController.signup(request.form)
 
+@app.route('/signin', methods=['POST'])
+def signin():
+    return RootController.signin(request.form)
+
 @app.route('/home')
 def home():
     return render_template('home.html')

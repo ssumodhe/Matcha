@@ -15,6 +15,14 @@
     </div>
     {% endif %}
 
+    {% if 'all_ok' != None %}
+    <div id='all_ok'>
+        <p>
+           {{ all_ok }} 
+        </p>
+    </div>
+    {% endif %}
+
 	<div id='index-login'>
         
         <div>
@@ -40,7 +48,7 @@
         </div>
         
         <div>
-        <form method="get" action="#">
+        <form method="post" action="/signin">
             <p> Déjà inscrit ?</p>
             Votre pseudo : <input type="text" name="username" placeholder="Pseudo" />
             <br/>
