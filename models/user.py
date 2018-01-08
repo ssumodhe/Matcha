@@ -45,15 +45,13 @@ class Model():
         cursor = db.cursor()
 
         req = "SELECT * FROM '" + cls.get_table_name() + "' WHERE " + cls.get_table_name() + "." + column + " = '" + value + "';"
-        print(req)
         cursor.execute(req)
         db.commit()
         answer = cursor.fetchall()
-        # print(answer)
         cursor.close()
-        # if reponse requete vide -> return NULL
         return answer
 
+    # With find_by: Check if return not None
     @classmethod
     def find_by(cls, column, value):
         def dict_factory(cursor, row):
@@ -67,13 +65,12 @@ class Model():
         cursor = db.cursor()
 
         req = "SELECT * FROM '" + cls.get_table_name() + "' WHERE " + cls.get_table_name() + "." + column + " = '" + value + "' LIMIT 1;"
-        print(req)
         cursor.execute(req)
         db.commit()
         answer = cursor.fetchone()
-        print(answer)
         cursor.close()
-        # if reponse requete vide -> return NULL
+        if answer == None:
+            return None
         return eval(cls.__name__ + "(answer)")
 
     @classmethod
@@ -248,46 +245,46 @@ class User(Model):
             return the_info[0]
 
 
+
+
+# infos = {'username': "moi", 
+#     'first_name': "toi",
+#     'last_name': "nous", 
+#     'email': "noustoimoi", 
+#     'password': "kitty"}
+# new_user1 = User.create(infos)
+
+# infos = {'username': "hello", 
+#     'first_name': "toi",
+#     'last_name': "bonjour", 
+#     'email': "aloha", 
+#     'password': "kitty"}
+# new_user2 = User.create(infos)
+
+# infos = {'username': "tous", 
+#     'first_name': "tous",
+#     'last_name': "nous", 
+#     'email': "noustous", 
+#     'password': "kitty"}
+# new_user3 = User.create(infos)
+
+# infos = {'username': "coco", 
+#     'first_name': "coco",
+#     'last_name': "toto", 
+#     'email': "totococo", 
+#     'password': "kitty"}
+# new_user4 = User.create(infos)
+
+# # qqchose = User.where('first_name', 'toi')
+# # my_list_len = len(qqchose)
+# # for i in range(0, my_list_len):
+# #     print("LIST " + str(i))
+# #     print(qqchose[i])
+
 # qqchose = User.find_by('username', 'toi')
 # print("All Ok so far")
-# print(qqchose.getEmail())
-
-infos = {'username': "moi", 
-    'first_name': "toi",
-    'last_name': "nous", 
-    'email': "noustoimoi", 
-    'password': "kitty"}
-new_user1 = User.create(infos)
-
-infos = {'username': "hello", 
-    'first_name': "toi",
-    'last_name': "bonjour", 
-    'email': "aloha", 
-    'password': "kitty"}
-new_user2 = User.create(infos)
-
-infos = {'username': "tous", 
-    'first_name': "tous",
-    'last_name': "nous", 
-    'email': "noustous", 
-    'password': "kitty"}
-new_user3 = User.create(infos)
-
-infos = {'username': "coco", 
-    'first_name': "coco",
-    'last_name': "toto", 
-    'email': "totococo", 
-    'password': "kitty"}
-new_user4 = User.create(infos)
-
-qqchose = User.where('first_name', 'toi')
-my_list_len = len(qqchose)
-for i in range(0, my_list_len):
-    print("LIST " + str(i))
-    print(qqchose[i])
-
-# print(qqchose[0]['first_name'])
-
+# if qqchose != None:
+#     print(qqchose.getEmail())
 
 # # new_user = new User   
 # # new_user = User()

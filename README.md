@@ -32,7 +32,7 @@ Python 3.6
 > - first_name (*string*) -> unique
 > - last_name (*string*) -> unique
 > - email (*string*) -> unique
-> - password (*string*)
+> - password (*string*) [8, 24]chars with lower/capital/digit
 > - confirmed (*boolean*)
 <!-- > - token (*string*) -->
 <!-- > - expired_at (*date*) -->
@@ -85,6 +85,13 @@ Python 3.6
 > - id (*integer*)
 > - user_id (*id*)
 > - interest_id (*id*)
+
+> **Bloqued**
+> - id (*integer*) -> unique
+> - stalker_id (*id*)
+> - victim_id (*id*)
+> - created_at (*date*)
+> - stalker_id X victime_id -> unique
 
 #### Sources
 Python
