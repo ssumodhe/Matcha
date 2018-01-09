@@ -34,7 +34,7 @@ class RootController:
 
 		auth = User.find_by('username', form['username'])
 		if auth != None:
-			error = "Pseudo déjà utilisé!"
+			error = "Ce pseudo existe déjà!"
 			return render_template('index.html', error=error)
 
 		auth = User.find_by('email', form['email'])

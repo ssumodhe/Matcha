@@ -30,3 +30,12 @@ hr{
     background-color: gainsboro;
     display: inline-block;
 }
+
+input {
+    margin: 2px 0 2px 0;
+}
+
+#form_error{
+    background-color: rgba(199, 0, 57, 0.4);
+    font-size: 50%;
+}
