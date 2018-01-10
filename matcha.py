@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from flask import Flask, request, abort, redirect, url_for, render_template, session
-from flask.ext.session import Session
+from flask_session import Session
 from controllers.root_controller import RootController
 from datetime import datetime, date
 from config import setup_db

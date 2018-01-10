@@ -142,6 +142,30 @@ class User(Model):
         super().__init__(infos)
         pass
 
+    def is_complet(self):
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+        request = "SELECT * FROM '" + self.get_table_name() + "' WHERE id = " + self.id + ";"
+        cursor.execute(request)
+        dbData = cursor.fetchone()
+        db.commit()
+        cursor.close()
+        # pprint(dbData)
+        for key, value in dbData.items():
+            if value == None:
+                return False
+        return True
+
+
+
+
     def check_password(self, password):
         return check_password_hash(getPassword(), password)
 
@@ -250,8 +274,15 @@ class User(Model):
 #     'first_name': "toi",
 #     'last_name': "nous", 
 #     'email': "noustoimoi", 
-#     'password': "kitty"}
+#     'password': "kitty",
+#     'sex': '1',
+#     'bio': 'hello',
+#     'interests': '2',
+#     'main_picture': '2',
+#     'last_connexion': '2018-01-10 19:34:39'}
 # new_user1 = User.create(infos)
+
+# print(new_user1.is_complet())
 
 # infos = {'username': "hello", 
 #     'first_name': "toi",

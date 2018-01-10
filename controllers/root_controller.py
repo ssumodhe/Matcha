@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Flask, request, abort, redirect, url_for, render_template, session
-from flask.ext.session import Session
+from flask_session import Session
 from datetime import date, datetime
 from flask import render_template
 from pprint import pprint
@@ -88,7 +88,11 @@ class RootController:
 		auth.modif('last_connexion', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 		auth.save()
 		session['user'] = auth.getUserName()
-		return render_template('home.html', user=session['user'])
+
+		if auth.is_complet() == True:
+			return render_template('home.html', user=session['user'])
+		else:
+			return render_template('profile.html', user=session['user'])
 
 
 	@staticmethod
