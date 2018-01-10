@@ -38,4 +38,10 @@ input {
 #form_error{
     background-color: rgba(199, 0, 57, 0.4);
     font-size: 50%;
+    display: block;
+}
+
+#form_info{
+    font-size: 50%;
+    display: block;
 }

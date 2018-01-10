@@ -31,17 +31,17 @@
         <div>
         <form name="signup" method="post" action="/signup">
             <p>Pas encore inscrit ?</p>
-            Votre pseudo : <input type="text" name="username" placeholder="Pseudo" required onblur="checkUsername()" />
+            Votre pseudo : <input type="text" name="username" placeholder="Pseudo" required onblur="checkUsername()" onkeyup="checkSubmit('0', 'username')"/>
             <br/>
-            Votre prénom : <input type="text" name="first_name" placeholder="Prénom" required onblur="checkInputs('0')"/>
+            Votre prénom : <input type="text" name="first_name" placeholder="Prénom" required onblur="checkInputs('0')" onkeyup="checkSubmit('0', 'first_name')"/>
             <br/>
-            Votre nom : <input type="text" name="last_name" placeholder="Nom" required onblur="checkInputs('0')"/>
+            Votre nom : <input type="text" name="last_name" placeholder="Nom" required onblur="checkInputs('0')" onkeyup="checkSubmit('0', 'last_name')"/>
             <br/>
-            Votre e-mail : <input type="email" name="email" placeholder="Adresse mail" required onblur="checkEmail()"/>
+            Votre e-mail : <input type="email" name="email" placeholder="Adresse mail" required onblur="checkEmail()" onkeyup="checkSubmit('0', 'email')"/>
             <br/>
-            Votre mot de passe : <input type="password" name="password" placeholder=" &middot; &middot; &middot;" required onblur="checkInputs('0')"/>
+            Votre mot de passe : <input type="password" name="password" placeholder=" &middot; &middot; &middot;" required onfocus="displayInfo(0)" onblur="displayInfo(1)" onkeyup="checkPassword()" onkeyup="checkSubmit('0', 'password')"/>
             <br/>
-            Confirmez votre mot de passe : <input type="password" name="password_2" placeholder=" &middot; &middot; &middot;" required onkeydown="checkLastInputs('0', 'password_2')"/>
+            Confirmez votre mot de passe : <input type="password" name="password_2" placeholder=" &middot; &middot; &middot;" required onkeyup="checkIdentical()" onkeyup="checkSubmit('0', 'password_2')"/>
             <br/>
             <input type="submit" name="submit" value="Je m'inscris !" disabled />
         </form>
@@ -53,9 +53,9 @@
         <div>
         <form name="signin" method="post" action="/signin">
             <p> Déjà inscrit ?</p>
-            Votre pseudo : <input type="text" name="username" placeholder="Pseudo" required onblur="checkInputs('1')"/>
+            Votre pseudo : <input type="text" name="username" placeholder="Pseudo" required onblur="checkInputs('1')" onkeyup="checkSubmit('1', 'username')"/>
             <br/>
-            Votre mot de passe : <input type="password" name="password" placeholder=" &middot; &middot; &middot;" required onfocus="checkLastInputs('1', 'password')"/>
+            Votre mot de passe : <input type="password" name="password" placeholder=" &middot; &middot; &middot;" required onkeyup="checkSubmit('1', 'password')"/>
             <br/>
             <a href="#"> Mot de passe oublié?</a>
             <br/>
