@@ -42,6 +42,7 @@ class RootController:
 			error = "Cet email existe déjà!"
 			return render_template('index.html', error=error)
 
+		# Prendre REGEX du JS in index-controller.js ???
 		if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", form['email']):
 			error = "P***** mais ecris bien ton email!"
 			return render_template('index.html', error=error)
@@ -57,7 +58,7 @@ class RootController:
 		# All Good on procède à la création du User
 		infos = form.to_dict()
 		infos.pop('password_2')
-		infos.pop('sign_up')
+		infos.pop('submit')
 		infos['password'] = generate_password_hash(infos['password'])
 		new_user = User.create(infos)
 
@@ -88,3 +89,27 @@ class RootController:
 		auth.save()
 		session['user'] = auth.getUserName()
 		return render_template('home.html', user=session['user'])
+
+
+	@staticmethod
+	def signout():
+		auth = User.find_by('username', session['user'])
+		auth.modif('status', '0')
+		auth.save()
+		session.pop('user', None)
+		return render_template('index.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

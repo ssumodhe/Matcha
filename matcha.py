@@ -31,8 +31,7 @@ def signin():
 
 @app.route('/signout')
 def signout():
-  session.pop('user', None)
-  return render_template('index.html')
+  return RootController.signout()
 
 @app.route('/home')
 def home():
