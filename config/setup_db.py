@@ -9,8 +9,8 @@ cursor = db.cursor()
 cursor.execute('''CREATE TABLE IF NOT EXISTS users 
     (id INTEGER PRIMARY KEY,
     username VARCHAR(255) UNIQUE NOT NULL,
-    first_name VARCHAR(255) UNIQUE NOT NULL,
-    last_name VARCHAR(255) UNIQUE NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     confirmed BOOLEAN DEFAULT 0,
@@ -22,6 +22,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS users
     pop_score INTEGER DEFAULT 0,
     created_at DATETIME NOT NULL,
     last_connexion DATETIME,
+    status INTEGER DEFAULT 0,
     FOREIGN KEY (main_picture) REFERENCES pictures(id)
     );''')
 

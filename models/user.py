@@ -21,7 +21,6 @@ class Model():
         get_keys = ", ".join(keys)
         get_values = ", ".join(values)
         req = "INSERT INTO " + cls.get_table_name() + " (" + get_keys + ") VALUES (" + get_values + ");"
-        print(req)
         cursor.execute(req)
         db.commit()
         id = cursor.lastrowid
@@ -31,6 +30,27 @@ class Model():
 
     # faire where: qui return un tableau de tous les thomas si on cherche tous les thomas
 
+
+    @classmethod
+    def where(cls, column, value):
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+
+        req = "SELECT * FROM '" + cls.get_table_name() + "' WHERE " + cls.get_table_name() + "." + column + " = '" + value + "';"
+        cursor.execute(req)
+        db.commit()
+        answer = cursor.fetchall()
+        cursor.close()
+        return answer
+
+    # With find_by: Check if return not None
     @classmethod
     def find_by(cls, column, value):
         def dict_factory(cursor, row):
@@ -43,14 +63,13 @@ class Model():
         db.row_factory = dict_factory
         cursor = db.cursor()
 
-        req = "SELECT * FROM '" + cls.get_table_name() + "' WHERE " + cls.get_table_name() + "." + column + " = '" + value + "';"
-        print(req)
+        req = "SELECT * FROM '" + cls.get_table_name() + "' WHERE " + cls.get_table_name() + "." + column + " = '" + value + "' LIMIT 1;"
         cursor.execute(req)
         db.commit()
         answer = cursor.fetchone()
-        print(answer)
         cursor.close()
-        # if reponse requete vide -> return NULL
+        if answer == None:
+            return None
         return eval(cls.__name__ + "(answer)")
 
     @classmethod
@@ -122,6 +141,30 @@ class User(Model):
     def __init__(self, infos):
         super().__init__(infos)
         pass
+
+    def is_complet(self):
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+        request = "SELECT * FROM '" + self.get_table_name() + "' WHERE id = " + self.id + ";"
+        cursor.execute(request)
+        dbData = cursor.fetchone()
+        db.commit()
+        cursor.close()
+        # pprint(dbData)
+        for key, value in dbData.items():
+            if value == None:
+                return False
+        return True
+
+
+
 
     def check_password(self, password):
         return check_password_hash(getPassword(), password)
@@ -225,18 +268,54 @@ class User(Model):
             return the_info[0]
 
 
-# qqchose = User.find_by('username', 'toi')
-# print("All Ok so far")
-# print(qqchose.getEmail())
+
 
 # infos = {'username': "moi", 
 #     'first_name': "toi",
 #     'last_name': "nous", 
 #     'email': "noustoimoi", 
-#     'password': "kitty"}
-    
+#     'password': "kitty",
+#     'sex': '1',
+#     'bio': 'hello',
+#     'interests': '2',
+#     'main_picture': '2',
+#     'last_connexion': '2018-01-10 19:34:39'}
+# new_user1 = User.create(infos)
 
-# new_user = User.create(infos)
+# print(new_user1.is_complet())
+
+# infos = {'username': "hello", 
+#     'first_name': "toi",
+#     'last_name': "bonjour", 
+#     'email': "aloha", 
+#     'password': "kitty"}
+# new_user2 = User.create(infos)
+
+# infos = {'username': "tous", 
+#     'first_name': "tous",
+#     'last_name': "nous", 
+#     'email': "noustous", 
+#     'password': "kitty"}
+# new_user3 = User.create(infos)
+
+# infos = {'username': "coco", 
+#     'first_name': "coco",
+#     'last_name': "toto", 
+#     'email': "totococo", 
+#     'password': "kitty"}
+# new_user4 = User.create(infos)
+
+# # qqchose = User.where('first_name', 'toi')
+# # my_list_len = len(qqchose)
+# # for i in range(0, my_list_len):
+# #     print("LIST " + str(i))
+# #     print(qqchose[i])
+
+# qqchose = User.find_by('username', 'toi')
+# print("All Ok so far")
+# if qqchose != None:
+#     print(qqchose.getEmail())
+
 # # new_user = new User   
 # # new_user = User()
 # # new_user.create(qqun)

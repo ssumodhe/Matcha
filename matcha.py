@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from flask import Flask, request, abort, redirect, url_for, render_template, session
-from flask.ext.session import Session
+from flask_session import Session
 from controllers.root_controller import RootController
 from datetime import datetime, date
 from config import setup_db
@@ -15,27 +15,35 @@ sess.init_app(app)
 # Passera les variables à toutes les pages.
 @app.context_processor
 def get_time_now():
-    return dict({'now_year': datetime.now().year, 'date': date.today().isoformat()})
+  return dict({'now_year': datetime.now().year, 'date': date.today().isoformat()})
 
 @app.route('/')
 def accueil():
-    return RootController.view()
+  return RootController.view()
 
 @app.route('/signup', methods=['POST'])
 def signup():
-    return RootController.signup(request.form)
+  return RootController.signup(request.form)
+
+@app.route('/signin', methods=['POST'])
+def signin():
+  return RootController.signin(request.form)
+
+@app.route('/signout')
+def signout():
+  return RootController.signout()
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+  return render_template('home.html')
 
 @app.route('/messenger')
 def messenger():
-    return render_template('messenger.html')
+  return render_template('messenger.html')
 
 @app.route('/profile')
 def profile():
-    return render_template('profile.html')
+  return render_template('profile.html')
 
 
 @app.errorhandler(404)
