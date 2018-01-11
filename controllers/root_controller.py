@@ -90,9 +90,11 @@ class RootController:
 		session['user'] = auth.getUserName()
 
 		if auth.is_complet() == True:
-			return render_template('home.html', user=session['user'])
+			return redirect(url_for('home'))
+			# return render_template('home.html', user=session['user'])
 		else:
-			return render_template('profile.html', user=session['user'])
+			return redirect(url_for('profile'))
+			# return render_template('profile.html', user=session['user'])
 
 
 	@staticmethod
