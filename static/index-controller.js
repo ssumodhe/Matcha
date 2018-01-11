@@ -169,7 +169,7 @@ function displayInfo(status) {
 
 	if (status == '0'){
 		var span = document.createElement('span');
-		span.innerHTML = "Votre mot de passe doit avoir emtre 8 et 24 caractères, <br> \
+		span.innerHTML = "Votre mot de passe doit avoir entre 8 et 24 caractères, <br> \
 					et contenir au moins des lettres en minuscules, majuscules et des chiffres.";
 		span.setAttribute("id", "form_info");
 
@@ -182,10 +182,6 @@ function displayInfo(status) {
 			
 	}
 }
-
-
-
-// ^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[A-Za-z0-9_#@%\*\-]{8,24}$
 
 
 
