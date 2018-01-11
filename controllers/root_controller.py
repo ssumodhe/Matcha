@@ -21,7 +21,11 @@ class RootController:
 	@staticmethod
 	def view():
 		if 'user' in session:
-			return render_template('home.html', user=session['user'])
+			auth = User.find_by('username', session['user'])
+			if auth.is_complete() == True:
+				return redirect(url_for('home'))
+			else:
+				return redirect(url_for('profile', username=session['user']))
 		return render_template('index.html')
 
 
@@ -93,17 +97,80 @@ class RootController:
 			return redirect(url_for('home'))
 			# return render_template('home.html', user=session['user'])
 		else:
-			return redirect(url_for('profile'))
+			return redirect(url_for('profile', username=session['user']))
 			# return render_template('profile.html', user=session['user'])
 
 
 	@staticmethod
 	def signout():
-		auth = User.find_by('username', session['user'])
-		auth.modif('status', '0')
-		auth.save()
-		session.pop('user', None)
-		return render_template('index.html')
+		if 'user' in session:
+			auth = User.find_by('username', session['user'])
+			auth.modif('status', '0')
+			auth.save()
+			session.pop('user', None)
+		return redirect(url_for('accueil'))
+
+	@staticmethod
+	def profile(username):
+		if 'user' in session:
+			infos = {}
+			if session['user'] == username:
+				infos['is_user_me'] = True
+			else:
+				infos['is_user_me'] = False
+
+			auth = User.find_by('username', username)
+			# if auth doesn't exists redirect accueil
+
+			infos['username'] = auth.getUserName()
+			infos['first_name'] = auth.getFirstName()
+			infos['last_name'] = auth.getLastName()
+			infos['email'] = auth.getEmail()
+			infos['sex'] = auth.getSex()
+			infos['orientation'] = auth.getOrientation()
+			infos['bio'] = auth.getBio()
+			infos['interests'] = auth.getInterests()
+			infos['pop_score'] = auth.getPopScore()
+			infos['last_connexion'] = auth.getLastConnexion()
+			
+
+			return render_template('profile.html', infos=infos)
+		else:
+			return redirect(url_for('accueil'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

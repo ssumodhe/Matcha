@@ -158,6 +158,7 @@ class User(Model):
         db.commit()
         cursor.close()
         # pprint(dbData)
+        # virer if last_connexion == None?
         for key, value in dbData.items():
             if value == None:
                 return False

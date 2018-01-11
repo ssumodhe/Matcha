@@ -41,9 +41,10 @@ def home():
 def messenger():
   return render_template('messenger.html')
 
-@app.route('/profile')
-def profile():
-  return render_template('profile.html')
+@app.route('/profile/<username>')
+def profile(username):
+  return RootController.profile(username)
+  
 
 
 @app.errorhandler(404)
