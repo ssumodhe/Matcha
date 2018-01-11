@@ -4,7 +4,7 @@ class ConfirmationMail(Mail):
 
     subject = "Confirm your account"
 
-    body = "We should put a confirmation mail in this string"
+    body = "Please visit http://localhost:5000/confirm_account/{} to complete your registration"
 
-    def __init__(self, recipients):
+    def __init__(self, recipients, hash):
         super().__init__(recipients)

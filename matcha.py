@@ -2,6 +2,7 @@
 from flask import Flask, request, abort, redirect, url_for, render_template, session
 from flask_session import Session
 from controllers.root_controller import RootController
+from controllers.user_controller import UserController
 from datetime import datetime, date
 from config import setup_db
 
@@ -10,7 +11,6 @@ sess = Session()
 app.secret_key = 'super secret pswd'
 app.config['SESSION_TYPE'] = 'filesystem'
 sess.init_app(app)
-
 
 # Passera les variables à toutes les pages.
 @app.context_processor
@@ -45,6 +45,9 @@ def messenger():
 def profile():
   return render_template('profile.html')
 
+@app.route('/confirm_account/<hash>')
+def confirm_account(hash):
+  return UserController.confirm_account(hash)
 
 @app.errorhandler(404)
 def page_not_found(error):

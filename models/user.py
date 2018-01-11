@@ -116,7 +116,6 @@ class Model():
     def modif(self, key, value):
         str = "self." + key + " = \"" + value +"\""
         exec(str)
-        # save()?????
 
     def search(self, column):
         db = sqlite3.connect('Matcha.db')
@@ -162,9 +161,6 @@ class User(Model):
             if value == None:
                 return False
         return True
-
-
-
 
     def check_password(self, password):
         return check_password_hash(getPassword(), password)
@@ -266,69 +262,3 @@ class User(Model):
         else:
             the_info = self.search('last_connexion')
             return the_info[0]
-
-
-
-
-# infos = {'username': "moi", 
-#     'first_name': "toi",
-#     'last_name': "nous", 
-#     'email': "noustoimoi", 
-#     'password': "kitty",
-#     'sex': '1',
-#     'bio': 'hello',
-#     'interests': '2',
-#     'main_picture': '2',
-#     'last_connexion': '2018-01-10 19:34:39'}
-# new_user1 = User.create(infos)
-
-# print(new_user1.is_complet())
-
-# infos = {'username': "hello", 
-#     'first_name': "toi",
-#     'last_name': "bonjour", 
-#     'email': "aloha", 
-#     'password': "kitty"}
-# new_user2 = User.create(infos)
-
-# infos = {'username': "tous", 
-#     'first_name': "tous",
-#     'last_name': "nous", 
-#     'email': "noustous", 
-#     'password': "kitty"}
-# new_user3 = User.create(infos)
-
-# infos = {'username': "coco", 
-#     'first_name': "coco",
-#     'last_name': "toto", 
-#     'email': "totococo", 
-#     'password': "kitty"}
-# new_user4 = User.create(infos)
-
-# # qqchose = User.where('first_name', 'toi')
-# # my_list_len = len(qqchose)
-# # for i in range(0, my_list_len):
-# #     print("LIST " + str(i))
-# #     print(qqchose[i])
-
-# qqchose = User.find_by('username', 'toi')
-# print("All Ok so far")
-# if qqchose != None:
-#     print(qqchose.getEmail())
-
-# # new_user = new User   
-# # new_user = User()
-# # new_user.create(qqun)
-# # new_user.first_name
-# print(new_user)
-# print(new_user.email)
-# print(new_user.first_name)
-# new_user.modif("email", "1234@mail.re")
-# # new_user.email = '1234@mail.re'
-# print(new_user.email)
-# new_user.save()
-# print("search : ", new_user.search('*'))
-# print("LastCo : ", new_user.getLastConnexion())
-# print("User.Id : ", new_user.getId())
-# print("PopScore : ", new_user.getPopScore())
-
