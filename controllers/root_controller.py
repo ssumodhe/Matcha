@@ -89,7 +89,7 @@ class RootController:
 		auth.save()
 		session['user'] = auth.getUserName()
 
-		if auth.is_complet() == True:
+		if auth.is_complete() == True:
 			return redirect(url_for('home'))
 			# return render_template('home.html', user=session['user'])
 		else:

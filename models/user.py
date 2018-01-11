@@ -142,7 +142,7 @@ class User(Model):
         super().__init__(infos)
         pass
 
-    def is_complet(self):
+    def is_complete(self):
         def dict_factory(cursor, row):
             d = {}
             for idx, col in enumerate(cursor.description):
@@ -282,7 +282,7 @@ class User(Model):
 #     'last_connexion': '2018-01-10 19:34:39'}
 # new_user1 = User.create(infos)
 
-# print(new_user1.is_complet())
+# print(new_user1.is_complete())
 
 # infos = {'username': "hello", 
 #     'first_name': "toi",
