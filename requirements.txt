@@ -6,6 +6,4 @@ Jinja2==2.10
 MarkupSafe==1.0
 maxminddb==1.3.0
 maxminddb-geolite2==2017.803
-python-geoip==1.2
-python-geoip-geolite2==2015.303
 Werkzeug==0.12.2
