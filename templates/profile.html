@@ -8,31 +8,31 @@
 
 	{% block body %}
 	
-		<div>
+	<div>
+		<div id="box_picture">
+			<img src="{{ url_for('static', filename='waiting_for_picture.jpg') }}"/>
+		</div>
 		<p>{{ infos['username'] }}</p>
 		<p>{{ infos['first_name'] }}</p>
 		<p>{{ infos['last_name'] }}</p>
-		</div>
-<div id="main" style="">
-		<div id="box_left">
 		<p>{{ infos['email'] }}</p>
-		<p>{{ infos['sex'] }}</p>
-		<p>{{ infos['orientation'] }}</p>
+		<p>{{ infos['pop_score'] }}</p>
+		<p>{{ infos['last_connexion'] }}</p>
+	</div>
+		
+	<div id="main_container" style="">
+		<div id="box_left">
+			<p>{{ infos['sex'] }}</p>
+			<p>{{ infos['orientation'] }}</p>
+			<p>{{ infos['bio'] }}</p>
+			<p>{{ infos['interests'] }}</p>
 		</div>
 		
 		<div id="box_right">
-		<!-- 	<p>{{ infos['bio'] }}</p>
-			<p>{{ infos['interests'] }}</p>
-			<p>{{ infos['pop_score'] }}</p>
-			<p>{{ infos['last_connexion'] }}</p> -->
-			<img width='150px' height='150px' src="https://www.google.fr/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=2ahUKEwiF4p-cstDYAhXHoKQKHVifAukQjRx6BAgAEAY&url=https%3A%2F%2Fpixabay.com%2Ffr%2Fretouche-d-image-ebv-unleashed-101040%2F&psig=AOvVaw2tp2vhaGn7U-H2jFeupWQy&ust=1515776658437731"/>
-			<img width='150px' height='150px' src="https://www.google.fr/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=2ahUKEwiF4p-cstDYAhXHoKQKHVifAukQjRx6BAgAEAY&url=https%3A%2F%2Fpixabay.com%2Ffr%2Fretouche-d-image-ebv-unleashed-101040%2F&psig=AOvVaw2tp2vhaGn7U-H2jFeupWQy&ust=1515776658437731"/>
-			<img width='150px' height='150px' src="https://www.google.fr/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=2ahUKEwiF4p-cstDYAhXHoKQKHVifAukQjRx6BAgAEAY&url=https%3A%2F%2Fpixabay.com%2Ffr%2Fretouche-d-image-ebv-unleashed-101040%2F&psig=AOvVaw2tp2vhaGn7U-H2jFeupWQy&ust=1515776658437731"/>
-			<img width='150px' height='150px' src="https://www.google.fr/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=2ahUKEwiF4p-cstDYAhXHoKQKHVifAukQjRx6BAgAEAY&url=https%3A%2F%2Fpixabay.com%2Ffr%2Fretouche-d-image-ebv-unleashed-101040%2F&psig=AOvVaw2tp2vhaGn7U-H2jFeupWQy&ust=1515776658437731"/>
-			<img width='150px' height='150px' src="https://www.google.fr/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=2ahUKEwiF4p-cstDYAhXHoKQKHVifAukQjRx6BAgAEAY&url=https%3A%2F%2Fpixabay.com%2Ffr%2Fretouche-d-image-ebv-unleashed-101040%2F&psig=AOvVaw2tp2vhaGn7U-H2jFeupWQy&ust=1515776658437731"/>
-			<img width='150px' height='150px' src="https://www.google.fr/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=2ahUKEwiF4p-cstDYAhXHoKQKHVifAukQjRx6BAgAEAY&url=https%3A%2F%2Fpixabay.com%2Ffr%2Fretouche-d-image-ebv-unleashed-101040%2F&psig=AOvVaw2tp2vhaGn7U-H2jFeupWQy&ust=1515776658437731"/>
-			<img width='150px' height='150px' src="https://www.google.fr/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=2ahUKEwiF4p-cstDYAhXHoKQKHVifAukQjRx6BAgAEAY&url=https%3A%2F%2Fpixabay.com%2Ffr%2Fretouche-d-image-ebv-unleashed-101040%2F&psig=AOvVaw2tp2vhaGn7U-H2jFeupWQy&ust=1515776658437731"/>
-			<img width='150px' height='150px' src="https://www.google.fr/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=2ahUKEwiF4p-cstDYAhXHoKQKHVifAukQjRx6BAgAEAY&url=https%3A%2F%2Fpixabay.com%2Ffr%2Fretouche-d-image-ebv-unleashed-101040%2F&psig=AOvVaw2tp2vhaGn7U-H2jFeupWQy&ust=1515776658437731"/>
+			<img src="{{ url_for('static', filename='missing_picture.jpeg') }}"/>
+			<img src="{{ url_for('static', filename='missing_picture.jpeg') }}"/>
+			<img src="{{ url_for('static', filename='missing_picture.jpeg') }}"/>
+			<img src="{{ url_for('static', filename='missing_picture.jpeg') }}"/>
 		</div>
 	</div>
 	{% endblock body %}
