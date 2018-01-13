@@ -4,7 +4,9 @@
 	{% extends 'layouts/default.html' %}
 	
 	{% block title %}Compte &middot; {{ super() }}{% endblock title %}
-
+	{% block script %}
+    <script type="text/javascript" src="{{ url_for('static', filename='profile-controller.js') }}"></script>
+    {% endblock script %}
 
 	{% block body %}
 	
@@ -21,18 +23,48 @@
 			</div>
 			<div id="social">
 				<p id="pop_score">{{ infos['pop_score'] }}</p>
-				<p id="nb_likes">0</p>
+				<p id="nb_likes">0 likes</p>
 				<p id="last_connexion">{{ infos['last_connexion'] }}</p>
 			</div>
 		</div>
 	</div>
 		
-	<div id="main_container" style="">
+	<div id="main_container">
 		<div id="box_left">
-			<p>{{ infos['sex'] }}</p>
-			<p>{{ infos['orientation'] }}</p>
-			<p>{{ infos['bio'] }}</p>
-			<p>{{ infos['interests'] }}</p>
+			<div class="inline" name="sex" onmouseenter="displayForm('sex')" onmouseleave="unDisplayForm('sex')">
+					<p>{{ infos['sex'] }}</p>
+					
+					<form name="form_sex" action="" method="post" hidden>
+						<input type="text" name="sex" placeholder="{{ infos['sex'] }}">
+						<input type="button" name="submit" value="Modif.">
+					</form>
+
+<!-- 					<img src="{{ url_for('static', filename='modif_button.png') }}" width=15px height=15px > -->
+			</div>
+
+			<div class="inline" name="orientation" onmouseenter="displayForm('orientation')" onmouseleave="unDisplayForm('orientation')">
+				<p>{{ infos['orientation'] }}</p>
+				<form name="form_orientation" action="" method="post" hidden>
+						<input type="text" name="orientation" placeholder="{{ infos['orientation'] }}">
+						<input type="button" name="submit" value="Modif.">
+				</form>
+			</div>
+
+			<div class="inline" name="bio" onmouseenter="displayForm('bio')" onmouseleave="unDisplayForm('bio')">
+					<p>{{ infos['bio'] }}</p>
+					<form name="form_bio" action="" method="post" hidden>
+						<input type="text" name="bio" placeholder="{{ infos['bio'] }}">
+						<input type="button" name="submit" value="Modif.">
+				</form>
+			</div>
+
+			<div class="inline" name="interests" onmouseenter="displayForm('interests')" onmouseleave="unDisplayForm('interests')">
+					<p>{{ infos['interests'] }}</p>
+					<form name="form_interests" action="" method="post" hidden>
+						<input type="text" name="interests" placeholder="{{ infos['interests'] }}">
+						<input type="button" name="submit" value="Modif.">
+				</form>
+			</div>
 		</div>
 		
 		<div id="box_right">

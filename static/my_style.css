@@ -62,6 +62,12 @@ input {
     flex-direction: column;
 }
 
+.inline{
+    display: inline-flex;
+    margin: 0px 5px 0px 5px;
+    justify-content: center;
+}
+
 #box_right{
     margin: 5px 10px 5px 10px;
     width: 70%;
@@ -83,12 +89,12 @@ input {
     border-color: black;/* A VIRER !! */
 }
 
-#username{
+#username, #pop_score{
     font-weight: bold;
     font-size: x-large;
 }
 
-#first_name #last_name{
+#first_name, #last_name{
     font-style: italic;
     font-size: medium;
 }

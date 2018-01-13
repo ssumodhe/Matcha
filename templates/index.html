@@ -12,7 +12,7 @@
 
 	{% block body %}
     
-    {% if 'error' != None %}
+    {% if 'error' != None :%}
     <div id='error'>
         <p>
            {{ error }} 
@@ -20,7 +20,7 @@
     </div>
     {% endif %}
 
-    {% if 'all_ok' != None %}
+    {% if 'all_ok' != None : %}
     <div id='all_ok'>
         <p>
            {{ all_ok }} 
