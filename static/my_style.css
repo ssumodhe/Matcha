@@ -16,6 +16,7 @@ hr{
     color: black;
 }
 
+/* A VIRER !! */
 div{
     border-style: solid;
 }
@@ -41,16 +42,16 @@ input {
 
 #form_error{
     background-color: rgba(199, 0, 57, 0.4);
-    font-size: 50%;
+    font-size: x-small;
     display: block;
 }
 
 #form_info{
-    font-size: 50%;
+    font-size: x-small;
     display: block;
 }
 
-#main_container{
+#main_container, #infos_user{
     display: flex;
 }
 
@@ -73,4 +74,25 @@ input {
     margin: 5px 0px 5px 0px;
     border-style: solid;
     border-color: gainsboro;
+}
+
+#profile{
+    width: 70%;
+    text-align: left;
+    padding-left: 10%;
+    border-color: black;/* A VIRER !! */
+}
+
+#username{
+    font-weight: bold;
+    font-size: x-large;
+}
+
+#first_name #last_name{
+    font-style: italic;
+    font-size: medium;
+}
+
+#social{
+    width: 30%;
 }

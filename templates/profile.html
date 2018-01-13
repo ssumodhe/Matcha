@@ -12,12 +12,19 @@
 		<div id="box_picture">
 			<img src="{{ url_for('static', filename='waiting_for_picture.jpg') }}"/>
 		</div>
-		<p>{{ infos['username'] }}</p>
-		<p>{{ infos['first_name'] }}</p>
-		<p>{{ infos['last_name'] }}</p>
-		<p>{{ infos['email'] }}</p>
-		<p>{{ infos['pop_score'] }}</p>
-		<p>{{ infos['last_connexion'] }}</p>
+		<div id="infos_user">
+			<div id="profile">
+				<p id="username">{{ infos['username'] }}</p>
+				<p id="first_name">{{ infos['first_name'] }}</p>
+				<p id="last_name">{{ infos['last_name'] }}</p>
+				<p id="email" hidden>{{ infos['email'] }}</p>
+			</div>
+			<div id="social">
+				<p id="pop_score">{{ infos['pop_score'] }}</p>
+				<p id="nb_likes">0</p>
+				<p id="last_connexion">{{ infos['last_connexion'] }}</p>
+			</div>
+		</div>
 	</div>
 		
 	<div id="main_container" style="">
