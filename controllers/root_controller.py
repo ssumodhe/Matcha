@@ -123,7 +123,7 @@ class RootController:
 			auth = User.find_by('username', username)
 			# if auth doesn't exists redirect accueil
 
-			infos['username'] = auth.getUserName()
+			# infos['username'] = auth.getUserName()
 			infos['first_name'] = auth.getFirstName()
 			infos['last_name'] = auth.getLastName()
 			infos['email'] = auth.getEmail()

@@ -77,15 +77,18 @@ Python 3.6
 > - id (*integer*) -> unique
 > - stalker (*id*)
 > - victim (*id*)
+> - created_at (*date*)
 
 > **Interest**
 > - id (*integer*)
 > - value (*string*)
+> - created_at (*date*)
 
 > **Interest / User**
 > - id (*integer*)
 > - user_id (*id*)
 > - interest_id (*id*)
+> - created_at (*date*)
 
 > **Bloqued**
 > - id (*integer*) -> unique

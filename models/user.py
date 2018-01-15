@@ -1,5 +1,6 @@
  # -*- coding:utf-8 -*-
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Flask, request, abort, redirect, url_for, render_template, session
 from datetime import date, datetime
 import sqlite3 
 import pprint
@@ -27,9 +28,6 @@ class Model():
         # cursor.close()
         infos['id'] = str(id)
         return eval(cls.__name__ + "(infos)")
-
-    # faire where: qui return un tableau de tous les thomas si on cherche tous les thomas
-
 
     @classmethod
     def where(cls, column, value):
@@ -76,7 +74,6 @@ class Model():
     def get_table_name(cls):
         return cls.__name__.lower() + 's'
 
-
     def save(self):
         selfData = vars(self)
 
@@ -116,7 +113,6 @@ class Model():
     def modif(self, key, value):
         str = "self." + key + " = \"" + value +"\""
         exec(str)
-        # save()?????
 
     def search(self, column):
         db = sqlite3.connect('Matcha.db')
@@ -133,6 +129,13 @@ class Model():
             return self.id
         else:
             the_info = self.search('id')
+            return the_info[0]
+
+    def getCreatedAt(self):
+        if hasattr(self, 'created_at'):
+            return self.created_at
+        else:
+            the_info = self.search('created_at')
             return the_info[0]
 
 
@@ -164,11 +167,10 @@ class User(Model):
                 return False
         return True
 
-
-
-
     def check_password(self, password):
         return check_password_hash(getPassword(), password)
+
+    # getID in Model
 
     def getUserName(self):
         if hasattr(self, 'username'):
@@ -254,13 +256,6 @@ class User(Model):
             the_info = self.search('pop_score')
             return the_info[0]
 
-    def getCreatedAt(self):
-        if hasattr(self, 'created_at'):
-            return self.created_at
-        else:
-            the_info = self.search('created_at')
-            return the_info[0]
-
     def getLastConnexion(self):
         if hasattr(self, 'last_connexion'):
             return self.last_connexion
@@ -274,9 +269,119 @@ class User(Model):
         else:
             the_info = self.search('status')
             return the_info[0]
+    # getCreatedAt in Model
 
 
+class Picture(Model):
+    def __init__(self, infos):
+        super().__init__(infos)
+        pass
 
+    # getID in Model
+    def getUserId(self):
+        if hasattr(self, 'user_id'):
+            return self.user_id
+        else:
+            the_info = self.search('user_id')
+            return the_info[0]
+
+    def getData(self):
+        if hasattr(self, 'data'):
+            return self.data
+        else:
+            the_info = self.search('data')
+            return the_info[0]
+    # getCreatedAt in Model
+
+class Like(Model):
+    def __init__(self, infos):
+        super().__init__(infos)
+        pass
+
+    # getID in Model
+
+    def getStalkerId(self):
+        if hasattr(self, 'stalker_id'):
+            return self.stalker_id
+        else:
+            the_info = self.search('stalker_id')
+            return the_info[0]
+
+    def getVictimId(self):
+        if hasattr(self, 'victim_id'):
+            return self.victim_id
+        else:
+            the_info = self.search('victim_id')
+            return the_info[0]
+
+    # getCreatedAt in Model
+
+class View(Model):
+    def __init__(self, infos):
+        super().__init__(infos)
+        pass
+
+    # getID in Model
+
+    def getStalkerId(self):
+        if hasattr(self, 'stalker_id'):
+            return self.stalker_id
+        else:
+            the_info = self.search('stalker_id')
+            return the_info[0]
+
+    def getVictimId(self):
+        if hasattr(self, 'victim_id'):
+            return self.victim_id
+        else:
+            the_info = self.search('victim_id')
+            return the_info[0]
+
+    # getCreatedAt in Model
+
+class Interest(Model):
+    def __init__(self, infos):
+        super().__init__(infos)
+        pass
+
+    # getID in Model
+
+    def getValue(self):
+        if hasattr(self, 'value'):
+            return self.value
+        else:
+            the_info = self.search('value')
+            return the_info[0]
+
+    # getCreatedAt in Model
+
+class UsersInterest(Model):
+    def __init__(self, infos):
+        super().__init__(infos)
+        pass
+
+    # getID in Model
+
+    def getUserId(self):
+        if hasattr(self, 'user_id'):
+            return self.user_id
+        else:
+            the_info = self.search('user_id')
+            return the_info[0]
+
+    def getInterestId(self):
+        if hasattr(self, 'interest_id'):
+            return self.interest_id
+        else:
+            the_info = self.search('interest_id')
+            return the_info[0]
+
+    # getCreatedAt in Model
+
+# infos = {'user_id': '2',
+# 'data': "qqchose"}
+# new_pic = Picture.create(infos)
+# print(new_pic.where())
 
 # infos = {'username': "moi", 
 #     'first_name': "toi",
