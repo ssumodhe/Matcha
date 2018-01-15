@@ -32,11 +32,11 @@ def accueil():
   # print(match['location'])
   return RootController.view()
 
-@app.route('/signup', methods=['POST'])
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
   return RootController.signup(request.form)
 
-@app.route('/signin', methods=['POST'])
+@app.route('/signin', methods=['GET', 'POST'])
 def signin():
   return RootController.signin(request.form)
 
@@ -55,6 +55,11 @@ def messenger():
 @app.route('/profile/<username>')
 def profile(username):
   return RootController.profile(username)
+
+@app.route('/profile_modifications', methods=['GET', 'POST'])
+def profile_modifications():
+  return RootController.profile_modifications(request.form)
+
   
 
 

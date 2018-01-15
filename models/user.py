@@ -268,6 +268,13 @@ class User(Model):
             the_info = self.search('last_connexion')
             return the_info[0]
 
+    def getStatus(self):
+        if hasattr(self, 'status'):
+            return self.status
+        else:
+            the_info = self.search('status')
+            return the_info[0]
+
 
 
 

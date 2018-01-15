@@ -16,54 +16,101 @@
 		</div>
 		<div id="infos_user">
 			<div id="profile">
+				
 				<p id="username">{{ infos['username'] }}</p>
-				<p id="first_name">{{ infos['first_name'] }}</p>
-				<p id="last_name">{{ infos['last_name'] }}</p>
-				<p id="email" hidden>{{ infos['email'] }}</p>
+
+				<div class="inline" name="first_name" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('first_name')" onmouseleave="unDisplayForm('first_name')" {% endif %}>
+					<p id="first_name">{{ infos['first_name'] }}</p>
+
+					{% if infos['is_user_me'] == True %}
+					<form name="form_first_name" action="/profile_modifications" method="post" hidden>
+						<input type="text" name="first_name" placeholder="{{ infos['first_name'] }}">
+						<input type="hidden" name="username" value="{{ infos['username'] }}">
+						<input type="submit" name="submit" value="Modif.">
+					</form>
+					{% endif %}
+				</div>
+				
+				<div class="inline" name="last_name" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('last_name')" onmouseleave="unDisplayForm('last_name')" {% endif %}>
+					<p id="last_name">{{ infos['last_name'] }}</p>
+
+					{% if infos['is_user_me'] == True %}
+					<form name="form_last_name" action="" method="post" hidden>
+						<input type="text" name="last_name" placeholder="{{ infos['last_name'] }}">
+						<input type="submit" name="submit" value="Modif.">
+					</form>
+					{% endif %}
+				</div>
+				
+				{% if infos['is_user_me'] == True %}
+				<div class="inline" name="email" onmouseenter="displayForm('email')" onmouseleave="unDisplayForm('email')">
+					<p id="email">{{ infos['email'] }} HIDDEN IF NOT MY PROFILE PAGE</p>
+
+					<form name="form_email" action="" method="post" hidden>
+						<input type="text" name="email" placeholder="{{ infos['email'] }}">
+						<input type="submit" name="submit" value="Modif.">
+					</form>
+				</div>
+				{% endif %}
+			
 			</div>
 			<div id="social">
 				<p id="pop_score">{{ infos['pop_score'] }}</p>
 				<p id="nb_likes">0 likes</p>
 				<p id="last_connexion">{{ infos['last_connexion'] }}</p>
+				{% if infos['status'] == '1': %}
+				<img width="10%" src="{{ url_for('static', filename='status-green.png') }}" alt="online" title="online"/>
+				{% else: %}
+				<img width="10%" src="{{ url_for('static', filename='status-red.png') }}" alt="offline" title="offline"/>
+				{% endif%}
 			</div>
 		</div>
 	</div>
 		
 	<div id="main_container">
 		<div id="box_left">
-			<div class="inline" name="sex" onmouseenter="displayForm('sex')" onmouseleave="unDisplayForm('sex')">
-					<p>{{ infos['sex'] }}</p>
-					
-					<form name="form_sex" action="" method="post" hidden>
-						<input type="text" name="sex" placeholder="{{ infos['sex'] }}">
-						<input type="button" name="submit" value="Modif.">
-					</form>
-
-<!-- 					<img src="{{ url_for('static', filename='modif_button.png') }}" width=15px height=15px > -->
+			<div class="inline" name="sex" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('sex')" onmouseleave="unDisplayForm('sex')" {% endif %}>
+				<p>{{ infos['sex'] }}</p>
+				
+				{% if infos['is_user_me'] == True %}
+				<form name="form_sex" action="" method="post" hidden>
+					<input type="text" name="sex" placeholder="{{ infos['sex'] }}">
+					<input type="submit" name="submit" value="Modif.">
+				</form>
+				{% endif %}
 			</div>
 
-			<div class="inline" name="orientation" onmouseenter="displayForm('orientation')" onmouseleave="unDisplayForm('orientation')">
+			<div class="inline" name="orientation" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('orientation')" onmouseleave="unDisplayForm('orientation')" {% endif %}>
 				<p>{{ infos['orientation'] }}</p>
+				
+				{% if infos['is_user_me'] == True %}
 				<form name="form_orientation" action="" method="post" hidden>
 						<input type="text" name="orientation" placeholder="{{ infos['orientation'] }}">
-						<input type="button" name="submit" value="Modif.">
+						<input type="submit" name="submit" value="Modif.">
 				</form>
+				{% endif %}
 			</div>
 
-			<div class="inline" name="bio" onmouseenter="displayForm('bio')" onmouseleave="unDisplayForm('bio')">
-					<p>{{ infos['bio'] }}</p>
-					<form name="form_bio" action="" method="post" hidden>
-						<input type="text" name="bio" placeholder="{{ infos['bio'] }}">
-						<input type="button" name="submit" value="Modif.">
+			<div class="inline" name="bio" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('bio')" onmouseleave="unDisplayForm('bio')" {% endif %}>
+				<p>{{ infos['bio'] }}</p>
+				
+				{% if infos['is_user_me'] == True %}
+				<form name="form_bio" action="" method="post" hidden>
+					<input type="text" name="bio" placeholder="{{ infos['bio'] }}">
+					<input type="submit" name="submit" value="Modif.">
 				</form>
+				{% endif %}
 			</div>
 
-			<div class="inline" name="interests" onmouseenter="displayForm('interests')" onmouseleave="unDisplayForm('interests')">
-					<p>{{ infos['interests'] }}</p>
-					<form name="form_interests" action="" method="post" hidden>
-						<input type="text" name="interests" placeholder="{{ infos['interests'] }}">
-						<input type="button" name="submit" value="Modif.">
+			<div class="inline" name="interests" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('interests')" onmouseleave="unDisplayForm('interests')" {% endif %}>
+				<p>{{ infos['interests'] }}</p>
+				
+				{% if infos['is_user_me'] == True %}
+				<form name="form_interests" action="" method="post" hidden>
+					<input type="text" name="interests" placeholder="{{ infos['interests'] }}">
+					<input type="submit" name="submit" value="Modif.">
 				</form>
+				{% endif %}
 			</div>
 		</div>
 		
