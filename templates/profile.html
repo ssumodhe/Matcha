@@ -77,7 +77,7 @@
 				{% if infos['is_user_me'] == True %}
 				<form name="form_sex" action="/profile_modifications" method="post" hidden>
 					<!-- <input type="text" name="sex" placeholder="{{ infos['sex'] }}"> -->
-					<select form="form_sex" name="form_sex">
+					<select name="sex">
 						<option value="1">Homme</option>
 						<option value="2">Femme</option>
 					</select>
@@ -92,7 +92,12 @@
 				
 				{% if infos['is_user_me'] == True %}
 				<form name="form_orientation" action="/profile_modifications" method="post" hidden>
-					<input type="text" name="orientation" placeholder="{{ infos['orientation'] }}">
+					<!-- <input type="text" name="orientation" placeholder="{{ infos['orientation'] }}"> -->
+					<select name="orientation">
+						<option value="0">Homo</option>
+						<option value="1">Hétéro</option>
+						<option value="2">Bi</option>
+					</select>
 					<input type="hidden" name="username" value="{{ infos['username'] }}">
 					<input type="submit" name="submit" value="Modif.">
 				</form>
