@@ -35,8 +35,9 @@
 					<p id="last_name">{{ infos['last_name'] }}</p>
 
 					{% if infos['is_user_me'] == True %}
-					<form name="form_last_name" action="" method="post" hidden>
+					<form name="form_last_name" action="/profile_modifications" method="post" hidden>
 						<input type="text" name="last_name" placeholder="{{ infos['last_name'] }}">
+						<input type="hidden" name="username" value="{{ infos['username'] }}">
 						<input type="submit" name="submit" value="Modif.">
 					</form>
 					{% endif %}
@@ -44,10 +45,11 @@
 				
 				{% if infos['is_user_me'] == True %}
 				<div class="inline" name="email" onmouseenter="displayForm('email')" onmouseleave="unDisplayForm('email')">
-					<p id="email">{{ infos['email'] }} HIDDEN IF NOT MY PROFILE PAGE</p>
+					<p id="email">{{ infos['email'] }}</p>
 
-					<form name="form_email" action="" method="post" hidden>
+					<form name="form_email" action="/profile_modifications" method="post" hidden>
 						<input type="text" name="email" placeholder="{{ infos['email'] }}">
+						<input type="hidden" name="username" value="{{ infos['username'] }}">
 						<input type="submit" name="submit" value="Modif.">
 					</form>
 				</div>
@@ -73,8 +75,13 @@
 				<p>{{ infos['sex'] }}</p>
 				
 				{% if infos['is_user_me'] == True %}
-				<form name="form_sex" action="" method="post" hidden>
-					<input type="text" name="sex" placeholder="{{ infos['sex'] }}">
+				<form name="form_sex" action="/profile_modifications" method="post" hidden>
+					<!-- <input type="text" name="sex" placeholder="{{ infos['sex'] }}"> -->
+					<select form="form_sex" name="form_sex">
+						<option value="1">Homme</option>
+						<option value="2">Femme</option>
+					</select>
+					<input type="hidden" name="username" value="{{ infos['username'] }}">
 					<input type="submit" name="submit" value="Modif.">
 				</form>
 				{% endif %}
@@ -84,9 +91,10 @@
 				<p>{{ infos['orientation'] }}</p>
 				
 				{% if infos['is_user_me'] == True %}
-				<form name="form_orientation" action="" method="post" hidden>
-						<input type="text" name="orientation" placeholder="{{ infos['orientation'] }}">
-						<input type="submit" name="submit" value="Modif.">
+				<form name="form_orientation" action="/profile_modifications" method="post" hidden>
+					<input type="text" name="orientation" placeholder="{{ infos['orientation'] }}">
+					<input type="hidden" name="username" value="{{ infos['username'] }}">
+					<input type="submit" name="submit" value="Modif.">
 				</form>
 				{% endif %}
 			</div>
@@ -95,8 +103,9 @@
 				<p>{{ infos['bio'] }}</p>
 				
 				{% if infos['is_user_me'] == True %}
-				<form name="form_bio" action="" method="post" hidden>
+				<form name="form_bio" action="/profile_modifications" method="post" hidden>
 					<input type="text" name="bio" placeholder="{{ infos['bio'] }}">
+					<input type="hidden" name="username" value="{{ infos['username'] }}">
 					<input type="submit" name="submit" value="Modif.">
 				</form>
 				{% endif %}
@@ -106,8 +115,9 @@
 				<p>{{ infos['interests'] }}</p>
 				
 				{% if infos['is_user_me'] == True %}
-				<form name="form_interests" action="" method="post" hidden>
+				<form name="form_interests" action="/profile_modifications" method="post" hidden>
 					<input type="text" name="interests" placeholder="{{ infos['interests'] }}">
+					<input type="hidden" name="username" value="{{ infos['username'] }}">
 					<input type="submit" name="submit" value="Modif.">
 				</form>
 				{% endif %}

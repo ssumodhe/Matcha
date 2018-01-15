@@ -129,14 +129,14 @@ class RootController:
 			infos['email'] = auth.getEmail()
 			infos['sex'] = auth.getSex()
 			infos['orientation'] = auth.getOrientation()
-			infos['bio'] = auth.getBio()
+			infos['bio'] = html.unescape(auth.getBio())
 			infos['interests'] = auth.getInterests()
 			infos['pop_score'] = auth.getPopScore()
 			infos['last_connexion'] = auth.getLastConnexion()
 			infos['status'] = auth.getStatus()
 			
-			print("PROFILE PAGE infos = ")
-			print(infos)
+			# print("PROFILE PAGE infos = ")
+			# print(infos)
 
 			return render_template('profile.html', infos=infos)
 		else:
@@ -144,18 +144,19 @@ class RootController:
 
 	@staticmethod
 	def profile_modifications(form):
-		pprint(form)
 		modif = User.find_by('username', form['username'])
-		print(modif.id)
 		infos = form.to_dict()
 		infos.pop('username')
 		infos.pop('submit')
+		pprint(form)
+		print("MODIFICATIONS PAGE infos = ")
 		pprint(infos)
 		for key, value in infos.items():
 			print("KEY = " + key)
 			print("VALUE = " + value)
 			if key == "bio":
 				value = html.escape(value)
+				# need to add html.unescape in /profile when infos
 			else:
 				# error if spec chars
 				print("VALUE2 = " + value)
