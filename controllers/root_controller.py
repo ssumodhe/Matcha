@@ -145,6 +145,14 @@ class RootController:
 			infos['last_connexion'] = auth.getLastConnexion()
 			infos['status'] = auth.getStatus()
 
+			picture = Picture.where('user_id', auth.getId())
+			infos['picture_1'] = Picture.fillInInfos(auth.getId(), '1')
+			infos['picture_2'] = Picture.fillInInfos(auth.getId(), '2')
+			infos['picture_3'] = Picture.fillInInfos(auth.getId(), '3')
+			infos['picture_4'] = Picture.fillInInfos(auth.getId(), '4')
+			infos['picture_5'] = Picture.fillInInfos(auth.getId(), '5')
+
+
 			
 			
 			# print("PROFILE PAGE infos = ")
@@ -200,12 +208,24 @@ class RootController:
 			filename = user.getUserName() + "_" + form['number'] + "." + ext
 			path_to_upload = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 			file_to_save.save(path_to_upload)
-			infos = {}
-			infos['user_id'] = user.getId() 
-			infos['data'] = path_to_upload
-			picture = Picture.create(infos)
-			user.modif('main_picture', picture.getId())
-			user.save()
+			
+			if Picture.getPicName(user.getId(), form['number']) == None:
+				infos = {}
+				infos['user_id'] = user.getId() 
+				infos['data'] = filename
+				picture = Picture.create(infos)
+				
+			else:
+				expression = user.getUserName() + "_" + form['number'] + ".%"
+				print(expression)
+				picture = Picture.find_like('data', expression)
+				print(picture.getData())
+				picture.modif('data', filename)
+				picture.save()
+
+			if form['number'] == '1':
+				user.modif('main_picture', picture.getId())
+				user.save()
 
 		return redirect(url_for('profile', username=user.getUserName()))
 

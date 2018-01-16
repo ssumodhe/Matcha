@@ -13,7 +13,7 @@
 	<div>
 		<div id="box_picture" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('picture_1')" onmouseleave="unDisplayForm('picture_1')" {% endif %}>
 			{% if infos['main_picture'] != 'None': %}
-				<img src="{{ url_for('static', filename='unicorn_vnr.png') }}"/>
+				<img src="{{ infos['picture_1'] }}"/>
 			{% else: %}
 				<img src="{{ url_for('static', filename='waiting_for_picture.jpg') }}"/>
 			{% endif %}
@@ -141,13 +141,80 @@
 		</div>
 		
 		<div id="box_right">
-			<img src="{{ url_for('static', filename='missing_picture.jpeg') }}"/>
-			<img src="{{ url_for('static', filename='missing_picture.jpeg') }}"/>
-			<img src="{{ url_for('static', filename='missing_picture.jpeg') }}"/>
-			<img src="{{ url_for('static', filename='missing_picture.jpeg') }}"/>
+			<div {% if infos['is_user_me'] == True %} onmouseenter="displayForm('picture_2')" onmouseleave="unDisplayForm('picture_2')" {% endif %}>
+				<img src="{{ infos['picture_2'] }}"/>
+
+				<form name="form_picture_2" method="post" action="/profile_add_picture" enctype="multipart/form-data" hidden>
+			        <input type="file" name="picture"/>
+			        <input type="hidden" name="username" value="{{ infos['username'] }}">
+			        <input type="hidden" name="number" value="2">
+			        <input type="hidden" name="MAX_FILE_SIZE" value="1048576"/>
+			        <input type="submit" name="submit" value="Upload"/>
+			    </form>
+			</div>
+
+			<div {% if infos['is_user_me'] == True %} onmouseenter="displayForm('picture_3')" onmouseleave="unDisplayForm('picture_3')" {% endif %}>
+				<img src="{{ infos['picture_3'] }}"/>
+
+				<form name="form_picture_3" method="post" action="/profile_add_picture" enctype="multipart/form-data" hidden>
+			        <input type="file" name="picture"/>
+			        <input type="hidden" name="username" value="{{ infos['username'] }}">
+			        <input type="hidden" name="number" value="3">
+			        <input type="hidden" name="MAX_FILE_SIZE" value="1048576"/>
+			        <input type="submit" name="submit" value="Upload"/>
+			    </form>
+			</div>
+			
+			<div {% if infos['is_user_me'] == True %} onmouseenter="displayForm('picture_4')" onmouseleave="unDisplayForm('picture_4')" {% endif %}>
+				<img src="{{ infos['picture_4'] }}"/>
+
+				<form name="form_picture_4" method="post" action="/profile_add_picture" enctype="multipart/form-data" hidden>
+			        <input type="file" name="picture"/>
+			        <input type="hidden" name="username" value="{{ infos['username'] }}">
+			        <input type="hidden" name="number" value="4">
+			        <input type="hidden" name="MAX_FILE_SIZE" value="1048576"/>
+			        <input type="submit" name="submit" value="Upload"/>
+			    </form>
+			</div>
+
+			<div {% if infos['is_user_me'] == True %} onmouseenter="displayForm('picture_5')" onmouseleave="unDisplayForm('picture_5')" {% endif %}>
+				<img src="{{ infos['picture_5'] }}"/>
+
+				<form name="form_picture_5" method="post" action="/profile_add_picture" enctype="multipart/form-data" hidden>
+			        <input type="file" name="picture"/>
+			        <input type="hidden" name="username" value="{{ infos['username'] }}">
+			        <input type="hidden" name="number" value="5">
+			        <input type="hidden" name="MAX_FILE_SIZE" value="1048576"/>
+			        <input type="submit" name="submit" value="Upload"/>
+			    </form>
+			</div>
 		</div>
 	</div>
 	{% endblock body %}
 
         
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

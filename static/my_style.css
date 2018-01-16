@@ -77,9 +77,10 @@ input {
 }
 
 #box_right img{
-    margin: 5px 0px 5px 0px;
+    margin: 5px 10% 5px 10%;
     border-style: solid;
     border-color: gainsboro;
+    max-width: 50%;
 }
 
 #profile{
