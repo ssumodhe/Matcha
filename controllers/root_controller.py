@@ -1,18 +1,27 @@
 # -*- coding:utf-8 -*-
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from flask import Flask, request, abort, redirect, url_for, render_template, session
 from flask_session import Session
 from datetime import date, datetime
 from flask import render_template
 from pprint import pprint
+
 import re
 import html
+import os
+
 from models.user import User
+from models.user import Picture
+
+UPLOAD_FOLDER = 'static/users_pictures'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
 sess = Session()
 app.secret_key = 'super secret pswd'
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 sess.init_app(app)
 
 class RootController:
@@ -123,7 +132,7 @@ class RootController:
 			auth = User.find_by('username', username)
 			# if auth doesn't exists redirect accueil
 
-			# infos['username'] = auth.getUserName()
+			infos['username'] = auth.getUserName()
 			infos['first_name'] = auth.getFirstName()
 			infos['last_name'] = auth.getLastName()
 			infos['email'] = auth.getEmail()
@@ -131,9 +140,12 @@ class RootController:
 			infos['orientation'] = auth.getOrientation()
 			infos['bio'] = html.unescape(auth.getBio())
 			infos['interests'] = auth.getInterests()
+			infos['main_picture'] = auth.getMainPicture()
 			infos['pop_score'] = auth.getPopScore()
 			infos['last_connexion'] = auth.getLastConnexion()
 			infos['status'] = auth.getStatus()
+
+			
 			
 			# print("PROFILE PAGE infos = ")
 			# print(infos)
@@ -165,6 +177,37 @@ class RootController:
 		modif.save()
 
 		return redirect(url_for('profile', username=modif.getUserName()))
+
+	@staticmethod
+	def profile_add_picture(form, file):
+
+		def allowed_file(filename):
+			return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+		if 'picture' not in file:
+			print('No file part')
+			# display error on PROFILE PAGE
+		file_to_save = file['picture']
+		if file_to_save.filename == '':
+			print('No selected file')
+			# display error on PROFILE PAGE
+			
+		if file_to_save and allowed_file(file_to_save.filename):
+			filename = secure_filename(file_to_save.filename)
+			user = User.find_by('username', form['username'])
+			ext = filename.rsplit('.', 1)[1].lower()
+			filename = user.getUserName() + "_" + form['number'] + "." + ext
+			path_to_upload = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+			file_to_save.save(path_to_upload)
+			infos = {}
+			infos['user_id'] = user.getId() 
+			infos['data'] = path_to_upload
+			picture = Picture.create(infos)
+			user.modif('main_picture', picture.getId())
+			user.save()
+
+		return redirect(url_for('profile', username=user.getUserName()))
 
 
 

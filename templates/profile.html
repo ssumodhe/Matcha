@@ -11,12 +11,23 @@
 	{% block body %}
 	
 	<div>
-		<div id="box_picture">
-			<img src="{{ url_for('static', filename='waiting_for_picture.jpg') }}"/>
+		<div id="box_picture" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('picture_1')" onmouseleave="unDisplayForm('picture_1')" {% endif %}>
+			{% if infos['main_picture'] != 'None': %}
+				<img src="{{ url_for('static', filename='unicorn_vnr.png') }}"/>
+			{% else: %}
+				<img src="{{ url_for('static', filename='waiting_for_picture.jpg') }}"/>
+			{% endif %}
+			
+			<form name="form_picture_1" method="post" action="/profile_add_picture" enctype="multipart/form-data" hidden>
+		        <input type="file" name="picture"/>
+		        <input type="hidden" name="username" value="{{ infos['username'] }}">
+		        <input type="hidden" name="number" value="1">
+		        <input type="hidden" name="MAX_FILE_SIZE" value="1048576"/>
+		        <input type="submit" name="submit" value="Upload"/>
+		    </form>
 		</div>
 		<div id="infos_user">
 			<div id="profile">
-				
 				<p id="username">{{ infos['username'] }}</p>
 
 				<div class="inline" name="first_name" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('first_name')" onmouseleave="unDisplayForm('first_name')" {% endif %}>
@@ -54,8 +65,8 @@
 					</form>
 				</div>
 				{% endif %}
-			
 			</div>
+			
 			<div id="social">
 				<p id="pop_score">{{ infos['pop_score'] }}</p>
 				<p id="nb_likes">0 likes</p>

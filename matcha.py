@@ -8,11 +8,14 @@ from geolite2 import geolite2
 import pprint
 
 
+
+
 app = Flask(__name__)
 sess = Session()
 app.secret_key = 'super secret pswd'
 app.config['SESSION_TYPE'] = 'filesystem'
 sess.init_app(app)
+
 
 
 # Passera les variables à toutes les pages.
@@ -60,6 +63,18 @@ def profile(username):
 def profile_modifications():
   return RootController.profile_modifications(request.form)
 
+@app.route('/profile_add_picture', methods=['GET', 'POST'])
+def profile_add_picture():
+  # file = request.files
+  # pic = file.to_dict()
+  # for key, value in pic.items():
+  #   print("FILE : " + str(key) + " et = " + str(value))
+  # form = request.form
+  # user = form.to_dict()
+  # for key, value in user.items():
+  #   print("FORM : " + str(key) + " et = " + str(value)) 
+  return RootController.profile_add_picture(request.form, request.files)
+
   
 
 
@@ -73,3 +88,41 @@ if __name__ == '__main__':
    # host '0.0.0.0' permet à toutes les machines du reseau d'acceder à l'application
    # port=XXXX permet de choisir le port pour acceder à l'application
    # app.run(debug=True, host='0.0.0.0', port=3000)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
