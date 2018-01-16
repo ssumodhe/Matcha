@@ -128,6 +128,9 @@ class RootController:
 				infos['is_user_me'] = True
 			else:
 				infos['is_user_me'] = False
+				other = User.find_by('username', username)
+				if other.is_complete() == False:
+					return redirect(url_for('profile_not_complete'))
 
 			auth = User.find_by('username', username)
 			# if auth doesn't exists redirect accueil
@@ -136,9 +139,24 @@ class RootController:
 			infos['first_name'] = auth.getFirstName()
 			infos['last_name'] = auth.getLastName()
 			infos['email'] = auth.getEmail()
-			infos['sex'] = auth.getSex()
-			infos['orientation'] = auth.getOrientation()
+			
+			if auth.getSex() == '1':
+				infos['sex'] = "Homme"
+			elif auth.getSex() == '2':
+				infos['sex'] = "Femme"
+			else:
+				infos['sex'] = auth.getSex()
+			
+			if auth.getOrientation() == '0':
+				infos['orientation'] = "Homo"
+			elif auth.getOrientation() == '1':
+				infos['orientation'] = "Hetero"
+			else:
+				infos['orientation'] = "Bi"
+			
+
 			infos['bio'] = html.unescape(auth.getBio())
+			
 			infos['interests'] = auth.getInterests()
 			infos['main_picture'] = auth.getMainPicture()
 			infos['pop_score'] = auth.getPopScore()
@@ -192,7 +210,6 @@ class RootController:
 		def allowed_file(filename):
 			return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
 		if 'picture' not in file:
 			print('No file part')
 			# display error on PROFILE PAGE
@@ -217,9 +234,7 @@ class RootController:
 				
 			else:
 				expression = user.getUserName() + "_" + form['number'] + ".%"
-				print(expression)
 				picture = Picture.find_like('data', expression)
-				print(picture.getData())
 				picture.modif('data', filename)
 				picture.save()
 
@@ -227,7 +242,7 @@ class RootController:
 				user.modif('main_picture', picture.getId())
 				user.save()
 
-		return redirect(url_for('profile', username=user.getUserName()))
+		return redirect(url_for('profile', username=form['username']))
 
 
 

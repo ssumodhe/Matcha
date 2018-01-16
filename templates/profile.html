@@ -12,11 +12,7 @@
 	
 	<div>
 		<div id="box_picture" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('picture_1')" onmouseleave="unDisplayForm('picture_1')" {% endif %}>
-			{% if infos['main_picture'] != 'None': %}
-				<img src="{{ infos['picture_1'] }}"/>
-			{% else: %}
-				<img src="{{ url_for('static', filename='waiting_for_picture.jpg') }}"/>
-			{% endif %}
+			<img src="{{ infos['picture_1'] }}"/>
 			
 			<form name="form_picture_1" method="post" action="/profile_add_picture" enctype="multipart/form-data" hidden>
 		        <input type="file" name="picture"/>
@@ -26,6 +22,7 @@
 		        <input type="submit" name="submit" value="Upload"/>
 		    </form>
 		</div>
+		
 		<div id="infos_user">
 			<div id="profile">
 				<p id="username">{{ infos['username'] }}</p>

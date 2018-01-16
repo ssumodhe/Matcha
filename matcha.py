@@ -75,7 +75,9 @@ def profile_add_picture():
   #   print("FORM : " + str(key) + " et = " + str(value)) 
   return RootController.profile_add_picture(request.form, request.files)
 
-  
+@app.route('/profile_not_complete')
+def profile_not_complete():
+  return render_template('profile_not_complete.html')
 
 
 @app.errorhandler(404)

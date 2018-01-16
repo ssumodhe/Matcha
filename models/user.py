@@ -328,6 +328,25 @@ class Picture(Model):
         else:
             return url_for('static', filename='missing_picture.jpeg')
 
+    @classmethod
+    def howMany(self, user_id):
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+
+        req = "SELECT COUNT(*) FROM '" + self.get_table_name() + "' WHERE " + self.get_table_name() + ".user_id = '" + user_id + "';"
+        cursor.execute(req)
+        db.commit()
+        answer = cursor.fetchall()
+        cursor.close()
+        return answer[0]['COUNT(*)']
+
 class Like(Model):
     def __init__(self, infos):
         super().__init__(infos)
