@@ -71,6 +71,27 @@ class Model():
         return eval(cls.__name__ + "(answer)")
 
     @classmethod
+    def find_like(cls, column, exp):
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+
+        req = "SELECT * FROM '" + cls.get_table_name() + "' WHERE " + cls.get_table_name() + "." + column + " LIKE '" + exp + "' LIMIT 1;"
+        cursor.execute(req)
+        db.commit()
+        answer = cursor.fetchone()
+        cursor.close()
+        if answer == None:
+            return None
+        return eval(cls.__name__ + "(answer)")
+
+    @classmethod
     def get_table_name(cls):
         return cls.__name__.lower() + 's'
 
@@ -292,6 +313,20 @@ class Picture(Model):
             the_info = self.search('data')
             return the_info[0]
     # getCreatedAt in Model
+    @classmethod
+    def getPicName(self, user_id, number):
+        picture = self.where('user_id', user_id)
+        for i in range(len(picture)):
+            if number in picture[i]['data']:
+                return picture[i]['data']
+        return None
+
+    @classmethod
+    def fillInInfos(self, user_id, number):
+        if self.getPicName(user_id, number) != None:
+            return url_for('static', filename="users_pictures/" + Picture.getPicName(user_id, number))
+        else:
+            return url_for('static', filename='missing_picture.jpeg')
 
 class Like(Model):
     def __init__(self, infos):
