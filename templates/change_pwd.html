@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html>
+
+	{% extends 'layouts/default.html' %}
+	
+	{% block title %}Forgotten password &middot; {{ super() }}{% endblock title %}
+
+	{% block body %}
+		<p>Please set a new password</p>
+		<form method="post" action="/set_pwd">
+			<input type="hidden" name="hash" value={{hash}}>
+			<input type="password" name="email" placeholder="email"><br/>
+			<input type="password2" name="verify" placeholder="verify"><br/>
+			<input type="submit" value="Réinitialiser mot de passe"><br/>
+		</form>
+	{% endblock body %}
+
+        
+</html>

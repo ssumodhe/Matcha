@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html>
+
+	{% extends 'layouts/default.html' %}
+	
+	{% block title %}Forgotten password &middot; {{ super() }}{% endblock title %}
+
+	{% block body %}
+		<form method="get" action="/mail_reinit_pwd">
+			<input type="email" name="email" placeholder="email">
+			<input type="submit" value="Réinitialiser mot de passe">
+		</form>
+	{% endblock body %}
+
+        
+</html>

@@ -21,6 +21,22 @@ def get_time_now():
 def accueil():
   return RootController.view()
 
+@app.route('/forgotten_password', methods=['GET'])
+def forgotten_pwd():
+  return UserController.forgotten_pwd()
+
+@app.route('/mail_reinit_pwd', methods=['GET'])
+def mail_reinit_pwd():
+  return UserController.mail_reinit_pwd()
+
+@app.route('/reinit_pwd', methods=['GET'])
+def reinit_pwd():
+  return UserController.display_reinit_pwd()
+
+@app.route('/set_pwd', methods=['POST'])
+def set_pwd():
+  return UserController.set_new_pwd()
+
 @app.route('/signup', methods=['POST'])
 def signup():
   return RootController.signup(request.form)

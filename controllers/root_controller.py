@@ -24,7 +24,6 @@ class RootController:
 			return render_template('home.html', user=session['user'])
 		return render_template('index.html')
 
-
 	@staticmethod
 	def signup(form):
 		for item in form.values():
