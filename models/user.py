@@ -277,6 +277,13 @@ class User(Model):
             the_info = self.search('pop_score')
             return the_info[0]
 
+    def getLocation(self):
+        if hasattr(self, 'location'):
+            return self.location
+        else:
+            the_info = self.search('location')
+            return the_info[0]
+
     def getLastConnexion(self):
         if hasattr(self, 'last_connexion'):
             return self.last_connexion

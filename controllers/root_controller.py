@@ -160,6 +160,7 @@ class RootController:
 			infos['interests'] = auth.getInterests()
 			infos['main_picture'] = auth.getMainPicture()
 			infos['pop_score'] = auth.getPopScore()
+			infos['location'] = auth.getLocation()
 			infos['last_connexion'] = auth.getLastConnexion()
 			infos['status'] = auth.getStatus()
 
@@ -237,6 +238,7 @@ class RootController:
 				picture = Picture.find_like('data', expression)
 				picture.modif('data', filename)
 				picture.save()
+				# SUPPR. if ext differente else bourrage du dossier users_pictures
 
 			if form['number'] == '1':
 				user.modif('main_picture', picture.getId())

@@ -42,6 +42,7 @@ Python 3.6
 > - interests (*id*)
 > - main_picture (*id*)
 > - pop_score (*integer*)
+> - location (*string*)
 > - created_at (*date*)
 > - last_connexion (*date*)
 > - status (*integer*) 0:offline 1:online

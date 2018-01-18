@@ -62,6 +62,18 @@
 					</form>
 				</div>
 				{% endif %}
+
+				<div class="inline" name="location" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('location')" onmouseleave="unDisplayForm('location')" {% endif %}>
+					<p id="location">{{ infos['location'] }}</p>
+
+					{% if infos['is_user_me'] == True %}
+					<form name="form_location" action="/profile_modifications" method="post" hidden>
+						<input type="text" name="location" placeholder="{{ infos['location'] }}">
+						<input type="hidden" name="username" value="{{ infos['username'] }}">
+						<input type="submit" name="submit" value="Modif.">
+					</form>
+					{% endif %}
+				</div>
 			</div>
 			
 			<div id="social">
@@ -80,6 +92,8 @@
 	<div id="main_container">
 		<div id="box_left">
 			<div class="inline" name="sex" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('sex')" onmouseleave="unDisplayForm('sex')" {% endif %}>
+				<div>Sexe:</div>
+
 				<p>{{ infos['sex'] }}</p>
 				
 				{% if infos['is_user_me'] == True %}
@@ -96,6 +110,8 @@
 			</div>
 
 			<div class="inline" name="orientation" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('orientation')" onmouseleave="unDisplayForm('orientation')" {% endif %}>
+				<div>Orientation:</div>
+
 				<p>{{ infos['orientation'] }}</p>
 				
 				{% if infos['is_user_me'] == True %}
@@ -113,6 +129,8 @@
 			</div>
 
 			<div class="inline" name="bio" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('bio')" onmouseleave="unDisplayForm('bio')" {% endif %}>
+				<div>Bio:</div>
+
 				<p>{{ infos['bio'] }}</p>
 				
 				{% if infos['is_user_me'] == True %}
@@ -125,6 +143,8 @@
 			</div>
 
 			<div class="inline" name="interests" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('interests')" onmouseleave="unDisplayForm('interests')" {% endif %}>
+				<div>Intérêts:</div>
+
 				<p>{{ infos['interests'] }}</p>
 				
 				{% if infos['is_user_me'] == True %}

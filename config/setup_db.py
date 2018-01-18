@@ -20,6 +20,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS users
     interests INTEGER,
     main_picture INTEGER,
     pop_score INTEGER DEFAULT 0,
+    location VARCHAR(255),
     created_at DATETIME NOT NULL,
     last_connexion DATETIME,
     status INTEGER DEFAULT 0,
