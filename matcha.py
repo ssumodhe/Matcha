@@ -84,6 +84,10 @@ def profile_not_complete():
 def like():
   return LikeController.like(request.form)
 
+@app.route('/unlike', methods=['POST'])
+def unlike():
+  return LikeController.unlike(request.form)
+
 
 @app.errorhandler(404)
 def page_not_found(error):

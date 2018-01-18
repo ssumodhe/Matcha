@@ -31,11 +31,18 @@ class LikeController:
 
 	@staticmethod
 	def like(form):
-		print(form)
 		stalker = User.find_by('username', form['stalker'])
 		victim = User.find_by('username', form['victim'])
 		infos = {}
 		infos['stalker_id'] = stalker.getId()
 		infos['victim_id'] = victim.getId()
 		like = Like.create(infos)
+		return redirect(url_for('profile', username=form['victim']))
+
+	@staticmethod
+	def unlike(form):
+		stalker = User.find_by('username', form['stalker'])
+		victim = User.find_by('username', form['victim'])
+		unlike = Like.find_both('stalker_id', stalker.getId(), 'victim_id', victim.getId())
+		unlike.delete()
 		return redirect(url_for('profile', username=form['victim']))

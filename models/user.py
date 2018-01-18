@@ -92,6 +92,46 @@ class Model():
         return eval(cls.__name__ + "(answer)")
 
     @classmethod
+    def find_both(cls, col1, val1, col2, val2):
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+
+        req = "SELECT * FROM '" + cls.get_table_name() + "' WHERE " + cls.get_table_name() + "." + col1 + " = '" + val1 + "' AND " + cls.get_table_name() + "." + col2 + " = '" + val2 + "' LIMIT 1;"
+        cursor.execute(req)
+        db.commit()
+        answer = cursor.fetchone()
+        cursor.close()
+        if answer == None:
+            return None
+        return eval(cls.__name__ + "(answer)")
+
+    @classmethod
+    def howMany(self, column, value):
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+
+        req = "SELECT COUNT(*) FROM '" + self.get_table_name() + "' WHERE " + self.get_table_name() + "." + column + " = '" + value + "';"
+        cursor.execute(req)
+        db.commit()
+        answer = cursor.fetchall()
+        cursor.close()
+        return answer[0]['COUNT(*)']
+
+    @classmethod
     def get_table_name(cls):
         return cls.__name__.lower() + 's'
 
@@ -335,24 +375,6 @@ class Picture(Model):
         else:
             return url_for('static', filename='missing_picture.jpeg')
 
-    @classmethod
-    def howMany(self, user_id):
-        def dict_factory(cursor, row):
-            d = {}
-            for idx, col in enumerate(cursor.description):
-                d[col[0]] = row[idx]
-            return d
-
-        db = sqlite3.connect('Matcha.db')
-        db.row_factory = dict_factory
-        cursor = db.cursor()
-
-        req = "SELECT COUNT(*) FROM '" + self.get_table_name() + "' WHERE " + self.get_table_name() + ".user_id = '" + user_id + "';"
-        cursor.execute(req)
-        db.commit()
-        answer = cursor.fetchall()
-        cursor.close()
-        return answer[0]['COUNT(*)']
 
 class Like(Model):
     def __init__(self, infos):
@@ -367,24 +389,6 @@ class Like(Model):
                 return True
         return False
 
-    @classmethod
-    def howMany(self, column, value):
-        def dict_factory(cursor, row):
-            d = {}
-            for idx, col in enumerate(cursor.description):
-                d[col[0]] = row[idx]
-            return d
-
-        db = sqlite3.connect('Matcha.db')
-        db.row_factory = dict_factory
-        cursor = db.cursor()
-
-        req = "SELECT COUNT(*) FROM '" + self.get_table_name() + "' WHERE " + self.get_table_name() + "." + column + " = '" + value + "';"
-        cursor.execute(req)
-        db.commit()
-        answer = cursor.fetchall()
-        cursor.close()
-        return answer[0]['COUNT(*)']
     # getID in Model
 
     def getStalkerId(self):

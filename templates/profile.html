@@ -80,14 +80,20 @@
 				<p id="pop_score">Pop_score : {{ infos['pop_score'] }}</p>
 				<p id="nb_likes">Like : {{ infos['nb_like'] }}</p>
 
-				{% if infos['is_user_me'] == False and infos['has_liked'] == False %}
+				{% if infos['stalker_can_like'] == False %}
+				<p>T'as le seum, tu peux pas like parce que t'as pas mis de photo! Déso</p>
+				{% elif infos['is_user_me'] == False and infos['has_liked'] == False %}
 				<form name="form_like" action="/like" method="post">
-					<input type="image" name="like" class="like_button" src="{{ url_for('static', filename='like_button.png') }}">
+					<input type="image" name="like" class="like_button" src="{{ url_for('static', filename='like_button.png') }}" title="Like-moi !!">
 					<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
 					<input type="hidden" name="victim" value="{{ infos['username'] }}">
 				</form>
 				{% elif infos['is_user_me'] == False and infos['has_liked'] == True: %}
-				<img class="like_button" src="{{ url_for('static', filename='has_liked_button.png') }}" alt="already_liked" title="Tu as déjà liké cette personne">
+				<form name="form_unlike" action="/unlike" method="post">
+					<input type="image" name="unlike" class="like_button" src="{{ url_for('static', filename='has_liked_button.png') }}" title="Tu as déjà liké cette personne! Clique pour unlike!">
+					<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
+					<input type="hidden" name="victim" value="{{ infos['username'] }}">
+				</form>
 				{% endif %}
 				
 				<p id="last_connexion">{{ infos['last_connexion'] }}</p>
@@ -218,6 +224,18 @@
 			</div>
 		</div>
 	</div>
+
+	<div id="box_history">
+		<div id="history_views">
+			<p>Ils ont consulté ta page:</p>
+
+		</div>
+
+		<div id="history_likes">
+			<p>Ils t'ont liké:</p>
+		</div>
+	</div>
+
 	{% endblock body %}
 
         

@@ -13,6 +13,7 @@ import os
 
 from models.user import User
 from models.user import Like
+from models.user import View
 from models.user import Picture
 
 UPLOAD_FOLDER = 'static/users_pictures'
@@ -129,9 +130,18 @@ class RootController:
 			else:
 				infos['is_user_me'] = False
 				infos['stalker'] = session['user']
-				other = User.find_by('username', username)
-				if other.is_complete() == False:
+				victim = User.find_by('username', username)
+				if victim.is_complete() == False:
 					return redirect(url_for('profile_not_complete'))
+				stalker = User.find_by('username', infos['stalker'])
+				view = {}
+				view['stalker_id'] = stalker.getId()
+				view['victim_id'] = victim.getId()
+				View.create(view)
+				victim.modif('pop_score', str(View.howMany('victim_id', victim.getId())))
+				victim.save()
+
+
 
 			auth = User.find_by('username', username)
 			# if auth doesn't exists redirect accueil
@@ -175,8 +185,22 @@ class RootController:
 			if infos['is_user_me'] == False:
 				stalker = User.find_by('username', infos['stalker'])
 				infos['has_liked'] = Like.has_liked(stalker.getId(), auth.getId())
-
+				nb_picture = Picture.howMany('user_id', stalker.getId())
+				if nb_picture == 0:
+					infos['stalker_can_like'] = False
 			infos['nb_like'] = Like.howMany('victim_id', auth.getId())
+
+			all_views = View.where('victim_id', auth.getId())
+			for i in range(len(all_views)):
+				print("ITEM = " + str(all_views[i]['stalker_id']))
+			keys = ['' + str(all_views[i]['stalker_id']) + '' for i in range(len(all_views))]
+			print(keys)
+			
+			all_stalkers = {}
+			for i in keys:
+				print(i)
+
+			all_likes = Like.where('victim_id', auth.getId())
 
 			print("PROFILE PAGE infos = ")
 			print(infos)

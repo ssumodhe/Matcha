@@ -76,8 +76,8 @@ Python 3.6
 
 > **View**
 > - id (*integer*) -> unique
-> - stalker (*id*)
-> - victim (*id*)
+> - stalker_id (*id*)
+> - victim_id (*id*)
 > - created_at (*date*)
 
 > **Interest**
