@@ -12,6 +12,7 @@ import html
 import os
 
 from models.user import User
+from models.user import Like
 from models.user import Picture
 
 UPLOAD_FOLDER = 'static/users_pictures'
@@ -37,7 +38,6 @@ class RootController:
 			else:
 				return redirect(url_for('profile', username=session['user']))
 		return render_template('index.html')
-
 
 	@staticmethod
 	def signup(form):
@@ -128,6 +128,7 @@ class RootController:
 				infos['is_user_me'] = True
 			else:
 				infos['is_user_me'] = False
+				infos['stalker'] = session['user']
 				other = User.find_by('username', username)
 				if other.is_complete() == False:
 					return redirect(url_for('profile_not_complete'))
@@ -171,11 +172,14 @@ class RootController:
 			infos['picture_4'] = Picture.fillInInfos(auth.getId(), '4')
 			infos['picture_5'] = Picture.fillInInfos(auth.getId(), '5')
 
+			if infos['is_user_me'] == False:
+				stalker = User.find_by('username', infos['stalker'])
+				infos['has_liked'] = Like.has_liked(stalker.getId(), auth.getId())
 
-			
-			
-			# print("PROFILE PAGE infos = ")
-			# print(infos)
+			infos['nb_like'] = Like.howMany('victim_id', auth.getId())
+
+			print("PROFILE PAGE infos = ")
+			print(infos)
 
 			return render_template('profile.html', infos=infos)
 		else:

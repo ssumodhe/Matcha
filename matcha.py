@@ -2,6 +2,7 @@
 from flask import Flask, request, abort, redirect, url_for, render_template, session
 from flask_session import Session
 from controllers.root_controller import RootController
+from controllers.like_controller import LikeController
 from datetime import datetime, date
 from config import setup_db
 from geolite2 import geolite2
@@ -78,6 +79,10 @@ def profile_add_picture():
 @app.route('/profile_not_complete')
 def profile_not_complete():
   return render_template('profile_not_complete.html')
+
+@app.route('/like', methods=['POST'])
+def like():
+  return LikeController.like(request.form)
 
 
 @app.errorhandler(404)

@@ -359,6 +359,32 @@ class Like(Model):
         super().__init__(infos)
         pass
 
+    @classmethod
+    def has_liked(self, stalker_id, victim_id):
+        info = self.where('stalker_id', stalker_id)
+        for i in range(len(info)):
+            if int(info[i]['victim_id']) == int(victim_id):
+                return True
+        return False
+
+    @classmethod
+    def howMany(self, column, value):
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+
+        req = "SELECT COUNT(*) FROM '" + self.get_table_name() + "' WHERE " + self.get_table_name() + "." + column + " = '" + value + "';"
+        cursor.execute(req)
+        db.commit()
+        answer = cursor.fetchall()
+        cursor.close()
+        return answer[0]['COUNT(*)']
     # getID in Model
 
     def getStalkerId(self):

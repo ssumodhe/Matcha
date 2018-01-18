@@ -77,13 +77,24 @@
 			</div>
 			
 			<div id="social">
-				<p id="pop_score">{{ infos['pop_score'] }}</p>
-				<p id="nb_likes">0 likes</p>
+				<p id="pop_score">Pop_score : {{ infos['pop_score'] }}</p>
+				<p id="nb_likes">Like : {{ infos['nb_like'] }}</p>
+
+				{% if infos['is_user_me'] == False and infos['has_liked'] == False %}
+				<form name="form_like" action="/like" method="post">
+					<input type="image" name="like" class="like_button" src="{{ url_for('static', filename='like_button.png') }}">
+					<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
+					<input type="hidden" name="victim" value="{{ infos['username'] }}">
+				</form>
+				{% elif infos['is_user_me'] == False and infos['has_liked'] == True: %}
+				<img class="like_button" src="{{ url_for('static', filename='has_liked_button.png') }}" alt="already_liked" title="Tu as déjà liké cette personne">
+				{% endif %}
+				
 				<p id="last_connexion">{{ infos['last_connexion'] }}</p>
 				{% if infos['status'] == '1': %}
-				<img width="10%" src="{{ url_for('static', filename='status-green.png') }}" alt="online" title="online"/>
+				<img width="10%" src="{{ url_for('static', filename='status-green.png') }}" alt="online" title="L'utilisateur est en ligne"/>
 				{% else: %}
-				<img width="10%" src="{{ url_for('static', filename='status-red.png') }}" alt="offline" title="offline"/>
+				<img width="10%" src="{{ url_for('static', filename='status-red.png') }}" alt="offline" title="L'utilisateur est hors ligne"/>
 				{% endif%}
 			</div>
 		</div>

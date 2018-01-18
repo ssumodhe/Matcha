@@ -55,6 +55,11 @@ input {
     max-width: 45%;
 }
 
+.like_button{
+    width: 10%;
+    min-width: 4px;
+}
+
 #main_container, #infos_user{
     display: flex;
 }
