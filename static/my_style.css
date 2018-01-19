@@ -16,6 +16,11 @@ hr{
     color: black;
 }
 
+/* A VIRER !! */
+div{
+    border-style: solid;
+}
+
 #index-login{
     margin-bottom: 30px;
     display: inline-flex;
@@ -37,11 +42,122 @@ input {
 
 #form_error{
     background-color: rgba(199, 0, 57, 0.4);
-    font-size: 50%;
+    font-size: x-small;
     display: block;
 }
 
 #form_info{
-    font-size: 50%;
+    font-size: x-small;
     display: block;
 }
+
+#box_picture img{
+    max-width: 45%;
+}
+
+.like_button{
+    width: 10%;
+    min-width: 4px;
+}
+
+#main_container, #infos_user{
+    display: flex;
+}
+
+#box_left{
+    margin: 5px 10px 5px 10px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+.inline{
+    display: inline-flex;
+    margin: 0px 5px 0px 5px;
+    justify-content: center;
+}
+
+#box_right{
+    margin: 5px 10px 5px 10px;
+    width: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+#box_right img{
+    margin: 5px 10% 5px 10%;
+    border-style: solid;
+    border-color: gainsboro;
+    max-width: 50%;
+}
+
+#profile{
+    width: 70%;
+    text-align: left;
+    padding-left: 10%;
+    display: flex;
+    flex-direction: column;
+    border-color: black;/* A VIRER !! */
+}
+
+#username, #pop_score{
+    font-weight: bold;
+    font-size: x-large;
+}
+
+#first_name, #last_name{
+    font-style: italic;
+    font-size: medium;
+}
+
+#social{
+    width: 30%;
+}
+
+#box_history{
+    display: flex;
+}
+
+#history_views{
+    width: 50%;
+}
+
+#history_likes{
+    width: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -3,8 +3,14 @@ from flask import Flask, request, abort, redirect, url_for, render_template, ses
 from flask_session import Session
 from controllers.root_controller import RootController
 from controllers.user_controller import UserController
+from controllers.like_controller import LikeController
 from datetime import datetime, date
 from config import setup_db
+from geolite2 import geolite2
+import pprint
+
+
+
 
 app = Flask(__name__)
 sess = Session()
@@ -19,6 +25,14 @@ def get_time_now():
 
 @app.route('/')
 def accueil():
+  ip = request.environ['REMOTE_ADDR']
+  print("IP = " + ip)
+  # reader = geolite2.reader()
+  # match = reader.get('62.210.33.168')
+  # geolite2.close()
+  # print(match is not None)
+  # print(match)
+  # print(match['location'])
   return RootController.view()
 
 @app.route('/forgotten_password', methods=['GET'])
@@ -37,11 +51,11 @@ def reinit_pwd():
 def set_pwd():
   return UserController.set_new_pwd()
 
-@app.route('/signup', methods=['POST'])
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
   return RootController.signup(request.form)
 
-@app.route('/signin', methods=['POST'])
+@app.route('/signin', methods=['GET', 'POST'])
 def signin():
   return RootController.signin(request.form)
 
@@ -57,9 +71,37 @@ def home():
 def messenger():
   return render_template('messenger.html')
 
-@app.route('/profile')
-def profile():
-  return render_template('profile.html')
+@app.route('/profile/<username>')
+def profile(username):
+  return RootController.profile(username)
+
+@app.route('/profile_modifications', methods=['GET', 'POST'])
+def profile_modifications():
+  return RootController.profile_modifications(request.form)
+
+@app.route('/profile_add_picture', methods=['GET', 'POST'])
+def profile_add_picture():
+  # file = request.files
+  # pic = file.to_dict()
+  # for key, value in pic.items():
+  #   print("FILE : " + str(key) + " et = " + str(value))
+  # form = request.form
+  # user = form.to_dict()
+  # for key, value in user.items():
+  #   print("FORM : " + str(key) + " et = " + str(value)) 
+  return RootController.profile_add_picture(request.form, request.files)
+
+@app.route('/profile_not_complete')
+def profile_not_complete():
+  return render_template('profile_not_complete.html')
+
+@app.route('/like', methods=['POST'])
+def like():
+  return LikeController.like(request.form)
+
+@app.route('/unlike', methods=['POST'])
+def unlike():
+  return LikeController.unlike(request.form)
 
 @app.route('/confirm_account/<hash>')
 def confirm_account(hash):
@@ -75,3 +117,41 @@ if __name__ == '__main__':
    # host '0.0.0.0' permet à toutes les machines du reseau d'acceder à l'application
    # port=XXXX permet de choisir le port pour acceder à l'application
    # app.run(debug=True, host='0.0.0.0', port=3000)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

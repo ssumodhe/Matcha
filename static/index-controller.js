@@ -6,6 +6,12 @@
 // Check reg ex match with:
 // https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_match_regexp
 
+
+window.onload=function(){
+// check file index.php on desktop
+}
+
+
 function checkInputs(form){
 	var controller = 0;
 	form_name = document.forms[form].getAttribute("name");

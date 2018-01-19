@@ -4,10 +4,263 @@
 	{% extends 'layouts/default.html' %}
 	
 	{% block title %}Compte &middot; {{ super() }}{% endblock title %}
-
+	{% block script %}
+    <script type="text/javascript" src="{{ url_for('static', filename='profile-controller.js') }}"></script>
+    {% endblock script %}
 
 	{% block body %}
+	
+	<div>
+		<div id="box_picture" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('picture_1')" onmouseleave="unDisplayForm('picture_1')" {% endif %}>
+			<img src="{{ infos['picture_1'] }}"/>
+			
+			<form name="form_picture_1" method="post" action="/profile_add_picture" enctype="multipart/form-data" hidden>
+		        <input type="file" name="picture"/>
+		        <input type="hidden" name="username" value="{{ infos['username'] }}">
+		        <input type="hidden" name="number" value="1">
+		        <input type="hidden" name="MAX_FILE_SIZE" value="1048576"/>
+		        <input type="submit" name="submit" value="Upload"/>
+		    </form>
+		</div>
+		
+		<div id="infos_user">
+			<div id="profile">
+				<p id="username">{{ infos['username'] }}</p>
+
+				<div class="inline" name="first_name" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('first_name')" onmouseleave="unDisplayForm('first_name')" {% endif %}>
+					<p id="first_name">{{ infos['first_name'] }}</p>
+
+					{% if infos['is_user_me'] == True %}
+					<form name="form_first_name" action="/profile_modifications" method="post" hidden>
+						<input type="text" name="first_name" placeholder="{{ infos['first_name'] }}">
+						<input type="hidden" name="username" value="{{ infos['username'] }}">
+						<input type="submit" name="submit" value="Modif.">
+					</form>
+					{% endif %}
+				</div>
+				
+				<div class="inline" name="last_name" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('last_name')" onmouseleave="unDisplayForm('last_name')" {% endif %}>
+					<p id="last_name">{{ infos['last_name'] }}</p>
+
+					{% if infos['is_user_me'] == True %}
+					<form name="form_last_name" action="/profile_modifications" method="post" hidden>
+						<input type="text" name="last_name" placeholder="{{ infos['last_name'] }}">
+						<input type="hidden" name="username" value="{{ infos['username'] }}">
+						<input type="submit" name="submit" value="Modif.">
+					</form>
+					{% endif %}
+				</div>
+				
+				{% if infos['is_user_me'] == True %}
+				<div class="inline" name="email" onmouseenter="displayForm('email')" onmouseleave="unDisplayForm('email')">
+					<p id="email">{{ infos['email'] }}</p>
+
+					<form name="form_email" action="/profile_modifications" method="post" hidden>
+						<input type="text" name="email" placeholder="{{ infos['email'] }}">
+						<input type="hidden" name="username" value="{{ infos['username'] }}">
+						<input type="submit" name="submit" value="Modif.">
+					</form>
+				</div>
+				{% endif %}
+
+				<div class="inline" name="location" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('location')" onmouseleave="unDisplayForm('location')" {% endif %}>
+					<p id="location">{{ infos['location'] }}</p>
+
+					{% if infos['is_user_me'] == True %}
+					<form name="form_location" action="/profile_modifications" method="post" hidden>
+						<input type="text" name="location" placeholder="{{ infos['location'] }}">
+						<input type="hidden" name="username" value="{{ infos['username'] }}">
+						<input type="submit" name="submit" value="Modif.">
+					</form>
+					{% endif %}
+				</div>
+			</div>
+			
+			<div id="social">
+				<p id="pop_score">Pop_score : {{ infos['pop_score'] }}</p>
+				<p id="nb_likes">Like : {{ infos['nb_like'] }}</p>
+
+				{% if infos['stalker_can_like'] == False %}
+				<p>T'as le seum, tu peux pas like parce que t'as pas mis de photo! Déso</p>
+				{% elif infos['is_user_me'] == False and infos['has_liked'] == False %}
+				<form name="form_like" action="/like" method="post">
+					<input type="image" name="like" class="like_button" src="{{ url_for('static', filename='like_button.png') }}" title="Like-moi !!">
+					<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
+					<input type="hidden" name="victim" value="{{ infos['username'] }}">
+				</form>
+				{% elif infos['is_user_me'] == False and infos['has_liked'] == True: %}
+				<form name="form_unlike" action="/unlike" method="post">
+					<input type="image" name="unlike" class="like_button" src="{{ url_for('static', filename='has_liked_button.png') }}" title="Tu as déjà liké cette personne! Clique pour unlike!">
+					<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
+					<input type="hidden" name="victim" value="{{ infos['username'] }}">
+				</form>
+				{% endif %}
+				
+				<p id="last_connexion">{{ infos['last_connexion'] }}</p>
+				{% if infos['status'] == '1': %}
+				<img width="10%" src="{{ url_for('static', filename='status-green.png') }}" alt="online" title="L'utilisateur est en ligne"/>
+				{% else: %}
+				<img width="10%" src="{{ url_for('static', filename='status-red.png') }}" alt="offline" title="L'utilisateur est hors ligne"/>
+				{% endif%}
+			</div>
+		</div>
+	</div>
+		
+	<div id="main_container">
+		<div id="box_left">
+			<div class="inline" name="sex" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('sex')" onmouseleave="unDisplayForm('sex')" {% endif %}>
+				<div>Sexe:</div>
+
+				<p>{{ infos['sex'] }}</p>
+				
+				{% if infos['is_user_me'] == True %}
+				<form name="form_sex" action="/profile_modifications" method="post" hidden>
+					<!-- <input type="text" name="sex" placeholder="{{ infos['sex'] }}"> -->
+					<select name="sex">
+						<option value="1">Homme</option>
+						<option value="2">Femme</option>
+					</select>
+					<input type="hidden" name="username" value="{{ infos['username'] }}">
+					<input type="submit" name="submit" value="Modif.">
+				</form>
+				{% endif %}
+			</div>
+
+			<div class="inline" name="orientation" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('orientation')" onmouseleave="unDisplayForm('orientation')" {% endif %}>
+				<div>Orientation:</div>
+
+				<p>{{ infos['orientation'] }}</p>
+				
+				{% if infos['is_user_me'] == True %}
+				<form name="form_orientation" action="/profile_modifications" method="post" hidden>
+					<!-- <input type="text" name="orientation" placeholder="{{ infos['orientation'] }}"> -->
+					<select name="orientation">
+						<option value="0">Homo</option>
+						<option value="1">Hétéro</option>
+						<option value="2">Bi</option>
+					</select>
+					<input type="hidden" name="username" value="{{ infos['username'] }}">
+					<input type="submit" name="submit" value="Modif.">
+				</form>
+				{% endif %}
+			</div>
+
+			<div class="inline" name="bio" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('bio')" onmouseleave="unDisplayForm('bio')" {% endif %}>
+				<div>Bio:</div>
+
+				<p>{{ infos['bio'] }}</p>
+				
+				{% if infos['is_user_me'] == True %}
+				<form name="form_bio" action="/profile_modifications" method="post" hidden>
+					<input type="text" name="bio" placeholder="{{ infos['bio'] }}">
+					<input type="hidden" name="username" value="{{ infos['username'] }}">
+					<input type="submit" name="submit" value="Modif.">
+				</form>
+				{% endif %}
+			</div>
+
+			<div class="inline" name="interests" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('interests')" onmouseleave="unDisplayForm('interests')" {% endif %}>
+				<div>Intérêts:</div>
+
+				<p>{{ infos['interests'] }}</p>
+				
+				{% if infos['is_user_me'] == True %}
+				<form name="form_interests" action="/profile_modifications" method="post" hidden>
+					<input type="text" name="interests" placeholder="{{ infos['interests'] }}">
+					<input type="hidden" name="username" value="{{ infos['username'] }}">
+					<input type="submit" name="submit" value="Modif.">
+				</form>
+				{% endif %}
+			</div>
+		</div>
+		
+		<div id="box_right">
+			<div {% if infos['is_user_me'] == True %} onmouseenter="displayForm('picture_2')" onmouseleave="unDisplayForm('picture_2')" {% endif %}>
+				<img src="{{ infos['picture_2'] }}"/>
+
+				<form name="form_picture_2" method="post" action="/profile_add_picture" enctype="multipart/form-data" hidden>
+			        <input type="file" name="picture"/>
+			        <input type="hidden" name="username" value="{{ infos['username'] }}">
+			        <input type="hidden" name="number" value="2">
+			        <input type="hidden" name="MAX_FILE_SIZE" value="1048576"/>
+			        <input type="submit" name="submit" value="Upload"/>
+			    </form>
+			</div>
+
+			<div {% if infos['is_user_me'] == True %} onmouseenter="displayForm('picture_3')" onmouseleave="unDisplayForm('picture_3')" {% endif %}>
+				<img src="{{ infos['picture_3'] }}"/>
+
+				<form name="form_picture_3" method="post" action="/profile_add_picture" enctype="multipart/form-data" hidden>
+			        <input type="file" name="picture"/>
+			        <input type="hidden" name="username" value="{{ infos['username'] }}">
+			        <input type="hidden" name="number" value="3">
+			        <input type="hidden" name="MAX_FILE_SIZE" value="1048576"/>
+			        <input type="submit" name="submit" value="Upload"/>
+			    </form>
+			</div>
+			
+			<div {% if infos['is_user_me'] == True %} onmouseenter="displayForm('picture_4')" onmouseleave="unDisplayForm('picture_4')" {% endif %}>
+				<img src="{{ infos['picture_4'] }}"/>
+
+				<form name="form_picture_4" method="post" action="/profile_add_picture" enctype="multipart/form-data" hidden>
+			        <input type="file" name="picture"/>
+			        <input type="hidden" name="username" value="{{ infos['username'] }}">
+			        <input type="hidden" name="number" value="4">
+			        <input type="hidden" name="MAX_FILE_SIZE" value="1048576"/>
+			        <input type="submit" name="submit" value="Upload"/>
+			    </form>
+			</div>
+
+			<div {% if infos['is_user_me'] == True %} onmouseenter="displayForm('picture_5')" onmouseleave="unDisplayForm('picture_5')" {% endif %}>
+				<img src="{{ infos['picture_5'] }}"/>
+
+				<form name="form_picture_5" method="post" action="/profile_add_picture" enctype="multipart/form-data" hidden>
+			        <input type="file" name="picture"/>
+			        <input type="hidden" name="username" value="{{ infos['username'] }}">
+			        <input type="hidden" name="number" value="5">
+			        <input type="hidden" name="MAX_FILE_SIZE" value="1048576"/>
+			        <input type="submit" name="submit" value="Upload"/>
+			    </form>
+			</div>
+		</div>
+	</div>
+
+	<div id="box_history">
+		<div id="history_views">
+			<p>Ils ont consulté ta page:</p>
+
+		</div>
+
+		<div id="history_likes">
+			<p>Ils t'ont liké:</p>
+		</div>
+	</div>
+
 	{% endblock body %}
 
         
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
