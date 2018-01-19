@@ -5,6 +5,7 @@ from pprint import pprint
 from base64 import decodestring
 from mail.reinit_mail import ReinitMail
 from flask import abort
+from werkzeug.security import generate_password_hash
 
 class UserController:
     def __init__(self):
@@ -30,7 +31,6 @@ class UserController:
         user_email = request.args.get('email')
         user = User.find_by("email", user_email)
         if user:
-            print(user.getPassword())
             email = ReinitMail(user.getEmail(), user.getPassword())
             email.send()
             return render_template('index.html', all_ok="We sent you the link to reinit your pwd")    
@@ -44,14 +44,16 @@ class UserController:
             user = User.find_by("password", user_hash)
             if user:
                 return render_template('change_pwd.html', hash=user_hash)
-
         abort(404)
 
     @staticmethod
     def set_new_pwd():
-        if ('hash' in request.form) and (request.form['password'] == request.form['password2']):
-            User.find_by('password', hash)
+        if ('hash' in request.form) and (request.form['password'] == request.form['verify']):
+            user = User.find_by('password', request.form['hash'])
             if user:
-                #set pwd
-                pass
+                hash = generate_password_hash(request.form['password'])
+                import pdb; pdb.set_trace()
+                user.modif('password', hash)
+                user.save()
+                return render_template('index.html', all_ok='Your password have been change, you can login')
         abort(404)

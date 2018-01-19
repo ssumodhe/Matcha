@@ -1,5 +1,6 @@
  # -*- coding:utf-8 -*-
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Flask, request, abort, redirect, url_for, render_template, session
 from datetime import date, datetime
 import sqlite3 
 import pprint
@@ -27,9 +28,6 @@ class Model():
         # cursor.close()
         infos['id'] = str(id)
         return eval(cls.__name__ + "(infos)")
-
-    # faire where: qui return un tableau de tous les thomas si on cherche tous les thomas
-
 
     @classmethod
     def where(cls, column, value):
@@ -73,9 +71,69 @@ class Model():
         return eval(cls.__name__ + "(answer)")
 
     @classmethod
+    def find_like(cls, column, exp):
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+
+        req = "SELECT * FROM '" + cls.get_table_name() + "' WHERE " + cls.get_table_name() + "." + column + " LIKE '" + exp + "' LIMIT 1;"
+        cursor.execute(req)
+        db.commit()
+        answer = cursor.fetchone()
+        cursor.close()
+        if answer == None:
+            return None
+        return eval(cls.__name__ + "(answer)")
+
+    @classmethod
+    def find_both(cls, col1, val1, col2, val2):
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+
+        req = "SELECT * FROM '" + cls.get_table_name() + "' WHERE " + cls.get_table_name() + "." + col1 + " = '" + val1 + "' AND " + cls.get_table_name() + "." + col2 + " = '" + val2 + "' LIMIT 1;"
+        cursor.execute(req)
+        db.commit()
+        answer = cursor.fetchone()
+        cursor.close()
+        if answer == None:
+            return None
+        return eval(cls.__name__ + "(answer)")
+
+    @classmethod
+    def howMany(self, column, value):
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+
+        req = "SELECT COUNT(*) FROM '" + self.get_table_name() + "' WHERE " + self.get_table_name() + "." + column + " = '" + value + "';"
+        cursor.execute(req)
+        db.commit()
+        answer = cursor.fetchall()
+        cursor.close()
+        return answer[0]['COUNT(*)']
+
+    @classmethod
     def get_table_name(cls):
         return cls.__name__.lower() + 's'
-
 
     def save(self):
         selfData = vars(self)
@@ -134,6 +192,13 @@ class Model():
             the_info = self.search('id')
             return the_info[0]
 
+    def getCreatedAt(self):
+        if hasattr(self, 'created_at'):
+            return self.created_at
+        else:
+            the_info = self.search('created_at')
+            return the_info[0]
+
 
 
 class User(Model):
@@ -141,7 +206,7 @@ class User(Model):
         super().__init__(infos)
         pass
 
-    def is_complet(self):
+    def is_complete(self):
         def dict_factory(cursor, row):
             d = {}
             for idx, col in enumerate(cursor.description):
@@ -157,6 +222,7 @@ class User(Model):
         db.commit()
         cursor.close()
         # pprint(dbData)
+        # virer if last_connexion == None?
         for key, value in dbData.items():
             if value == None:
                 return False
@@ -164,6 +230,8 @@ class User(Model):
 
     def check_password(self, password):
         return check_password_hash(getPassword(), password)
+
+    # getID in Model
 
     def getUserName(self):
         if hasattr(self, 'username'):
@@ -249,11 +317,11 @@ class User(Model):
             the_info = self.search('pop_score')
             return the_info[0]
 
-    def getCreatedAt(self):
-        if hasattr(self, 'created_at'):
-            return self.created_at
+    def getLocation(self):
+        if hasattr(self, 'location'):
+            return self.location
         else:
-            the_info = self.search('created_at')
+            the_info = self.search('location')
             return the_info[0]
 
     def getLastConnexion(self):
@@ -262,3 +330,140 @@ class User(Model):
         else:
             the_info = self.search('last_connexion')
             return the_info[0]
+
+    def getStatus(self):
+        if hasattr(self, 'status'):
+            return self.status
+        else:
+            the_info = self.search('status')
+            return the_info[0]
+    # getCreatedAt in Model
+
+class Picture(Model):
+    def __init__(self, infos):
+        super().__init__(infos)
+        pass
+
+    # getID in Model
+    def getUserId(self):
+        if hasattr(self, 'user_id'):
+            return self.user_id
+        else:
+            the_info = self.search('user_id')
+            return the_info[0]
+
+    def getData(self):
+        if hasattr(self, 'data'):
+            return self.data
+        else:
+            the_info = self.search('data')
+            return the_info[0]
+    # getCreatedAt in Model
+    @classmethod
+    def getPicName(self, user_id, number):
+        picture = self.where('user_id', user_id)
+        for i in range(len(picture)):
+            if number in picture[i]['data']:
+                return picture[i]['data']
+        return None
+
+    @classmethod
+    def fillInInfos(self, user_id, number):
+        if self.getPicName(user_id, number) != None:
+            return url_for('static', filename="users_pictures/" + Picture.getPicName(user_id, number))
+        else:
+            return url_for('static', filename='missing_picture.jpeg')
+
+
+class Like(Model):
+    def __init__(self, infos):
+        super().__init__(infos)
+        pass
+
+    @classmethod
+    def has_liked(self, stalker_id, victim_id):
+        info = self.where('stalker_id', stalker_id)
+        for i in range(len(info)):
+            if int(info[i]['victim_id']) == int(victim_id):
+                return True
+        return False
+
+    # getID in Model
+
+    def getStalkerId(self):
+        if hasattr(self, 'stalker_id'):
+            return self.stalker_id
+        else:
+            the_info = self.search('stalker_id')
+            return the_info[0]
+
+    def getVictimId(self):
+        if hasattr(self, 'victim_id'):
+            return self.victim_id
+        else:
+            the_info = self.search('victim_id')
+            return the_info[0]
+
+    # getCreatedAt in Model
+
+class View(Model):
+    def __init__(self, infos):
+        super().__init__(infos)
+        pass
+
+    # getID in Model
+
+    def getStalkerId(self):
+        if hasattr(self, 'stalker_id'):
+            return self.stalker_id
+        else:
+            the_info = self.search('stalker_id')
+            return the_info[0]
+
+    def getVictimId(self):
+        if hasattr(self, 'victim_id'):
+            return self.victim_id
+        else:
+            the_info = self.search('victim_id')
+            return the_info[0]
+
+    # getCreatedAt in Model
+
+class Interest(Model):
+    def __init__(self, infos):
+        super().__init__(infos)
+        pass
+
+    # getID in Model
+
+    def getValue(self):
+        if hasattr(self, 'value'):
+            return self.value
+        else:
+            the_info = self.search('value')
+            return the_info[0]
+
+    # getCreatedAt in Model
+
+class UsersInterest(Model):
+    def __init__(self, infos):
+        super().__init__(infos)
+        pass
+
+    # getID in Model
+
+    def getUserId(self):
+        if hasattr(self, 'user_id'):
+            return self.user_id
+        else:
+            the_info = self.search('user_id')
+            return the_info[0]
+
+    def getInterestId(self):
+        if hasattr(self, 'interest_id'):
+            return self.interest_id
+        else:
+            the_info = self.search('interest_id')
+            return the_info[0]
+
+    # getCreatedAt in Model
