@@ -12,8 +12,8 @@ class UserController:
         pass
 
     @staticmethod
-    def confirm_account(hash):
-        print(hash)
+    def confirm_account():
+        hash = request.args.get('hash')
         user = User.find_by('password', "pbkdf2:sha256:" + hash)
         if not user:
             return redirect("/")
