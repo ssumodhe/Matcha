@@ -113,6 +113,28 @@ class Model():
         return eval(cls.__name__ + "(answer)")
 
     @classmethod
+    def join(cls, table1, table2, col1, col2, value):
+        # Attention la requete SELECT ne prend que l'id et le username (dans db users)
+        # et le created_at de l'autre table (table2 ici).
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+
+        req = "SELECT users.id, users.username, "+table2+".created_at FROM '" + table1 + "' INNER JOIN '" + table2 + "' ON " + table1 + "." + col1 + " = " + table2 + "." + col2 + " WHERE " + table2 + "." + col2 + " = " + value + ";"
+        cursor.execute(req)
+        db.commit()
+        answer = cursor.fetchall()
+        cursor.close()
+        return answer
+
+
+    @classmethod
     def howMany(self, column, value):
         def dict_factory(cursor, row):
             d = {}
