@@ -2,7 +2,9 @@
 from flask import Flask, request, abort, redirect, url_for, render_template, session
 from flask_session import Session
 from controllers.root_controller import RootController
+from controllers.profile_controller import ProfileController
 from controllers.like_controller import LikeController
+from controllers.home_controller import HomeController
 from datetime import datetime, date
 from config import setup_db
 from geolite2 import geolite2
@@ -48,33 +50,17 @@ def signin():
 def signout():
   return RootController.signout()
 
-@app.route('/home')
-def home():
-  return render_template('home.html')
-
-@app.route('/messenger')
-def messenger():
-  return render_template('messenger.html')
-
 @app.route('/profile/<username>')
 def profile(username):
-  return RootController.profile(username)
+  return ProfileController.profile(username)
 
 @app.route('/profile_modifications', methods=['GET', 'POST'])
 def profile_modifications():
-  return RootController.profile_modifications(request.form)
+  return ProfileController.profile_modifications(request.form)
 
 @app.route('/profile_add_picture', methods=['GET', 'POST'])
 def profile_add_picture():
-  # file = request.files
-  # pic = file.to_dict()
-  # for key, value in pic.items():
-  #   print("FILE : " + str(key) + " et = " + str(value))
-  # form = request.form
-  # user = form.to_dict()
-  # for key, value in user.items():
-  #   print("FORM : " + str(key) + " et = " + str(value)) 
-  return RootController.profile_add_picture(request.form, request.files)
+  return ProfileController.profile_add_picture(request.form, request.files)
 
 @app.route('/profile_not_complete')
 def profile_not_complete():
@@ -87,6 +73,14 @@ def like():
 @app.route('/unlike', methods=['POST'])
 def unlike():
   return LikeController.unlike(request.form)
+
+@app.route('/home')
+def home():
+  return HomeController.home()
+
+@app.route('/messenger')
+def messenger():
+  return render_template('messenger.html')
 
 
 @app.errorhandler(404)

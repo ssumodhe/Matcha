@@ -1,18 +1,18 @@
 # -*- coding:utf-8 -*-
+from flask import Flask, request, abort, redirect, url_for, render_template, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
-from flask import Flask, request, abort, redirect, url_for, render_template, session
-from flask_session import Session
 from datetime import date, datetime
-from flask import render_template
+from flask_session import Session
 from pprint import pprint
 
 import re
-import html
 import os
+import html
 
 from models.user import User
 from models.user import Like
+from models.user import View
 from models.user import Picture
 
 UPLOAD_FOLDER = 'static/users_pictures'
