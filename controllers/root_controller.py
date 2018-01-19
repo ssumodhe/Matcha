@@ -191,18 +191,25 @@ class RootController:
 			infos['nb_like'] = Like.howMany('victim_id', auth.getId())
 
 			all_views = View.where('victim_id', auth.getId())
-			for i in range(len(all_views)):
-				print("ITEM = " + str(all_views[i]['stalker_id']))
-			keys = ['' + str(all_views[i]['stalker_id']) + '' for i in range(len(all_views))]
-			print(keys)
-			
-			all_stalkers = {}
-			for i in keys:
-				print(i)
+			join_infos_views = []
+			for item in all_views:
+				join_infos_views = join_infos_views + User.join('users', 'views', 'id', 'stalker_id', str(item['stalker_id']))
+			infos['all_views'] = join_infos_views
 
 			all_likes = Like.where('victim_id', auth.getId())
+			join_infos_likes = []
+			for item in all_likes:
+				join_infos_likes = join_infos_likes + User.join('users', 'likes', 'id', 'stalker_id', str(item['stalker_id']))
+			infos['all_likes'] = join_infos_likes
+			
 
-			print("PROFILE PAGE infos = ")
+			print("\n\nALL_VIEWS")
+			print(join_infos_views)
+			print("\n\nALL_LIKES")
+			print(join_infos_likes)
+			
+
+			print("\n\nPROFILE PAGE infos = ")
 			print(infos)
 
 			return render_template('profile.html', infos=infos)

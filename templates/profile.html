@@ -229,10 +229,21 @@
 		<div id="history_views">
 			<p>Ils ont consulté ta page:</p>
 
+			{% for item in infos['all_views']: %}
+			<div class="stalkers">
+				<p><a href="/profile/{{item['username']}}">{{ item['username']}}</a> le {{ item['created_at']}} </p>	
+			</div>
+			{% endfor %}
 		</div>
 
 		<div id="history_likes">
 			<p>Ils t'ont liké:</p>
+
+			{% for item in infos['all_likes']: %}
+			<div class="stalkers">
+				<p><a href="/profile/{{item['username']}}">{{ item['username']}}</a> le {{ item['created_at']}} </p>	
+			</div>
+			{% endfor %}
 		</div>
 	</div>
 
