@@ -42,6 +42,7 @@ Python 3.6
 > - interests (*id*)
 > - main_picture (*id*)
 > - pop_score (*integer*)
+> - location (*string*)
 > - created_at (*date*)
 > - last_connexion (*date*)
 > - status (*integer*) 0:offline 1:online
@@ -75,17 +76,20 @@ Python 3.6
 
 > **View**
 > - id (*integer*) -> unique
-> - stalker (*id*)
-> - victim (*id*)
+> - stalker_id (*id*)
+> - victim_id (*id*)
+> - created_at (*date*)
 
 > **Interest**
 > - id (*integer*)
 > - value (*string*)
+> - created_at (*date*)
 
 > **Interest / User**
 > - id (*integer*)
 > - user_id (*id*)
 > - interest_id (*id*)
+> - created_at (*date*)
 
 > **Bloqued**
 > - id (*integer*) -> unique
