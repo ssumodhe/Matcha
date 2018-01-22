@@ -48,6 +48,16 @@ class Model():
         cursor.close()
         return answer
 
+    @classmethod
+    def where_multi(cls, column, val1, val2):
+        infos = []
+        for i in range(val1, (val2 + 1)):
+            answer = cls.where(column, str(i))
+            infos = infos + answer
+       
+        return infos
+
+
     # With find_by: Check if return not None
     @classmethod
     def find_by(cls, column, value):
@@ -498,6 +508,9 @@ class UsersInterest(Model):
 
     # getCreatedAt in Model
 
+
+# infos = User.where_multi('age', 5, 52)
+# print(infos)
 # infos = {'user_id': '2',
 # 'data': "qqchose"}
 # new_pic = Picture.create(infos)
