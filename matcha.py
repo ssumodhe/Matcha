@@ -66,6 +66,10 @@ def profile_add_picture():
 def profile_not_complete():
   return render_template('profile_not_complete.html')
 
+@app.route('/profile_not_exists')
+def profile_not_exists():
+  return render_template('profile_not_exists.html')
+
 @app.route('/like', methods=['POST'])
 def like():
   return LikeController.like(request.form)

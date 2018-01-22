@@ -39,6 +39,8 @@ class ProfileController:
 				infos['is_user_me'] = False
 				infos['stalker'] = session['user']
 				victim = User.find_by('username', username)
+				if victim == None:
+					return redirect(url_for('profile_not_exists'))
 				if victim.is_complete() == False:
 					return redirect(url_for('profile_not_complete'))
 				stalker = User.find_by('username', infos['stalker'])
