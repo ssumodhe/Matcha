@@ -8,7 +8,9 @@
 	<link rel="stylesheet" href="https://afeld.github.io/emoji-css/emoji.css">
     <link rel="stylesheet" type="text/css"  href="{{ url_for('static', filename='my_style.css') }}"/>
     <link rel="shortcut icon" href="{{ url_for('static', filename='logo-matcha.png') }}" />
-	
+	{% block css %}{% endblock css %}
+
+
 	<title>{% block title %}Matcha{% endblock title %}</title>
 	{% block script %}{% endblock script %}
 </head>

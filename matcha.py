@@ -82,6 +82,10 @@ def unlike():
 def home():
   return HomeController.home()
 
+@app.route('/search', methods=['POST'])
+def search():
+  return HomeController.search(request.form)
+
 @app.route('/messenger')
 def messenger():
   return render_template('messenger.html')

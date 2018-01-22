@@ -401,7 +401,7 @@ class Picture(Model):
     # getCreatedAt in Model
     @classmethod
     def getPicName(self, user_id, number):
-        picture = self.where('user_id', user_id)
+        picture = self.where('user_id', str(user_id))
         for i in range(len(picture)):
             if number in picture[i]['data']:
                 return picture[i]['data']
@@ -507,6 +507,23 @@ class UsersInterest(Model):
             return the_info[0]
 
     # getCreatedAt in Model
+
+
+# infos = {'username': "marie", 
+#     'first_name': "marie",
+#     'last_name': "jeanne", 
+#     'email': "marie@jeanne.com", 
+#     'password': "kitty",
+#     'sex': '2',
+#     'orientation': '2',
+#     'bio': 'hello',
+#     'interests': '2',
+#     'main_picture': '3',
+#     'pop_score': '72',
+#     'location': "Paris",
+#     'last_connexion': '2018-01-10 19:34:39'}
+# new_user1 = User.create(infos)
+
 
 
 # infos = User.where_multi('age', 5, 52)

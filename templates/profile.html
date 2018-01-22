@@ -115,7 +115,7 @@
 				
 				{% if infos['is_user_me'] == True %}
 				<form name="form_age" action="/profile_modifications" method="post" hidden>
-					<input type="number" name="age" placeholder="{{ infos['age'] }}">
+					<input type="number" name="age" placeholder="{{ infos['age'] }}" min="18" max="40">
 					<input type="hidden" name="username" value="{{ infos['username'] }}">
 					<input type="submit" name="submit" value="Modif.">
 				</form>

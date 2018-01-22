@@ -74,6 +74,7 @@ class RootController:
 		infos.pop('password_2')
 		infos.pop('submit')
 		infos['password'] = generate_password_hash(infos['password'])
+		infos['username'] = infos['username'].lower()
 		new_user = User.create(infos)
 
 		all_ok = "C'est Good!"
@@ -86,7 +87,7 @@ class RootController:
 				error = "REMPLIS TOUS LES P***** DE CHAMPS!"
 				return render_template('index.html', error=error)
 
-		auth = User.find_by('username', form['username'])
+		auth = User.find_by('username', form['username'].lower())
 		if auth == None:
 			error = "On ne connait pas ce pseudo!"
 			return render_template('index.html', error=error)

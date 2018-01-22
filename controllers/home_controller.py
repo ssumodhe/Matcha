@@ -34,10 +34,143 @@ class HomeController:
 		if 'user' in session:
 			auth = User.find_by('username', session['user'])
 			if auth.is_complete() == False:
-				print("C'est pas complet")
 				return redirect(url_for('profile', username=session['user']))
-			
-			return render_template('home.html')
+			orientation = auth.getOrientation()
+			sex = auth.getSex()
+			if orientation == '0':
+				infos = User.where('sex', sex)
+				for item in infos:
+					if int(item['orientation']) != 0:
+						infos.remove(item)
+			elif orientation == '1' and sex == '1':
+				infos = User.where('sex', '2')
+				for item in infos:
+					if int(item['orientation']) == 0:
+						infos.remove(item)
+			elif orientation == '1' and sex == '2':
+				infos = User.where('sex', '1')
+				for item in infos:
+					if int(item['orientation']) == 0:
+						infos.remove(item)
+			else:
+				print("Je suis bi")
+				infos = User.where_multi('sex', 1, 2)
+				for item in infos:
+					if int(item['orientation']) != 2:
+						infos.remove(item)
+						# RETIRER que les homo du sexe opposé au final
+
+			for item in infos:
+				if item['username'] == session['user']:
+					infos.remove(item)
+				else:
+					item['profile_picture'] = Picture.fillInInfos(item['id'], '1')
+					item.pop('password')
+
+			return render_template('home.html', infos=infos)
 		else:
 			return redirect(url_for('accueil'))
+
+	@staticmethod
+	def search(form):
+		if 'user' in session:
+			auth = User.find_by('username', session['user'])
+			orientation = auth.getOrientation()
+			sex = auth.getSex()
+			if orientation == '0':
+				infos = User.where('sex', sex)
+				for item in infos:
+					if item['orientation'] != '0':
+						infos.remove(item)
+			elif orientation == '1' and sex == '1':
+				infos = User.where('sex', '2')
+				for item in infos:
+					if item['orientation'] != '1':
+						infos.remove(item)
+			elif orientation == '1' and sex == '2':
+				infos = User.where('sex', '1')
+				for item in infos:
+					if item['orientation'] != '1':
+						infos.remove(item)
+			else:
+				infos = User.where_multi('sex', 1, 2)
+				for item in infos:
+					if item['orientation'] != '2':
+						infos.remove(item)
+
+			if form['age_min'] != '' and form['age_max'] != '':
+				for item in infos:
+					if int(item['age']) < int(form['age_min']) or int(item['age']) > int(form['age_max']):
+						infos.remove(item)
+
+			if form['pop_score_min'] != '' and form['pop_score_max'] != '':
+				for item in infos:
+					if item['pop_score'] < form['pop_score_min'] or item['pop_score'] > form['pop_score_max']:
+						infos.remove(item)
+
+
+
+
+			for item in infos:
+				if item['username'] == session['user']:
+					infos.remove(item)
+				else:
+					item['profile_picture'] = Picture.fillInInfos(item['id'], '1')
+		
+
+			return render_template('home.html', infos=infos)
+
+		else:
+			return redirect(url_for('accueil'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		
