@@ -297,6 +297,13 @@ class User(Model):
             the_info = self.search('confirmed')
             return the_info[0]
 
+    def getAge(self):
+        if hasattr(self, 'age'):
+            return self.age
+        else:
+            the_info = self.search('age')
+            return the_info[0]
+
     def getSex(self):
         if hasattr(self, 'sex'):
             return self.sex

@@ -60,6 +60,7 @@ class ProfileController:
 			infos['first_name'] = auth.getFirstName()
 			infos['last_name'] = auth.getLastName()
 			infos['email'] = auth.getEmail()
+			infos['age'] = auth.getAge()
 			
 			if auth.getSex() == '1':
 				infos['sex'] = "Homme"
