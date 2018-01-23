@@ -91,12 +91,12 @@ Python 3.6
 > - interest_id (*id*)
 > - created_at (*date*)
 
-> **Bloqued**
+> **Block**
 > - id (*integer*) -> unique
-> - stalker_id (*id*)
-> - victim_id (*id*)
+> - blocked_id (*id*)
+> - by_id (*id*)
 > - created_at (*date*)
-> - stalker_id X victime_id -> unique
+> - blocked_id X by_id -> unique
 
 #### Sources
 Python
