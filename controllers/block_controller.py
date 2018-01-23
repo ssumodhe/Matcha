@@ -26,24 +26,24 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 sess.init_app(app)
 
-class LikeController:
+class BlockController:
 	def __init__(self):
 		pass
 
 	@staticmethod
-	def like(form):
-		stalker = User.find_by('username', form['stalker'])
-		victim = User.find_by('username', form['victim'])
+	def block(form):
+		by = User.find_by('username', form['stalker'])
+		blocked = User.find_by('username', form['victim'])
 		infos = {}
-		infos['stalker_id'] = stalker.getId()
-		infos['victim_id'] = victim.getId()
-		like = Like.create(infos)
+		infos['by_id'] = by.getId()
+		infos['blocked_id'] = blocked.getId()
+		block = Block.create(infos)
 		return redirect(url_for('profile', username=form['victim']))
 
 	@staticmethod
-	def unlike(form):
-		stalker = User.find_by('username', form['stalker'])
-		victim = User.find_by('username', form['victim'])
-		unlike = Like.find_both('stalker_id', stalker.getId(), 'victim_id', victim.getId())
-		unlike.delete()
+	def unblock(form):
+		by = User.find_by('username', form['stalker'])
+		blocked = User.find_by('username', form['victim'])
+		unblock = Block.find_both('by_id', by.getId(), 'blocked_id', blocked.getId())
+		unblock.delete()
 		return redirect(url_for('profile', username=form['victim']))

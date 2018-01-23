@@ -5,6 +5,7 @@ from controllers.root_controller import RootController
 from controllers.profile_controller import ProfileController
 from controllers.like_controller import LikeController
 from controllers.home_controller import HomeController
+from controllers.block_controller import BlockController
 from datetime import datetime, date
 from config import setup_db
 from geolite2 import geolite2
@@ -77,6 +78,14 @@ def like():
 @app.route('/unlike', methods=['POST'])
 def unlike():
   return LikeController.unlike(request.form)
+
+@app.route('/block', methods=['POST'])
+def block():
+  return BlockController.block(request.form)
+
+@app.route('/unblock', methods=['POST'])
+def unblock():
+  return BlockController.unblock(request.form)
 
 @app.route('/home')
 def home():

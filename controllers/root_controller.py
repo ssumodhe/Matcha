@@ -13,6 +13,7 @@ import os
 from models.user import User
 from models.user import Like
 from models.user import View
+from models.user import Block
 from models.user import Picture
 
 UPLOAD_FOLDER = 'static/users_pictures'

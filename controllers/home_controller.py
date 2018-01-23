@@ -13,6 +13,7 @@ import html
 from models.user import User
 from models.user import Like
 from models.user import View
+from models.user import Block
 from models.user import Picture
 
 UPLOAD_FOLDER = 'static/users_pictures'
@@ -63,9 +64,13 @@ class HomeController:
 						infos.remove(item)
 
 			for item in infos:
+				if Block.exists('by_id', auth.getId(), 'blocked_id', item['id']) == True:
+					infos.remove(item)
+
+			for item in infos:
 				item['profile_picture'] = Picture.fillInInfos(item['id'], '1')
 				item.pop('password')
-			
+
 			for item in infos:
 				if item['username'] == session['user']:
 					infos.remove(item)

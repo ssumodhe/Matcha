@@ -13,6 +13,7 @@ import html
 from models.user import User
 from models.user import Like
 from models.user import View
+from models.user import Block
 from models.user import Picture
 
 UPLOAD_FOLDER = 'static/users_pictures'
@@ -93,9 +94,11 @@ class ProfileController:
 			infos['picture_4'] = Picture.fillInInfos(auth.getId(), '4')
 			infos['picture_5'] = Picture.fillInInfos(auth.getId(), '5')
 
+			# Put in first ELSE at the top
 			if infos['is_user_me'] == False:
 				stalker = User.find_by('username', infos['stalker'])
 				infos['has_liked'] = Like.has_liked(stalker.getId(), auth.getId())
+				infos['has_blocked'] = Block.exists('by_id', stalker.getId(), 'blocked_id', auth.getId())
 				nb_picture = Picture.howMany('user_id', stalker.getId())
 				if nb_picture == 0:
 					infos['stalker_can_like'] = False

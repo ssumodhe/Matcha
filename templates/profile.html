@@ -102,6 +102,26 @@
 				{% else: %}
 				<img width="10%" src="{{ url_for('static', filename='status-red.png') }}" alt="offline" title="L'utilisateur est hors ligne"/>
 				{% endif%}
+
+				{% if infos['is_user_me'] == False  and infos['has_blocked'] == False %}
+				<div>
+					<form name="form_block" action="/block" method="post">
+						<input type="image" name="block" class="like_button" src="{{ url_for('static', filename='block_button.png') }}" title="Bloquer cet utilisateur.">
+						<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
+						<input type="hidden" name="victim" value="{{ infos['username'] }}">
+					</form>
+
+				</div>
+				{% elif infos['is_user_me'] == False  and infos['has_blocked'] == True %}
+				<div>
+					<form name="form_unblock" action="/unblock" method="post">
+						<input type="image" name="unblock" class="like_button" src="{{ url_for('static', filename='unblock_button.png') }}" title="Débloquer cet utilisateur.">
+						<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
+						<input type="hidden" name="victim" value="{{ infos['username'] }}">
+					</form>
+
+				</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>
