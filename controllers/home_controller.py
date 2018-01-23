@@ -40,7 +40,7 @@ class HomeController:
 			if orientation == '0':
 				infos = User.where('sex', sex)
 				for item in infos:
-					if int(item['orientation']) != 0:
+					if int(item['orientation']) == 1:
 						infos.remove(item)
 			elif orientation == '1' and sex == '1':
 				infos = User.where('sex', '2')
@@ -53,19 +53,23 @@ class HomeController:
 					if int(item['orientation']) == 0:
 						infos.remove(item)
 			else:
-				print("Je suis bi")
 				infos = User.where_multi('sex', 1, 2)
 				for item in infos:
-					if int(item['orientation']) != 2:
+					if int(sex) == 1 and int(item['sex']) == 2 and int(item['orientation']) == 0:
 						infos.remove(item)
-						# RETIRER que les homo du sexe opposé au final
+					if int(sex) == 2 and int(item['sex']) == 1 and int(item['orientation']) == 0:
+						infos.remove(item)
+					if int(sex) == int(item['sex']) and int(item['orientation']) == 1:
+						infos.remove(item)
 
+			for item in infos:
+				item['profile_picture'] = Picture.fillInInfos(item['id'], '1')
+				item.pop('password')
+			
 			for item in infos:
 				if item['username'] == session['user']:
 					infos.remove(item)
-				else:
-					item['profile_picture'] = Picture.fillInInfos(item['id'], '1')
-					item.pop('password')
+
 
 			return render_template('home.html', infos=infos)
 		else:
@@ -80,22 +84,26 @@ class HomeController:
 			if orientation == '0':
 				infos = User.where('sex', sex)
 				for item in infos:
-					if item['orientation'] != '0':
+					if int(item['orientation']) == 1:
 						infos.remove(item)
 			elif orientation == '1' and sex == '1':
 				infos = User.where('sex', '2')
 				for item in infos:
-					if item['orientation'] != '1':
+					if int(item['orientation']) == 0:
 						infos.remove(item)
 			elif orientation == '1' and sex == '2':
 				infos = User.where('sex', '1')
 				for item in infos:
-					if item['orientation'] != '1':
+					if int(item['orientation']) == 0:
 						infos.remove(item)
 			else:
 				infos = User.where_multi('sex', 1, 2)
 				for item in infos:
-					if item['orientation'] != '2':
+					if int(sex) == 1 and int(item['sex']) == 2 and int(item['orientation']) == 0:
+						infos.remove(item)
+					if int(sex) == 2 and int(item['sex']) == 1 and int(item['orientation']) == 0:
+						infos.remove(item)
+					if int(sex) == int(item['sex']) and int(item['orientation']) == 1:
 						infos.remove(item)
 
 			if form['age_min'] != '' and form['age_max'] != '':
@@ -112,10 +120,12 @@ class HomeController:
 
 
 			for item in infos:
+				item['profile_picture'] = Picture.fillInInfos(item['id'], '1')
+				item.pop('password')
+			
+			for item in infos:
 				if item['username'] == session['user']:
 					infos.remove(item)
-				else:
-					item['profile_picture'] = Picture.fillInInfos(item['id'], '1')
 		
 
 			return render_template('home.html', infos=infos)
