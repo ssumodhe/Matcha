@@ -143,6 +143,14 @@ class Model():
         cursor.close()
         return answer
 
+    @classmethod
+    def exists(self, col1, val1, col2, val2):
+        info = self.where(col1, val1)
+        for i in range(len(info)):
+            if int(info[i][col2]) == int(val2):
+                return True
+        return False
+
 
     @classmethod
     def howMany(self, column, value):
@@ -504,6 +512,29 @@ class UsersInterest(Model):
             return self.interest_id
         else:
             the_info = self.search('interest_id')
+            return the_info[0]
+
+    # getCreatedAt in Model
+
+class Block(Model):
+    def __init__(self, infos):
+        super().__init__(infos)
+        pass
+
+    # getID in Model
+
+    def getById(self):
+        if hasattr(self, 'by_id'):
+            return self.by_id
+        else:
+            the_info = self.search('by_id')
+            return the_info[0]
+
+    def getBlockedId(self):
+        if hasattr(self, 'blocked_id'):
+            return self.blocked_id
+        else:
+            the_info = self.search('blocked_id')
             return the_info[0]
 
     # getCreatedAt in Model
