@@ -14,6 +14,7 @@ from models.user import User
 from models.user import Like
 from models.user import View
 from models.user import Block
+from models.user import Match
 from models.user import Picture
 
 UPLOAD_FOLDER = 'static/users_pictures'
@@ -38,6 +39,15 @@ class LikeController:
 		infos['stalker_id'] = stalker.getId()
 		infos['victim_id'] = victim.getId()
 		like = Like.create(infos)
+
+		check_both = Like.find_both('stalker_id', victim.getId(), 'victim_id', stalker.getId())
+		if check_both != None:
+			infos = {}
+			infos['user1_id'] = stalker.getId()
+			infos['user2_id'] = victim.getId()
+			match = Match.create(infos)
+			# notif de match else: notif de like
+
 		return redirect(url_for('profile', username=form['victim']))
 
 	@staticmethod

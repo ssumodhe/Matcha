@@ -6,6 +6,7 @@ from controllers.profile_controller import ProfileController
 from controllers.like_controller import LikeController
 from controllers.home_controller import HomeController
 from controllers.block_controller import BlockController
+from controllers.messenger_controller import MessengerController
 from datetime import datetime, date
 from config import setup_db
 from geolite2 import geolite2
@@ -97,7 +98,7 @@ def search():
 
 @app.route('/messenger')
 def messenger():
-  return render_template('messenger.html')
+  return MessengerController.messenger()
 
 
 @app.errorhandler(404)
