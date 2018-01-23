@@ -93,10 +93,10 @@ Python 3.6
 
 > **Block**
 > - id (*integer*) -> unique
-> - blocked_id (*id*)
 > - by_id (*id*)
+> - blocked_id (*id*)
 > - created_at (*date*)
-> - blocked_id X by_id -> unique
+> - by_id X blocked_id -> unique
 
 #### Sources
 Python
