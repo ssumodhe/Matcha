@@ -428,14 +428,6 @@ class Like(Model):
         super().__init__(infos)
         pass
 
-    @classmethod
-    def has_liked(self, stalker_id, victim_id):
-        info = self.where('stalker_id', stalker_id)
-        for i in range(len(info)):
-            if int(info[i]['victim_id']) == int(victim_id):
-                return True
-        return False
-
     # getID in Model
 
     def getStalkerId(self):
