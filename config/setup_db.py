@@ -46,6 +46,14 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS likes
     FOREIGN KEY (victim_id) REFERENCES users(id)
     );''')
 
+cursor.execute('''CREATE TABLE IF NOT EXISTS matchs
+    (id INTEGER PRIMARY KEY,
+    user1_id INTEGER NOT NULL,
+    user2_id INTEGER NOT NULL,
+    created_at DATETIME NOT NULL,
+    UNIQUE(user1_id, user2_id)
+    );''')
+
 cursor.execute('''CREATE TABLE IF NOT EXISTS dialogs
     (id INTEGER PRIMARY KEY,
     user1_id INTEGER NOT NULL,
