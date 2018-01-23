@@ -42,12 +42,18 @@
 
 			<div id="results">
 				<p>RESULTATS</p>
-				{%print(infos)%}
 				{% for item in infos: %}
 					<div>
 						<p>
-							<img width="5%" src="{{ item['profile_picture'] }}">
-							<a href="/profile/{{item['username']}}">{{ item['username']}}</a>
+							<a href="/profile/{{item['username']}}">
+								<img width="5%" src="{{ item['profile_picture'] }}">
+								{{ item['username']}}
+							</a>
+							{% if item['status'] == '1'%}
+								<img width="2%" src="{{ url_for('static', filename='status-green.png') }}" alt="online" title="L'utilisateur est en ligne"/>
+							{% else: %}
+								<img width="2%" src="{{ url_for('static', filename='status-red.png') }}" alt="offline" title="L'utilisateur est hors ligne"/>
+							{% endif%}
 						</p>	
 					</div>
 				{% endfor %}
