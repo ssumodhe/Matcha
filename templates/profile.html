@@ -5,7 +5,7 @@
 	
 	{% block title %}Compte &middot; {{ super() }}{% endblock title %}
 	{% block script %}
-    <script type="text/javascript" src="{{ url_for('static', filename='profile-controller.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/profile-controller.js') }}"></script>
     {% endblock script %}
 
 	{% block body %}
@@ -84,13 +84,13 @@
 				<p>T'as le seum, tu peux pas like parce que t'as pas mis de photo! Déso</p>
 				{% elif infos['is_user_me'] == False and infos['has_liked'] == False %}
 				<form name="form_like" action="/like" method="post">
-					<input type="image" name="like" class="like_button" src="{{ url_for('static', filename='like_button.png') }}" title="Like-moi !!">
+					<input type="image" name="like" class="like_button" src="{{ url_for('static', filename='img/like_button.png') }}" title="Like-moi !!">
 					<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
 					<input type="hidden" name="victim" value="{{ infos['username'] }}">
 				</form>
 				{% elif infos['is_user_me'] == False and infos['has_liked'] == True: %}
 				<form name="form_unlike" action="/unlike" method="post">
-					<input type="image" name="unlike" class="like_button" src="{{ url_for('static', filename='has_liked_button.png') }}" title="Tu as déjà liké cette personne! Clique pour unlike!">
+					<input type="image" name="unlike" class="like_button" src="{{ url_for('static', filename='img/has_liked_button.png') }}" title="Tu as déjà liké cette personne! Clique pour unlike!">
 					<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
 					<input type="hidden" name="victim" value="{{ infos['username'] }}">
 				</form>
@@ -98,15 +98,15 @@
 				
 				<p id="last_connexion">{{ infos['last_connexion'] }}</p>
 				{% if infos['status'] == '1': %}
-				<img width="10%" src="{{ url_for('static', filename='status-green.png') }}" alt="online" title="L'utilisateur est en ligne"/>
+				<img width="10%" src="{{ url_for('static', filename='img/status-green.png') }}" alt="online" title="L'utilisateur est en ligne"/>
 				{% else: %}
-				<img width="10%" src="{{ url_for('static', filename='status-red.png') }}" alt="offline" title="L'utilisateur est hors ligne"/>
+				<img width="10%" src="{{ url_for('static', filename='img/status-red.png') }}" alt="offline" title="L'utilisateur est hors ligne"/>
 				{% endif%}
 
 				{% if infos['is_user_me'] == False  and infos['has_blocked'] == False %}
 				<div>
 					<form name="form_block" action="/block" method="post">
-						<input type="image" name="block" class="like_button" src="{{ url_for('static', filename='block_button.png') }}" title="Bloquer cet utilisateur.">
+						<input type="image" name="block" class="like_button" src="{{ url_for('static', filename='img/block_button.png') }}" title="Bloquer cet utilisateur.">
 						<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
 						<input type="hidden" name="victim" value="{{ infos['username'] }}">
 					</form>
@@ -115,7 +115,7 @@
 				{% elif infos['is_user_me'] == False  and infos['has_blocked'] == True %}
 				<div>
 					<form name="form_unblock" action="/unblock" method="post">
-						<input type="image" name="unblock" class="like_button" src="{{ url_for('static', filename='unblock_button.png') }}" title="Débloquer cet utilisateur.">
+						<input type="image" name="unblock" class="like_button" src="{{ url_for('static', filename='img/unblock_button.png') }}" title="Débloquer cet utilisateur.">
 						<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
 						<input type="hidden" name="victim" value="{{ infos['username'] }}">
 					</form>

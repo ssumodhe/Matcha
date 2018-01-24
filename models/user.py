@@ -420,7 +420,7 @@ class Picture(Model):
         if self.getPicName(user_id, number) != None:
             return url_for('static', filename="users_pictures/" + Picture.getPicName(user_id, number))
         else:
-            return url_for('static', filename='missing_picture.jpeg')
+            return url_for('static', filename='img/missing_picture.jpeg')
 
 
 class Like(Model):
