@@ -105,6 +105,10 @@ def search():
 def messenger():
   return MessengerController.messenger()
 
+@app.route('/dialog')
+def dialog():
+  return MessengerController.dialog()
+
 
 @app.errorhandler(404)
 def page_not_found(error):

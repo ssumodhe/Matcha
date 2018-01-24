@@ -36,12 +36,28 @@ class MessengerController:
 		if 'user' in session:
 			auth = User.find_by('username', session['user'])
 			all_likes = Like.where('stalker_id', auth.getId())
-			print(all_likes)
-			for item in all_likes:
-				print("Im going in")
-				if Match.is_match(str(auth.getId()), str(item['victim_id'])) == True:
-					print(item) 
 
-			return render_template('messenger.html')
+			infos = []
+			for item in all_likes:
+				if Match.is_match(str(auth.getId()), str(item['victim_id'])) == True:
+					matcher = {}
+					the_matcha = User.find_by('id', str(item['victim_id']))
+					matcher['username'] = the_matcha.getUserName()
+					matcher['status'] = the_matcha.getStatus()
+					matcher['profile_picture'] = Picture.fillInInfos(the_matcha.getId(), '1')
+					infos.append(matcher)
+
+			
+			return render_template('messenger.html', infos=infos)
+		else:
+			return redirect(url_for('accueil'))
+
+	@staticmethod
+	def dialog():
+		if 'user' in session:
+			auth = User.find_by('username', session['user'])
+			
+			
+			return render_template('dialog.html')
 		else:
 			return redirect(url_for('accueil'))
