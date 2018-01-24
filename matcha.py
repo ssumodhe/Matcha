@@ -7,7 +7,7 @@ from controllers.like_controller import LikeController
 from controllers.home_controller import HomeController
 from controllers.block_controller import BlockController
 from controllers.messenger_controller import MessengerController
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from config import setup_db
 from geolite2 import geolite2
 import pprint
@@ -22,6 +22,11 @@ app.config['SESSION_TYPE'] = 'filesystem'
 sess.init_app(app)
 
 
+# By default in Flask, permanent_session_lifetime is set to 31 days.
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=60)
 
 # Passera les variables à toutes les pages.
 @app.context_processor
