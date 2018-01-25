@@ -33,7 +33,7 @@ Python 3.6
 > - last_name (*string*) -> unique
 > - email (*string*) -> unique
 > - password (*string*) [8, 24]chars with lower/capital/digit
-> - confirmed (*boolean*)
+> - confirmed (*boolean*) 0: NotConfirmed 1:Confirmed
 <!-- > - token (*string*) -->
 <!-- > - expired_at (*date*) -->
 > - sex (*integer*) 1:homme 2:femme
@@ -67,16 +67,16 @@ Python 3.6
 > - user1_id X user2_id -> unique
 > - created_at (*date*)
 
-> **Dialog**
+<!-- > **Dialog**
 > - id (*integer*) -> unique
 > - user1_id (*string*)
 > - user2_id (*string*)
 > - user1_id X user2_id -> unique
-> - created_at (*date*)
+> - created_at (*date*) -->
 
 > **Message**
 > - id (*integer*) -> unique
-> - dialog_id (*id*)
+> - match_id (*id*)
 > - from (*id*)
 > - content (*string*)
 > - created_at (*date*)
