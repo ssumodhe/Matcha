@@ -105,6 +105,12 @@ Python 3.6
 > - created_at (*date*)
 > - by_id X blocked_id -> unique
 
+> **Notification**
+> - id (*integer*) -> unique
+> - user_id (*id*)
+> - message (*string*)
+> - seen (*boolean*)
+
 #### Sources
 Python
 - https://www.youtube.com/watch?v=ajrfDEi8F7Y (FR - base)

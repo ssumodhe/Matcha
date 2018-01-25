@@ -1,15 +1,15 @@
 DB_NAME = Matcha.db
 USERS_PIC = static/users_pictures
 
-all: del-do drop setup
+all: del-do drop setup seed
 
 setup: 
 	@echo "db setup"
 	@python config/setup_db.py
 
-# seed:
-# 	@echo "db seed"
-# 	@php config/seed.php
+seed:
+	@echo "db seed"
+	@python seed.py
 
 del-do:
 	@echo "file deleted"

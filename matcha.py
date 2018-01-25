@@ -11,16 +11,15 @@ from controllers.messenger_controller import MessengerController
 from datetime import datetime, date, timedelta
 from config import setup_db
 from geolite2 import geolite2
+from flask_socketio import SocketIO
 import pprint
-
-
-
 
 app = Flask(__name__)
 sess = Session()
 app.secret_key = 'super secret pswd'
 app.config['SESSION_TYPE'] = 'filesystem'
 sess.init_app(app)
+socketio = SocketIO(app)
 
 # By default in Flask, permanent_session_lifetime is set to 31 days.
 @app.before_request
@@ -134,9 +133,18 @@ def dialog():
 def page_not_found(error):
 	return render_template('errors/404.html'), 404
 
+@socketio.on('message')
+def handle_message(message):
+  print('received message: ' + message)
+
+@socketio.on('my event')
+def handle_my_custom_event(json):
+    print('received json: ' + str(json))
+
 # Permet d'executer l'application
 if __name__ == '__main__':
-   app.run(debug=True)
+  socketio.run(app)
+  app.run(debug=True)
    # host '0.0.0.0' permet à toutes les machines du reseau d'acceder à l'application
    # port=XXXX permet de choisir le port pour acceder à l'application
    # app.run(debug=True, host='0.0.0.0', port=3000)
