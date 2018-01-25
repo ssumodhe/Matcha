@@ -4,6 +4,7 @@ from flask import Flask, request, abort, redirect, url_for, render_template, ses
 from datetime import date, datetime
 import sqlite3 
 import pprint
+
 db = sqlite3.connect('Matcha.db', check_same_thread=False)
 cursor = db.cursor()
 
@@ -56,7 +57,6 @@ class Model():
             infos = infos + answer
        
         return infos
-
 
     # With find_by: Check if return not None
     @classmethod
