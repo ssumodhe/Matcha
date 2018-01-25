@@ -32,7 +32,7 @@ class MessengerController:
 		pass
 
 	@staticmethod
-	def messenger():
+	def messenger(form=None):
 		if 'user' in session:
 			auth = User.find_by('username', session['user'])
 			all_likes = Like.where('stalker_id', auth.getId())
@@ -47,17 +47,26 @@ class MessengerController:
 					matcher['profile_picture'] = Picture.fillInInfos(the_matcha.getId(), '1')
 					infos.append(matcher)
 
-			
-			return render_template('messenger.html', infos=infos)
+			if form != None:
+				print("\n\n\nMESSAGE")
+				print(form)
+				form['message'].strip()
+				split_msg = form['message'].splitlines()
+				print(split_msg)
+			else:
+				print("\n\nNo FORM")
+
+			mee = auth.getUserName()
+			return render_template('messenger.html', infos=infos, my_username=mee)
 		else:
 			return redirect(url_for('accueil'))
 
 	@staticmethod
-	def dialog():
+	def dialog(exp, dest):
 		if 'user' in session:
 			auth = User.find_by('username', session['user'])
 			
 			
-			return render_template('dialog.html')
+			return render_template('dialog.html', exp=exp, dest=dest)
 		else:
 			return redirect(url_for('accueil'))

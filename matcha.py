@@ -13,9 +13,6 @@ from config import setup_db
 from geolite2 import geolite2
 import pprint
 
-
-
-
 app = Flask(__name__)
 sess = Session()
 app.secret_key = 'super secret pswd'
@@ -122,13 +119,16 @@ def home():
 def search():
   return HomeController.search(request.form)
 
-@app.route('/messenger')
+@app.route('/messenger', methods=['GET', 'POST'])
 def messenger():
-  return MessengerController.messenger()
+  if request.method == 'POST':
+    return MessengerController.messenger(request.form)
+  else:
+    return MessengerController.messenger()
 
-@app.route('/dialog')
-def dialog():
-  return MessengerController.dialog()
+@app.route('/dialog/<exp>&<dest>')
+def dialog(exp, dest):
+  return MessengerController.dialog(exp, dest)
 
 @app.errorhandler(404)
 def page_not_found(error):
@@ -136,7 +136,7 @@ def page_not_found(error):
 
 # Permet d'executer l'application
 if __name__ == '__main__':
-   app.run(debug=True)
+   app.run(debug=True, host='0.0.0.0')
    # host '0.0.0.0' permet à toutes les machines du reseau d'acceder à l'application
    # port=XXXX permet de choisir le port pour acceder à l'application
    # app.run(debug=True, host='0.0.0.0', port=3000)

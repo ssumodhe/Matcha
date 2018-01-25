@@ -1,7 +1,20 @@
+#messages{
+	display: flex;
+}
+
+#who{
+	width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+#display_message{
+	width: 70%;
+}
 
 
 .me{
-	width: 25%;
+	width: 35%;
 	display: flex;
 	background-color: pink;
 
@@ -12,7 +25,7 @@
 }
 
 .dest{
-	width: 25%;
+	width: 35%;
 	display: flex;
 	background-color: gainsboro;
 

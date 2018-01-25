@@ -100,6 +100,10 @@ class RootController:
 			error = "Mot de passe incorrect!"
 			return render_template('index.html', error=error)
 
+		if auth.getConfirmed() == '0':
+			error = "Ton compte n'a pas été confirmé! Vérifie tes mails pour confirmer ton compte! :)"
+			return render_template('index.html', error=error)
+
 		# All Good on modifie les infos nécessaires
 		auth.modif('status', '1')
 		auth.modif('last_connexion', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
