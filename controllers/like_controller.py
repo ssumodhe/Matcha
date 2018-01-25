@@ -11,11 +11,11 @@ import os
 import html
 
 from models.user import User
-from models.user import Like
-from models.user import View
-from models.user import Block
-from models.user import Match
-from models.user import Picture
+from models.like import Like
+from models.view import View
+from models.block import Block
+from models.match import Match
+from models.picture import Picture
 
 UPLOAD_FOLDER = 'static/users_pictures'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
