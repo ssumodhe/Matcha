@@ -5,7 +5,7 @@
 	
 	{% block title %}Compte &middot; {{ super() }}{% endblock title %}
 	{% block script %}
-    <script type="text/javascript" src="{{ url_for('static', filename='profile-controller.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/profile-controller.js') }}"></script>
     {% endblock script %}
 
 	{% block body %}
@@ -84,13 +84,13 @@
 				<p>T'as le seum, tu peux pas like parce que t'as pas mis de photo! Déso</p>
 				{% elif infos['is_user_me'] == False and infos['has_liked'] == False %}
 				<form name="form_like" action="/like" method="post">
-					<input type="image" name="like" class="like_button" src="{{ url_for('static', filename='like_button.png') }}" title="Like-moi !!">
+					<input type="image" name="like" class="like_button" src="{{ url_for('static', filename='img/like_button.png') }}" title="Like-moi !!">
 					<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
 					<input type="hidden" name="victim" value="{{ infos['username'] }}">
 				</form>
 				{% elif infos['is_user_me'] == False and infos['has_liked'] == True: %}
 				<form name="form_unlike" action="/unlike" method="post">
-					<input type="image" name="unlike" class="like_button" src="{{ url_for('static', filename='has_liked_button.png') }}" title="Tu as déjà liké cette personne! Clique pour unlike!">
+					<input type="image" name="unlike" class="like_button" src="{{ url_for('static', filename='img/has_liked_button.png') }}" title="Tu as déjà liké cette personne! Clique pour unlike!">
 					<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
 					<input type="hidden" name="victim" value="{{ infos['username'] }}">
 				</form>
@@ -98,16 +98,51 @@
 				
 				<p id="last_connexion">{{ infos['last_connexion'] }}</p>
 				{% if infos['status'] == '1': %}
-				<img width="10%" src="{{ url_for('static', filename='status-green.png') }}" alt="online" title="L'utilisateur est en ligne"/>
+				<img width="10%" src="{{ url_for('static', filename='img/status-green.png') }}" alt="online" title="L'utilisateur est en ligne"/>
 				{% else: %}
-				<img width="10%" src="{{ url_for('static', filename='status-red.png') }}" alt="offline" title="L'utilisateur est hors ligne"/>
+				<img width="10%" src="{{ url_for('static', filename='img/status-red.png') }}" alt="offline" title="L'utilisateur est hors ligne"/>
 				{% endif%}
+
+				{% if infos['is_user_me'] == False  and infos['has_blocked'] == False %}
+				<div>
+					<form name="form_block" action="/block" method="post">
+						<input type="image" name="block" class="like_button" src="{{ url_for('static', filename='img/block_button.png') }}" title="Bloquer cet utilisateur.">
+						<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
+						<input type="hidden" name="victim" value="{{ infos['username'] }}">
+					</form>
+
+				</div>
+				{% elif infos['is_user_me'] == False  and infos['has_blocked'] == True %}
+				<div>
+					<form name="form_unblock" action="/unblock" method="post">
+						<input type="image" name="unblock" class="like_button" src="{{ url_for('static', filename='img/unblock_button.png') }}" title="Débloquer cet utilisateur.">
+						<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
+						<input type="hidden" name="victim" value="{{ infos['username'] }}">
+					</form>
+
+				</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>
 		
 	<div id="main_container">
 		<div id="box_left">
+			<div class="inline" name="age" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('age')" onmouseleave="unDisplayForm('age')" {% endif %}>
+				<div>Age:</div>
+
+				<p>{{ infos['age'] }}</p>
+				
+				{% if infos['is_user_me'] == True %}
+				<form name="form_age" action="/profile_modifications" method="post" hidden>
+					<input type="number" name="age" placeholder="{{ infos['age'] }}" min="18" max="40">
+					<input type="hidden" name="username" value="{{ infos['username'] }}">
+					<input type="submit" name="submit" value="Modif.">
+				</form>
+				{% endif %}
+			</div>
+
+
 			<div class="inline" name="sex" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('sex')" onmouseleave="unDisplayForm('sex')" {% endif %}>
 				<div>Sexe:</div>
 
@@ -229,10 +264,21 @@
 		<div id="history_views">
 			<p>Ils ont consulté ta page:</p>
 
+			{% for item in infos['all_views']: %}
+			<div class="stalkers">
+				<p><a href="/profile/{{item['username']}}">{{ item['username']}}</a> le {{ item['created_at']}} </p>	
+			</div>
+			{% endfor %}
 		</div>
 
 		<div id="history_likes">
 			<p>Ils t'ont liké:</p>
+
+			{% for item in infos['all_likes']: %}
+			<div class="stalkers">
+				<p><a href="/profile/{{item['username']}}">{{ item['username']}}</a> le {{ item['created_at']}} </p>	
+			</div>
+			{% endfor %}
 		</div>
 	</div>
 

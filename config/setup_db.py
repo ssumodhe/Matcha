@@ -14,6 +14,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS users
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     confirmed BOOLEAN DEFAULT 0,
+    age INTEGER,
     sex INTEGER,
     orientation INTEGER DEFAULT 2,
     bio VARCHAR(1024),
@@ -43,6 +44,14 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS likes
     UNIQUE(stalker_id, victim_id),
     FOREIGN KEY (stalker_id) REFERENCES users(id),
     FOREIGN KEY (victim_id) REFERENCES users(id)
+    );''')
+
+cursor.execute('''CREATE TABLE IF NOT EXISTS matchs
+    (id INTEGER PRIMARY KEY,
+    user1_id INTEGER NOT NULL,
+    user2_id INTEGER NOT NULL,
+    created_at DATETIME NOT NULL,
+    UNIQUE(user1_id, user2_id)
     );''')
 
 cursor.execute('''CREATE TABLE IF NOT EXISTS dialogs
@@ -83,6 +92,16 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS users_interests
     created_at DATETIME NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (interest_id) REFERENCES interests(id)
+    );''')
+
+cursor.execute('''CREATE TABLE IF NOT EXISTS blocks
+    (id INTEGER PRIMARY KEY,
+    by_id INTEGER NOT NULL,
+    blocked_id INTEGER NOT NULL,
+    created_at DATETIME NOT NULL,
+    UNIQUE(by_id, blocked_id),
+    FOREIGN KEY (by_id) REFERENCES users(id),
+    FOREIGN KEY (blocked_id) REFERENCES users(id)
     );''')
 
 # cursor.execute('''INSERT INTO users 

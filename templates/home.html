@@ -2,12 +2,63 @@
 <html>
 
 	{% extends 'layouts/default.html' %}
+
+	{% block css %}
+	<link rel="stylesheet" type="text/css"  href="{{ url_for('static', filename='css/home.css') }}"/>
+	{% endblock css %}
 	
 	{% block title %}Home &middot; {{ super() }}{% endblock title %}
+	{% block script %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/home-controller.js') }}"></script>
+    {% endblock script %}
 
 	{% block body %}
 		<p>On est sur la page Home</p>
-		<p>{{user}}</p>
+		<div id="search_found">
+			<div class="inline">
+
+				
+				<form name="filtres" method="post" action="/search">
+				<p>
+				age entre : 
+					<input type="number" name="age_min" min="18" max="40" onblur="checkMax('age')">
+					et :
+					<input type="number" name="age_max" max="40">
+				 | pop_score entre : 
+					<input type="number" name="pop_score_min" step="10" min="0" max="1000" onblur="checkMax('pop_score')">
+					et :
+					<input type="number" name="pop_score_max" step="10" max="1000">
+				 </p>
+				 <p>localisation : 
+					<input type="number" name="location" step="10" min="0" max="1000"> autour de moi.
+				 | nombre de tags en commun : 
+					<input type="number" name="interests" min="0" max="10">
+				</p>
+				<input type="submit" name="submit">
+				</form>
+
+
+			</div>
+
+			<div id="results">
+				<p>RESULTATS</p>
+				{% for item in infos: %}
+					<div>
+						<p>
+							<a href="/profile/{{item['username']}}">
+								<img width="5%" src="{{ item['profile_picture'] }}">
+								{{ item['username']}}
+							</a>
+							{% if item['status'] == '1'%}
+								<img width="2%" src="{{ url_for('static', filename='img/status-green.png') }}" alt="online" title="L'utilisateur est en ligne"/>
+							{% else: %}
+								<img width="2%" src="{{ url_for('static', filename='img/status-red.png') }}" alt="offline" title="L'utilisateur est hoqqrs ligne"/>
+							{% endif%}
+						</p>	
+					</div>
+				{% endfor %}
+			</div>
+		</div>
 	{% endblock body %}
 
         

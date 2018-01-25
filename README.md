@@ -60,11 +60,18 @@ Python 3.6
 > - created_at (*date*)
 > - stalker_id X victime_id -> unique
 
+> **Match**
+> - id (*integer*) -> unique
+> - user1_id (*string*)
+> - user2_id (*string*)
+> - user1_id X user2_id -> unique
+> - created_at (*date*)
+
 > **Dialog**
 > - id (*integer*) -> unique
-> - user_1 (*string*)
-> - user_2 (*string*)
-> - user_1 X user_2 -> unique
+> - user1_id (*string*)
+> - user2_id (*string*)
+> - user1_id X user2_id -> unique
 > - created_at (*date*)
 
 > **Message**
@@ -91,12 +98,12 @@ Python 3.6
 > - interest_id (*id*)
 > - created_at (*date*)
 
-> **Bloqued**
+> **Block**
 > - id (*integer*) -> unique
-> - stalker_id (*id*)
-> - victim_id (*id*)
+> - by_id (*id*)
+> - blocked_id (*id*)
 > - created_at (*date*)
-> - stalker_id X victime_id -> unique
+> - by_id X blocked_id -> unique
 
 #### Sources
 Python

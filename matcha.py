@@ -3,8 +3,12 @@ from flask import Flask, request, abort, redirect, url_for, render_template, ses
 from flask_session import Session
 from controllers.root_controller import RootController
 from controllers.user_controller import UserController
+from controllers.profile_controller import ProfileController
 from controllers.like_controller import LikeController
-from datetime import datetime, date
+from controllers.home_controller import HomeController
+from controllers.block_controller import BlockController
+from controllers.messenger_controller import MessengerController
+from datetime import datetime, date, timedelta
 from config import setup_db
 from geolite2 import geolite2
 import pprint
@@ -18,6 +22,12 @@ app.secret_key = 'super secret pswd'
 app.config['SESSION_TYPE'] = 'filesystem'
 sess.init_app(app)
 
+# By default in Flask, permanent_session_lifetime is set to 31 days.
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=60)
+ 
 # Passera les variables à toutes les pages.
 @app.context_processor
 def get_time_now():
@@ -63,37 +73,25 @@ def signin():
 def signout():
   return RootController.signout()
 
-@app.route('/home')
-def home():
-  return render_template('home.html')
-
-@app.route('/messenger')
-def messenger():
-  return render_template('messenger.html')
-
 @app.route('/profile/<username>')
 def profile(username):
-  return RootController.profile(username)
+  return ProfileController.profile(username)
 
 @app.route('/profile_modifications', methods=['GET', 'POST'])
 def profile_modifications():
-  return RootController.profile_modifications(request.form)
+  return ProfileController.profile_modifications(request.form)
 
 @app.route('/profile_add_picture', methods=['GET', 'POST'])
 def profile_add_picture():
-  # file = request.files
-  # pic = file.to_dict()
-  # for key, value in pic.items():
-  #   print("FILE : " + str(key) + " et = " + str(value))
-  # form = request.form
-  # user = form.to_dict()
-  # for key, value in user.items():
-  #   print("FORM : " + str(key) + " et = " + str(value)) 
-  return RootController.profile_add_picture(request.form, request.files)
+  return ProfileController.profile_add_picture(request.form, request.files)
 
 @app.route('/profile_not_complete')
 def profile_not_complete():
   return render_template('profile_not_complete.html')
+
+@app.route('/profile_not_exists')
+def profile_not_exists():
+  return render_template('profile_not_exists.html')
 
 @app.route('/like', methods=['POST'])
 def like():
@@ -103,9 +101,34 @@ def like():
 def unlike():
   return LikeController.unlike(request.form)
 
+
 @app.route('/confirm_account/<hash>')
 def confirm_account(hash):
   return UserController.confirm_account(hash)
+
+@app.route('/block', methods=['POST'])
+def block():
+  return BlockController.block(request.form)
+
+@app.route('/unblock', methods=['POST'])
+def unblock():
+  return BlockController.unblock(request.form)
+
+@app.route('/home')
+def home():
+  return HomeController.home()
+
+@app.route('/search', methods=['POST'])
+def search():
+  return HomeController.search(request.form)
+
+@app.route('/messenger')
+def messenger():
+  return MessengerController.messenger()
+
+@app.route('/dialog')
+def dialog():
+  return MessengerController.dialog()
 
 @app.errorhandler(404)
 def page_not_found(error):

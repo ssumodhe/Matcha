@@ -1,6 +1,9 @@
-import sqlite3
+ # -*- coding:utf-8 -*-
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Flask, request, abort, redirect, url_for, render_template, session
 from datetime import date, datetime
-import models.user
+import sqlite3 
+import pprint
 
 db = sqlite3.connect('Matcha.db', check_same_thread=False)
 cursor = db.cursor()
@@ -25,10 +28,7 @@ class Model():
         id = cursor.lastrowid
         # cursor.close()
         infos['id'] = str(id)
-        return eval(cls.__name__ + "(infos)")
-
-    # faire where: qui return un tableau de tous les thomas si on cherche tous les thomas
-
+        return cls(infos)
 
     @classmethod
     def where(cls, column, value):
@@ -48,6 +48,15 @@ class Model():
         answer = cursor.fetchall()
         cursor.close()
         return answer
+
+    @classmethod
+    def where_multi(cls, column, val1, val2):
+        infos = []
+        for i in range(val1, (val2 + 1)):
+            answer = cls.where(column, str(i))
+            infos = infos + answer
+       
+        return infos
 
     # With find_by: Check if return not None
     @classmethod
@@ -69,12 +78,102 @@ class Model():
         cursor.close()
         if answer == None:
             return None
-        return eval(cls.__name__ + "(answer)")
+        return cls(answer)
+
+    @classmethod
+    def find_like(cls, column, exp):
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+
+        req = "SELECT * FROM '" + cls.get_table_name() + "' WHERE " + cls.get_table_name() + "." + column + " LIKE '" + exp + "' LIMIT 1;"
+        cursor.execute(req)
+        db.commit()
+        answer = cursor.fetchone()
+        cursor.close()
+        if answer == None:
+            return None
+        return cls(answer)
+
+    @classmethod
+    def find_both(cls, col1, val1, col2, val2):
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+
+        req = "SELECT * FROM '" + cls.get_table_name() + "' WHERE " + cls.get_table_name() + "." + col1 + " = '" + val1 + "' AND " + cls.get_table_name() + "." + col2 + " = '" + val2 + "' LIMIT 1;"
+        cursor.execute(req)
+        db.commit()
+        answer = cursor.fetchone()
+        cursor.close()
+        if answer == None:
+            return None
+        return cls(answer)
+
+    @classmethod
+    def join(cls, table1, table2, col1, col2, value):
+        # Attention la requete SELECT ne prend que l'id et le username (dans db users)
+        # et le created_at de l'autre table (table2 ici).
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+
+        req = "SELECT users.id, users.username, "+table2+".created_at FROM '" + table1 + "' INNER JOIN '" + table2 + "' ON " + table1 + "." + col1 + " = " + table2 + "." + col2 + " WHERE " + table2 + "." + col2 + " = " + value + ";"
+        cursor.execute(req)
+        db.commit()
+        answer = cursor.fetchall()
+        cursor.close()
+        return answer
+
+    @classmethod
+    def exists(self, col1, val1, col2, val2):
+        info = self.where(col1, val1)
+        for i in range(len(info)):
+            if int(info[i][col2]) == int(val2):
+                return True
+        return False
+
+
+    @classmethod
+    def howMany(self, column, value):
+        def dict_factory(cursor, row):
+            d = {}
+            for idx, col in enumerate(cursor.description):
+                d[col[0]] = row[idx]
+            return d
+
+        db = sqlite3.connect('Matcha.db')
+        db.row_factory = dict_factory
+        cursor = db.cursor()
+
+        req = "SELECT COUNT(*) FROM '" + self.get_table_name() + "' WHERE " + self.get_table_name() + "." + column + " = '" + value + "';"
+        cursor.execute(req)
+        db.commit()
+        answer = cursor.fetchall()
+        cursor.close()
+        return answer[0]['COUNT(*)']
 
     @classmethod
     def get_table_name(cls):
         return cls.__name__.lower() + 's'
-
 
     def save(self):
         selfData = vars(self)
@@ -131,4 +230,11 @@ class Model():
             return self.id
         else:
             the_info = self.search('id')
+            return the_info[0]
+
+    def getCreatedAt(self):
+        if hasattr(self, 'created_at'):
+            return self.created_at
+        else:
+            the_info = self.search('created_at')
             return the_info[0]

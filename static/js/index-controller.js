@@ -165,7 +165,7 @@ function checkIdentical() {
 	return 0;
 
 	checkInputs('0');
-	checkSubmit('0', 'password_2')
+	checkSubmit('0', 'password_2');
 
 }
 

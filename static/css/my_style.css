@@ -10,6 +10,8 @@ html{
     /*Dance To Forget*/
     /*background: linear-gradient(to right, #ff4e50, #f9d423); */
     background-color: white;
+    display: flex;
+    justify-content: center;
 }
 
 hr{
@@ -125,6 +127,10 @@ input {
 
 #history_likes{
     width: 50%;
+}
+
+.stalkers{
+    font-size: x-small;
 }
 
 

@@ -1,0 +1,23 @@
+
+
+.me{
+	width: 25%;
+	display: flex;
+	background-color: pink;
+
+
+    padding: 10px;
+    margin: 5px 0px 5px auto;
+    border-radius: 50px 20px;
+}
+
+.dest{
+	width: 25%;
+	display: flex;
+	background-color: gainsboro;
+
+
+	padding: 10px;
+    margin: 5px auto 5px 0px;
+    border-radius: 20px 50px;
+}
