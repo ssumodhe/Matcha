@@ -56,4 +56,5 @@ class LikeController:
 		victim = User.find_by('username', form['victim'])
 		unlike = Like.find_both('stalker_id', stalker.getId(), 'victim_id', victim.getId())
 		unlike.delete()
+		print("J'ai unlike")
 		return redirect(url_for('profile', username=form['victim']))
