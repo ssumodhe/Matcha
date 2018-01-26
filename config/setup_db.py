@@ -104,22 +104,14 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS blocks
     FOREIGN KEY (blocked_id) REFERENCES users(id)
     );''')
 
-# cursor.execute('''INSERT INTO users 
-#     (username,
-#     first_name,
-#     last_name ,
-#     email,
-#     password,
-#     created_at
-#     ) 
-#     VALUES
-#     ('coco asticot',
-#     'coco',
-#     'channel',
-#     'coco@channel.com',
-#     'thomaiszebest',
-#     '2005-06-15'
-#     );''')
+cursor.execute('''CREATE TABLE IF NOT EXISTS notifications
+    (id INTEGER PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    message VARCHAR(1024) NOT NULL,
+    seen BOOLEAN NOT NULL DEFAULT 0,
+    created_at DATETIME NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+    );''')
 
 db.commit()
 cursor.close()

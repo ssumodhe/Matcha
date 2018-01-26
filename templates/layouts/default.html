@@ -12,10 +12,11 @@
 
 
 	<title>{% block title %}Matcha{% endblock title %}</title>
-	{% block script %}{% endblock script %}
+	
 </head>
 
 <body>
+	<p>{{ session['user'] }}</p>
 	<h1>Bienvenue sur Matcha<br/> le site de soul_match !</h1>
     <p>Aujourd'hui nous sommes le {{date}}, c'est un bon jour pour trouver ton soul_match!</p>
 
@@ -27,5 +28,10 @@
 	{% include 'layouts/footer.html' %}
 </body>
 
+<script type="text/javascript" src="{{ url_for('static', filename='js/notification-controller.js') }}"></script>
+
+{% block script %}
+
+{% endblock script %}
 
 </html>
