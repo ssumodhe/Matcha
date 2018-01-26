@@ -16,6 +16,7 @@ from models.view import View
 from models.block import Block
 from models.match import Match
 from models.picture import Picture
+from models.message import Message
 
 UPLOAD_FOLDER = 'static/users_pictures'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -53,6 +54,13 @@ class MessengerController:
 				form['message'].strip()
 				split_msg = form['message'].splitlines()
 				print(split_msg)
+				# save dans MESSAGE table
+				# match = Match.
+				# new_msg['match_id'] = match.getId()
+				# new_msg['from_id'] = auth.getId()
+				# new_msg['content'] = split_msg
+				# msg = Message.create(new_msg)
+
 			else:
 				print("\n\nNo FORM")
 
@@ -66,6 +74,7 @@ class MessengerController:
 		if 'user' in session:
 			auth = User.find_by('username', session['user'])
 			
+			# get all messages from MESSAGE table and display in dialog template
 			
 			return render_template('dialog.html', exp=exp, dest=dest)
 		else:

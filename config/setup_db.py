@@ -64,7 +64,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS dialogs
 
 cursor.execute('''CREATE TABLE IF NOT EXISTS messages
     (id INTEGER PRIMARY KEY,
-    dialog_id INTEGER NOT NULL,
+    match_id INTEGER NOT NULL,
     from_id INTEGER NOT NULL,
     content VARCHAR(255),
     created_at DATETIME NOT NULL
