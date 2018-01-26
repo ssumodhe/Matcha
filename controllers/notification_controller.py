@@ -1,5 +1,5 @@
 from pprint import pprint
-from flask import jsonify
+from flask import jsonify, abort
 from models.user import User
 from models.notification import Notification
 
@@ -19,7 +19,6 @@ class NotificationController():
 	@staticmethod
 	def unread_notifications(form):
 		user = User.find_by("username", form["username"])
-		pprint(form)
 		if not user:
 			abort(404)
 		notifications = Notification.where("user_id", user.getId())
