@@ -8,6 +8,7 @@ from controllers.like_controller import LikeController
 from controllers.home_controller import HomeController
 from controllers.block_controller import BlockController
 from controllers.messenger_controller import MessengerController
+from controllers.notification_controller import NotificationController
 from datetime import datetime, date, timedelta
 from config import setup_db
 from geolite2 import geolite2
@@ -130,51 +131,21 @@ def messenger():
 def dialog(exp, dest):
   return MessengerController.dialog(exp, dest)
 
+@app.route('/notifications', methods=['POST'])
+def list_notifications():
+  return NotificationController.list_notifications(request.form)
+
+@app.route('/unread_notif', methods=['POST'])
+def unread_notifications():
+  return NotificationController.unread_notifications(request.form)
+
 @app.errorhandler(404)
 def page_not_found(error):
 	return render_template('errors/404.html'), 404
 
 # Permet d'executer l'application
 if __name__ == '__main__':
-   app.run(debug=True, host='0.0.0.0')
+   app.run(debug=True, host='0.0.0.0', threaded=True)
    # host '0.0.0.0' permet à toutes les machines du reseau d'acceder à l'application
    # port=XXXX permet de choisir le port pour acceder à l'application
    # app.run(debug=True, host='0.0.0.0', port=3000)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
