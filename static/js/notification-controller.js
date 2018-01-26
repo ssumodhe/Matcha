@@ -5,6 +5,7 @@ function magic_loop(){
     setTimeout(function() {
         var req = new XMLHttpRequest();
         var params = "username=totolapaille";
+        // dont forget to dynamic change usernmae because we dont want only totolapaille's notifications
 
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
@@ -14,10 +15,8 @@ function magic_loop(){
 
         req.open('POST', `http://${document.domain}:${location.port}/unread_notif`, true); 
         req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        req.send(params)
-        if (notifications.length == 0) {
-            magic_loop();
-        }
+        req.send(params);
+        magic_loop();
     }, 3000);
 }
 
