@@ -1,4 +1,5 @@
 import pprint
+import sqlite3 
 
 from models.model import Model
 
@@ -13,10 +14,10 @@ class Message(Model):
     # getID in Model
 
     def getMatchId(self):
-        if hasattr(self, 'dialog_id'):
-            return self.dialog_id
+        if hasattr(self, 'match_id'):
+            return self.match_id
         else:
-            the_info = self.search('dialog_id')
+            the_info = self.search('match_id')
             return the_info[0]
 
     def getFromId(self):
