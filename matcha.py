@@ -29,7 +29,7 @@ def make_session_permanent():
 # Passera les variables à toutes les pages.
 @app.context_processor
 def get_time_now():
-  return dict({'now_year': datetime.now().year, 'date': date.today().isoformat()})
+  return dict({'now_year': datetime.now().year, 'date': date.today().isoformat(), 'name': session['user']})
 
 @app.route('/')
 def accueil():

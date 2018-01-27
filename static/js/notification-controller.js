@@ -4,8 +4,8 @@ notifications = []
 function magic_loop(){
     setTimeout(function() {
         var req = new XMLHttpRequest();
-        var params = "username=totolapaille";
-        // dont forget to dynamic change usernmae because we dont want only totolapaille's notifications
+        username = document.getElementById('my_user_name').innerHTML
+        var params = "username=" + username;
 
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
