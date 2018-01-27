@@ -51,15 +51,21 @@ class MessengerController:
 			if form != None:
 				print("\n\n\nMESSAGE")
 				print(form)
-				form['message'].strip()
-				split_msg = form['message'].splitlines()
-				print(split_msg)
+				message = form['message'].strip()
+				message = html.escape(message)
+
 				# save dans MESSAGE table
-				# match = Match.
-				# new_msg['match_id'] = match.getId()
-				# new_msg['from_id'] = auth.getId()
-				# new_msg['content'] = split_msg
-				# msg = Message.create(new_msg)
+				to = User.find_by('username', form['to'])
+				match = Match.find_both('user1_id', auth.getId(), 'user2_id', to.getId())
+				if match == None:
+					match = Match.find_both('user1_id', to.getId(), 'user2_id', auth.getId())
+				new_msg = {}
+				new_msg['match_id'] = match.getId()
+				new_msg['from_id'] = auth.getId()
+				new_msg['content'] = message
+				print(new_msg)
+				msg = Message.create(new_msg)
+				# need to give the infos enabling the form when form is send
 
 			else:
 				print("\n\nNo FORM")
