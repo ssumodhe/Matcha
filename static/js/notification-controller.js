@@ -5,7 +5,6 @@ notifications = []
 
 function displayNotif(message){
 
-    console.log(document.body.lastChild)
     var note = document.createElement('span');
     note.setAttribute("class", "notifications");
     note.innerHTML = message;

@@ -34,12 +34,9 @@ function checkSubmit(form, attr){
 	check_value = document.forms[form_name][attr].value;
 	check_disabled = document.forms[form_name]["submit"].getAttribute("disabled");
 
-	console.log(checkInputs(form));
-
 	if (check_value == "" && check_disabled == null )
 		document.forms[form_name]["submit"].setAttribute("disabled", true);
 	if (check_value != "" && checkInputs(form) != '1'){
-		console.log("C'est ici qu'on vire disabled");
 		document.forms[form_name]["submit"].removeAttribute("disabled");
 	}
 }
