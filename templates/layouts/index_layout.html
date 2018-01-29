@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://afeld.github.io/emoji-css/emoji.css">
+    <link rel="stylesheet" type="text/css"  href="{{ url_for('static', filename='css/my_style.css') }}"/>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo-matcha.png') }}" />
+	{% block css %}{% endblock css %}
+
+
+	<title>{% block title %}Matcha{% endblock title %}</title>
+	
+</head>
+
+<body>
+	<p hidden id="my_user_name">{{ session['user'] }}</p>
+	<h1>Bienvenue sur Matcha<br/> le site de soul_match !</h1>
+    <p>Aujourd'hui nous sommes le {{date}}, c'est un bon jour pour trouver ton soul_match!</p>
+
+
+	{% block body %}
+	{% endblock body %}
+
+	{% include 'layouts/footer.html' %}
+</body>
+
+{% block script %}
+
+{% endblock script %}
+
+</html>
