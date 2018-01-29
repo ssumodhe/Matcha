@@ -31,7 +31,7 @@ function magic_loop(){
                 notifications = JSON.parse(req.response);
                 console.log(notifications)
                 if (notifications != undefined){
-                    displayNotif(notifications['0']['message']);
+                    // displayNotif(notifications['0']['message']);
                 }
             }
         }
@@ -40,7 +40,7 @@ function magic_loop(){
         req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         req.send(params);
         magic_loop();
-    }, 3000);
+    }, 20000);
 }
 
 magic_loop();
