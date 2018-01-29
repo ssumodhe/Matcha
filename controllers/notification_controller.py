@@ -1,11 +1,23 @@
 from pprint import pprint
-from flask import jsonify, abort
+from flask import jsonify
+from flask import Flask, request, abort, redirect, url_for, render_template, session
+
 from models.user import User
 from models.notification import Notification
 
 class NotificationController():
 	def __init__(self):
 		pass
+
+	@staticmethod
+	def notifications():
+		if 'user' in session:
+			user = User.find_by("username", session['user'])
+			notes = Notification.where('user_id', user.getId())
+
+			return render_template('notifications.html', notes=notes)
+		else:
+			return redirect(url_for('accueil'))
 
 	@staticmethod
 	def list_notifications(form):

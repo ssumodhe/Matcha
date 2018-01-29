@@ -5,6 +5,8 @@
 		<li><a href="{{ url_for('home') }}"><i class="em em-love_hotel"></i> Home </a></li>
 		<li><a href="{{ url_for('profile', username=session['user']) }}"><i class="em em-spiral_note_pad"></i> Profile </a></li>
 		<li><a href="{{ url_for('messenger') }}"><i class="em em-love_letter"></i> Messenger </a></li>
+		<li><a href="/notes"><i class="em em-green_book"></i> Notifications </a></li>
+		<!-- why url_for doen't work here ? -->
 		<li><a href="{{ url_for('signout') }}"><img src="{{ url_for('static', filename='img/deco_button.png') }}" width="20px" height="20px"></a></li>
 	</ul>
 </nav>

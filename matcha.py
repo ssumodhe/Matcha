@@ -134,6 +134,10 @@ def messenger():
 def dialog(exp, dest):
   return MessengerController.dialog(exp, dest)
 
+@app.route('/notes')
+def notifications():
+  return NotificationController.notifications()
+
 @app.route('/notifications', methods=['POST'])
 def list_notifications():
   return NotificationController.list_notifications(request.form)

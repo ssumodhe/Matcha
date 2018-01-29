@@ -1,7 +1,7 @@
 
 notifications = []
 
-// function setSeen(user_id)
+// function setAsSeen(user_id)
 
 function displayNotif(message){
 
