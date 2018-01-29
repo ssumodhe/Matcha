@@ -29,9 +29,7 @@ def make_session_permanent():
 # Passera les variables à toutes les pages.
 @app.context_processor
 def get_time_now():
-  print(request.url_rule)
   if "/" in request.url_rule.rule:
-  # special for index because no more user ---> Need to do spec layout for index !!
     return dict({'now_year': datetime.now().year, 'date': date.today().isoformat()})
   else:
     return dict({'now_year': datetime.now().year, 'date': date.today().isoformat(), 'name': session['user']})
@@ -104,7 +102,6 @@ def like():
 @app.route('/unlike', methods=['POST'])
 def unlike():
   return LikeController.unlike(request.form)
-
 
 @app.route('/confirm_account/<hash>')
 def confirm_account(hash):
