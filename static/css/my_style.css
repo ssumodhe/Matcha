@@ -133,8 +133,12 @@ input {
     font-size: x-small;
 }
 
-
-
+.notifications{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 25%;
+}
 
 
 

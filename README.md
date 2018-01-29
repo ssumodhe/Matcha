@@ -110,6 +110,7 @@ Python 3.6
 > - user_id (*id*)
 > - message (*string*)
 > - seen (*boolean*) 0: unseen; 1: seen
+> - created_at (*date*)
 
 #### Sources
 Python
