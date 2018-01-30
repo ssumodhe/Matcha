@@ -93,9 +93,6 @@ class MessengerController:
 				match = Match.find_both('user1_id', to.getId(), 'user2_id', auth.getId())
 
 			msg = Message.where('match_id', match.getId())
-			print(msg)
-			
-			# get all messages from MESSAGE table and display in dialog template
 			
 			return render_template('dialog.html', msg=msg, from_id=int(auth.getId()))
 		else:

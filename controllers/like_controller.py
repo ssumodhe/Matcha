@@ -54,7 +54,7 @@ class LikeController:
 			notif = Notification.create_if(infos, stalker.getId())
 			infos = {}
 			infos['user_id'] = stalker.getId()
-			infos['message'] = "Match : C'est un MATCHA! <a href='/profile/" + victim.getUserName() + "'>"+victim.getUserName()+"</a> vous a egalement liké! "
+			infos['message'] = "Match : C'est un MATCHA! <a href='/profile/" + victim.getUserName() + "'>"+victim.getUserName()+"</a> vous a également liké! "
 			notif = Notification.create_if(infos, victim.getId())
 		else:
 			infos = {}
@@ -70,12 +70,10 @@ class LikeController:
 		victim = User.find_by('username', form['victim'])
 		unlike = Like.find_both('stalker_id', stalker.getId(), 'victim_id', victim.getId())
 		if Match.is_match(stalker.getId(), victim.getId()) == True:
-			print("UNLIKE - THERE IS A MATCHA")
 			match = Match.find_both('user1_id', stalker.getId(),'user2_id', victim.getId())
 			if match == None:
 				match = Match.find_both('user1_id', victim.getId(),'user2_id', stalker.getId())
 			Message.delete_where('match_id', match.getId())
-			print("MATCHA ID = " + match.getId())
 			match.delete()
 		infos = {}
 		infos['user_id'] = victim.getId()

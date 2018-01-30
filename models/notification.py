@@ -34,7 +34,7 @@ class Notification(Model):
 	def create_if(self, infos, stalker_id):
 		if Block.find_both('by_id', infos['user_id'], 'blocked_id', stalker_id) == None:
 			return self.create(infos)
-		return None
+		pass
 
 	@classmethod
 	def setAsSeen(self, user_id):
@@ -51,8 +51,6 @@ class Notification(Model):
 		req = "UPDATE notifications SET 'seen'=1 WHERE user_id="+user_id+";"
 		cursor.execute(req)
 		db.commit()
-		answer = cursor.fetchall()
 		cursor.close()
-		return answer
 		pass
 

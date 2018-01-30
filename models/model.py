@@ -151,7 +151,6 @@ class Model():
                 return True
         return False
 
-
     @classmethod
     def howMany(self, column, value):
         def dict_factory(cursor, row):

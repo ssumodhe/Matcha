@@ -58,8 +58,6 @@ class ProfileController:
 				victim.modif('pop_score', str(View.howMany('victim_id', victim.getId())))
 				victim.save()
 
-
-
 			auth = User.find_by('username', username)
 			# if auth doesn't exists redirect accueil
 
