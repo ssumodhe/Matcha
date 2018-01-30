@@ -211,6 +211,15 @@ class Model():
         db.commit()
         cursor.close()
 
+    @classmethod
+    def delete_where(self, column, value):
+        db = sqlite3.connect('Matcha.db')
+        cursor = db.cursor()
+        request = "DELETE FROM '" + self.get_table_name() + "' WHERE " + column + " = " + value + ";"
+        cursor.execute(request)
+        db.commit()
+        cursor.close()
+
     def modif(self, key, value):
         str = "self." + key + " = \"" + value +"\""
         exec(str)

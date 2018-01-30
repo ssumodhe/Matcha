@@ -10,7 +10,7 @@
 		{%for notif in notes: %}
 			<tr>
 				<td>{{notif['created_at']}}</td>
-				<td>{{notif['message']}}</td>
+				<td><pre>{{notif['message']}}</pre></td>
 			</tr>
 
 		{% endfor%}

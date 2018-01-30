@@ -16,6 +16,7 @@ from models.view import View
 from models.block import Block
 from models.match import Match
 from models.picture import Picture
+from models.notification import Notification
 
 UPLOAD_FOLDER = 'static/users_pictures'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -50,6 +51,10 @@ class ProfileController:
 				view['stalker_id'] = stalker.getId()
 				view['victim_id'] = victim.getId()
 				View.create(view)
+				notif = {}
+				notif['user_id'] = victim.getId()
+				notif['message'] = "Vu : <a href='/profile/" + stalker.getUserName() + "'>"+stalker.getUserName()+"</a> vous a rendu visite."
+				Notification.create_if(notif, stalker.getId())
 				victim.modif('pop_score', str(View.howMany('victim_id', victim.getId())))
 				victim.save()
 
