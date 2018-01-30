@@ -48,17 +48,19 @@ class LikeController:
 			infos['user1_id'] = stalker.getId()
 			infos['user2_id'] = victim.getId()
 			match = Match.create(infos)
-			print("MATCH CREATED " + match.getId())
 			infos = {}
 			infos['user_id'] = victim.getId()
 			infos['message'] = "Match : <a href='/profile/" + stalker.getUserName() + "'>"+stalker.getUserName()+"</a> vous a liké en retour! C'est un MATCHA!"
 			notif = Notification.create_if(infos, stalker.getId())
+			infos = {}
+			infos['user_id'] = stalker.getId()
+			infos['message'] = "Match : C'est un MATCHA! <a href='/profile/" + victim.getUserName() + "'>"+victim.getUserName()+"</a> vous a egalement liké! "
+			notif = Notification.create_if(infos, victim.getId())
 		else:
 			infos = {}
 			infos['user_id'] = victim.getId()
 			infos['message'] = "Like : Vous avez été Like par <a href='/profile/" + stalker.getUserName() + "'>"+stalker.getUserName()+"</a>"
 			notif = Notification.create_if(infos, stalker.getId())
-
 
 		return redirect(url_for('profile', username=form['victim']))
 
