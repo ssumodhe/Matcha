@@ -14,7 +14,7 @@ class NotificationController():
 		if 'user' in session:
 			user = User.find_by("username", session['user'])
 			notes = Notification.where('user_id', user.getId())
-
+			Notification.setAsSeen(user.getId())
 			return render_template('notifications.html', notes=notes)
 		else:
 			return redirect(url_for('accueil'))

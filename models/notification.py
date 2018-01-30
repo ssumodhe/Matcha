@@ -1,3 +1,5 @@
+import sqlite3 
+
 from models.model import Model
 from models.block import Block
 
@@ -33,4 +35,24 @@ class Notification(Model):
 		if Block.find_both('by_id', infos['user_id'], 'blocked_id', stalker_id) == None:
 			return self.create(infos)
 		return None
+
+	@classmethod
+	def setAsSeen(self, user_id):
+		def dict_factory(cursor, row):
+			d = {}
+			for idx, col in enumerate(cursor.description):
+				d[col[0]] = row[idx]
+			return d
+
+		db = sqlite3.connect('Matcha.db')
+		db.row_factory = dict_factory
+		cursor = db.cursor()
+
+		req = "UPDATE notifications SET 'seen'=1 WHERE user_id="+user_id+";"
+		cursor.execute(req)
+		db.commit()
+		answer = cursor.fetchall()
+		cursor.close()
+		return answer
+		pass
 
