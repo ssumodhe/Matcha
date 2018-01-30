@@ -36,6 +36,7 @@ Python 3.6
 > - confirmed (*boolean*) 0: NotConfirmed 1:Confirmed
 <!-- > - token (*string*) -->
 <!-- > - expired_at (*date*) -->
+> - age (*integer*)
 > - sex (*integer*) 1:homme 2:femme
 > - orientation (*integer*) 0:homo 1:hetero 2:bi
 > - bio (*string*)
