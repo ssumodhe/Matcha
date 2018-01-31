@@ -103,25 +103,37 @@
 				<img width="10%" src="{{ url_for('static', filename='img/status-red.png') }}" alt="offline" title="L'utilisateur est hors ligne"/>
 				{% endif%}
 
-				{% if infos['is_user_me'] == False  and infos['has_blocked'] == False %}
-				<div>
-					<form name="form_block" action="/block" method="post">
-						<input type="image" name="block" class="like_button" src="{{ url_for('static', filename='img/block_button.png') }}" title="Bloquer cet utilisateur.">
-						<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
-						<input type="hidden" name="victim" value="{{ infos['username'] }}">
-					</form>
+				<div style="display: inline-flex;">	
+					{% if infos['is_user_me'] == False  and infos['has_blocked'] == False %}
+					<div style="width: 50%; padding-bottom: 10px; padding-top: 10px;">
+						<form name="form_block" action="/block" method="post">
+							<input type="image" name="block" class="like_button" src="{{ url_for('static', filename='img/block_button.png') }}" title="Bloquer cet utilisateur.">
+							<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
+							<input type="hidden" name="victim" value="{{ infos['username'] }}">
+						</form>
 
-				</div>
-				{% elif infos['is_user_me'] == False  and infos['has_blocked'] == True %}
-				<div>
-					<form name="form_unblock" action="/unblock" method="post">
-						<input type="image" name="unblock" class="like_button" src="{{ url_for('static', filename='img/unblock_button.png') }}" title="Débloquer cet utilisateur.">
-						<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
-						<input type="hidden" name="victim" value="{{ infos['username'] }}">
-					</form>
+					</div>
+					{% elif infos['is_user_me'] == False  and infos['has_blocked'] == True %}
+					<div style="width: 50%; padding-bottom: 10px; padding-top: 10px;">
+						<form name="form_unblock" action="/unblock" method="post">
+							<input type="image" name="unblock" class="like_button" src="{{ url_for('static', filename='img/unblock_button.png') }}" title="Débloquer cet utilisateur.">
+							<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
+							<input type="hidden" name="victim" value="{{ infos['username'] }}">
+						</form>
 
+					</div>
+					{% endif %}
+
+					{% if infos['is_user_me'] == False%}
+					<div style="width: 50%; padding-bottom: 10px; padding-top: 10px;">
+						<form name="fake_report" action="/fake_report" method="post">
+							<input type="image" name="fake_report" class="like_button" src="{{ url_for('static', filename='img/fake_button.png') }}" title="Reporter ce compte comme étant un faux.">
+							<input type="hidden" name="stalker" value="{{ infos['stalker'] }}">
+							<input type="hidden" name="victim" value="{{ infos['username'] }}">
+						</form>
+					</div>
+					{% endif %}
 				</div>
-				{% endif %}
 			</div>
 		</div>
 	</div>

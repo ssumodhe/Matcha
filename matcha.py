@@ -7,6 +7,7 @@ from controllers.profile_controller import ProfileController
 from controllers.like_controller import LikeController
 from controllers.home_controller import HomeController
 from controllers.block_controller import BlockController
+from controllers.fake_controller import FakeController
 from controllers.messenger_controller import MessengerController
 from controllers.notification_controller import NotificationController
 from datetime import datetime, date, timedelta
@@ -94,6 +95,10 @@ def profile_not_complete():
 @app.route('/profile_not_exists')
 def profile_not_exists():
   return render_template('profile_not_exists.html')
+
+@app.route('/fake_report', methods=['POST'])
+def fake_report():
+  return FakeController.fake_report(request.form)
 
 @app.route('/like', methods=['POST'])
 def like():
