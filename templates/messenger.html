@@ -36,7 +36,7 @@
 			<form id="message" name="message" method="post" action="" {% if url == "":%} hidden="True" {% endif %}>
 				<textarea name="message" form="message" rows="2" cols="50" onkeyup="checkKey(event, 'message')"></textarea>
 				<input type="hidden" name="from" value="{{my_username}}">
-				<input id="to" type="hidden" name="to" value="">
+				<input id="to" type="hidden" name="to" value="{{other}}">
 				<input type="submit" value="Envoyer!">
 			</form>
 		</div>
