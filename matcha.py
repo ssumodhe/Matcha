@@ -146,6 +146,10 @@ def list_notifications():
 def unread_notifications():
   return NotificationController.unread_notifications(request.form)
 
+@app.route('/set_as_seen', methods=['POST'])
+def set_as_seen():
+  return NotificationController.set_as_seen(request.form)
+
 @app.errorhandler(404)
 def page_not_found(error):
 	return render_template('errors/404.html'), 404

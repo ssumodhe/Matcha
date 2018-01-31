@@ -15,7 +15,7 @@ class NotificationController():
 			user = User.find_by("username", session['user'])
 			notes = Notification.where('user_id', user.getId())
 			Notification.setAsSeen(user.getId())
-			return render_template('notifications.html', notes=notes)
+			return render_template('notifications.html', notes=reversed(notes))
 		else:
 			return redirect(url_for('accueil'))
 
@@ -37,3 +37,12 @@ class NotificationController():
 		unread_notifications = [n for n in notifications if n['seen'] == 0]
 
 		return jsonify(unread_notifications)
+
+	@staticmethod
+	def set_as_seen(form):
+		user = User.find_by("username", form["username"])
+		if not user:
+			abort(404)
+		Notification.setAsSeen(user.getId())
+
+		return jsonify("DONE")
