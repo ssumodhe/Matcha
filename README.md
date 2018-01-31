@@ -47,6 +47,7 @@ Python 3.6
 > - created_at (*date*)
 > - last_connexion (*date*)
 > - status (*integer*) 0:offline 1:online
+> - fake (*integer*) 0:non-fake 1:fake
  
 > **Picture**
 > - id (*integer*) -> unique

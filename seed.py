@@ -22,7 +22,8 @@ User.create({
 	'age': '25',
 	'sex': '1',
 	'orientation': '1',
-	'bio': 'homme hetero'})
+	'bio': 'homme hetero',
+	'fake': '0'})
 
 User.create({
 	'username': 'hello',
@@ -34,7 +35,9 @@ User.create({
 	'age': '18',
 	'sex': '2',
 	'orientation': '1',
-	'bio': 'femme hetero'})
+	'bio': 'femme hetero',
+	'fake': '0'})
+	
 Notification.create({
 	'user_id': '1',
 	'message': 'Hey just setting up my notifications'

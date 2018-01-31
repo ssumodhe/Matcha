@@ -25,6 +25,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS users
     created_at DATETIME NOT NULL,
     last_connexion DATETIME,
     status INTEGER DEFAULT 0,
+    fake INTEGER DEFAULT 0,
     FOREIGN KEY (main_picture) REFERENCES pictures(id)
     );''')
 
