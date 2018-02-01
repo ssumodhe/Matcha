@@ -142,6 +142,20 @@ class User(Model):
             the_info = self.search('location')
             return the_info[0]
 
+    def getLat(self):
+        if hasattr(self, 'lat'):
+            return self.lat
+        else:
+            the_info = self.search('lat')
+            return the_info[0]
+
+    def getLong(self):
+        if hasattr(self, 'long'):
+            return self.long
+        else:
+            the_info = self.search('long')
+            return the_info[0]
+
     def getLastConnexion(self):
         if hasattr(self, 'last_connexion'):
             return self.last_connexion

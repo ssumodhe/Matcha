@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from datetime import date, datetime
 from flask_session import Session
+from vincenty import vincenty
 from pprint import pprint
 
 import re
@@ -121,6 +122,18 @@ class HomeController:
 				for item in infos:
 					if item['pop_score'] < form['pop_score_min'] or item['pop_score'] > form['pop_score_max']:
 						infos.remove(item)
+
+
+			if form['location'] != '':
+				my_loc = (float(auth.getLat()), float(auth.getLong()))
+				for item in infos:
+					if item['lat'] is not None and item['long'] is not None:
+						other = User.find_by('username', item['username'])
+						else_loc = (float(other.getLat()), float(other.getLong()))
+						delta = vincenty(my_loc, else_loc)
+						if int(delta) > int(form['location']):
+							infos.remove(item)
+
 
 
 
