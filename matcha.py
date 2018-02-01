@@ -155,6 +155,13 @@ def unread_notifications():
 def set_as_seen():
   return NotificationController.set_as_seen(request.form)
 
+@app.route('/set_geo', methods=['POST', 'GET'])
+def set_geo():
+  if request.method == 'POST':
+    return UserController.set_geo(request.form)
+  else:
+    return UserController.set_geo()
+
 @app.errorhandler(404)
 def page_not_found(error):
 	return render_template('errors/404.html'), 404

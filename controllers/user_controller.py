@@ -1,11 +1,19 @@
 # -*- coding:utf-8 -*-
-from flask import redirect, render_template, request
+from flask import Flask, redirect, render_template, request, session
+from flask_session import Session
 from models.user import User
 from pprint import pprint
 from base64 import decodestring
 from mail.reinit_mail import ReinitMail
 from flask import abort
 from werkzeug.security import generate_password_hash
+from geolite2 import geolite2
+
+app = Flask(__name__)
+sess = Session()
+app.secret_key = 'super secret pswd'
+app.config['SESSION_TYPE'] = 'filesystem'
+sess.init_app(app)
 
 class UserController:
     def __init__(self):
@@ -57,3 +65,20 @@ class UserController:
                 user.save()
                 return render_template('index.html', all_ok='Your password have been change, you can login')
         abort(404)
+
+    @staticmethod
+    def set_geo(form=None):
+        if form is not None:
+            user = User.find_by('username', form['username'])
+            user.modif('lat', form['lat'])
+            user.modif('long', form['long'])
+        else:
+            user = User.find_by('username', session['user'])
+            ip = request.environ['REMOTE_ADDR']
+            reader = geolite2.reader()
+            match = reader.get('77.136.16.93')
+            geolite2.close()
+            user.modif('lat', str(match['location']['latitude']))
+            user.modif('long', str(match['location']['longitude']))
+        user.save()
+        return "", 200
