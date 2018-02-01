@@ -15,10 +15,14 @@ function displayNotif(message){
     var note = document.createElement('span');
     note.setAttribute("class", "notifications");
     note.innerHTML = message;
-    if (document.body.lastChild != 'span'){
+    console.log(document.body.lastChild.nodeName)
+    if (document.body.lastChild.nodeName != 'span'){
+        // note.setAttribute("style", "top:0;");
         document.body.appendChild(note);
     }
     else{
+        // note.setAttribute("style", "top:"+(parseInt(document.body.lastChild.style.top) + parseInt(20)) +";");
+        
         document.body.insertBefore(note, document.body.lastChild);
     }
     setAsSeen();
