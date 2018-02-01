@@ -151,7 +151,6 @@ class Model():
                 return True
         return False
 
-
     @classmethod
     def howMany(self, column, value):
         def dict_factory(cursor, row):
@@ -207,6 +206,15 @@ class Model():
         db = sqlite3.connect('Matcha.db')
         cursor = db.cursor()
         request = "DELETE FROM '" + self.get_table_name() + "' WHERE id = " + self.id + ";"
+        cursor.execute(request)
+        db.commit()
+        cursor.close()
+
+    @classmethod
+    def delete_where(self, column, value):
+        db = sqlite3.connect('Matcha.db')
+        cursor = db.cursor()
+        request = "DELETE FROM '" + self.get_table_name() + "' WHERE " + column + " = " + value + ";"
         cursor.execute(request)
         db.commit()
         cursor.close()

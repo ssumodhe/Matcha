@@ -5,9 +5,7 @@
 
 	
     {% block title %}Login &middot; {{ super() }}{% endblock title %}
-	{% block script %}
-    <script type="text/javascript" src="static/js/index-controller.js"></script>
-    {% endblock script %}
+
 
 
 	{% block body %}
@@ -68,5 +66,58 @@
     </div>
 	{% endblock body %}
 
+    {% block script %}
+    <script type="text/javascript" src="static/js/index-controller.js"></script>
+
+    <script type="text/javascript">
+
+        if (navigator.geolocation)
+            navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+        else
+            console.log("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
+            
+        function successCallback(position){
+            console.log("Latitude : " + position.coords.latitude + ", longitude : " + position.coords.longitude);
+            // save long and lat in users
+        };  
+
+        function errorCallback(error){
+            switch(error.code){
+                case error.PERMISSION_DENIED:
+                    console.log("L'utilisateur n'a pas autorisé l'accès à sa position");
+                    break;          
+                case error.POSITION_UNAVAILABLE:
+                    console.log("L'emplacement de l'utilisateur n'a pas pu être déterminé");
+                    break;
+                case error.TIMEOUT:
+                    console.log("Le service n'a pas répondu à temps");
+                    break;
+                }
+        };
+
+    </script>
+    {% endblock script %}
+
+
         
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

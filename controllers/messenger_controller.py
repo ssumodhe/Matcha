@@ -17,6 +17,7 @@ from models.block import Block
 from models.match import Match
 from models.picture import Picture
 from models.message import Message
+from models.notification import Notification
 
 UPLOAD_FOLDER = 'static/users_pictures'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -64,16 +65,21 @@ class MessengerController:
 				msg = Message.create(new_msg)
 				display_form = True
 				url = "/dialog/" + auth.getUserName() + "&" + to.getUserName()
-				# need to give the infos enabling the form when form is send
+				other = to.getUserName()
+				notif = {}
+				notif['user_id'] = to.getId()
+				notif['message'] = "Message : You've got Mail ! De la part de <a href='/profile/" + auth.getUserName() + "'>"+auth.getUserName()+"</a>"
+				Notification.create_if(notif, auth.getId())
+				# notif message recu
 
 			else:
 				display_form = False
 				url = ""
-				print("\n\nNo FORM")
+				other = ""
 
 			mee = auth.getUserName()
 			print("URL = " + url)
-			return render_template('messenger.html', infos=infos, my_username=mee, display_form=display_form, url=url)
+			return render_template('messenger.html', infos=infos, my_username=mee, other=other,display_form=display_form, url=url)
 		else:
 			return redirect(url_for('accueil'))
 
@@ -88,9 +94,6 @@ class MessengerController:
 				match = Match.find_both('user1_id', to.getId(), 'user2_id', auth.getId())
 
 			msg = Message.where('match_id', match.getId())
-			print(msg)
-			
-			# get all messages from MESSAGE table and display in dialog template
 			
 			return render_template('dialog.html', msg=msg, from_id=int(auth.getId()))
 		else:

@@ -7,6 +7,7 @@ from controllers.profile_controller import ProfileController
 from controllers.like_controller import LikeController
 from controllers.home_controller import HomeController
 from controllers.block_controller import BlockController
+from controllers.fake_controller import FakeController
 from controllers.messenger_controller import MessengerController
 from controllers.notification_controller import NotificationController
 from datetime import datetime, date, timedelta
@@ -95,6 +96,10 @@ def profile_not_complete():
 def profile_not_exists():
   return render_template('profile_not_exists.html')
 
+@app.route('/fake_report', methods=['POST'])
+def fake_report():
+  return FakeController.fake_report(request.form)
+
 @app.route('/like', methods=['POST'])
 def like():
   return LikeController.like(request.form)
@@ -134,6 +139,10 @@ def messenger():
 def dialog(exp, dest):
   return MessengerController.dialog(exp, dest)
 
+@app.route('/notes')
+def notifications():
+  return NotificationController.notifications()
+
 @app.route('/notifications', methods=['POST'])
 def list_notifications():
   return NotificationController.list_notifications(request.form)
@@ -141,6 +150,10 @@ def list_notifications():
 @app.route('/unread_notif', methods=['POST'])
 def unread_notifications():
   return NotificationController.unread_notifications(request.form)
+
+@app.route('/set_as_seen', methods=['POST'])
+def set_as_seen():
+  return NotificationController.set_as_seen(request.form)
 
 @app.errorhandler(404)
 def page_not_found(error):
