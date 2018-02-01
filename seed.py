@@ -23,6 +23,8 @@ User.create({
 	'sex': '1',
 	'orientation': '1',
 	'bio': 'homme hetero',
+	'lat' : '48.8600',
+	'long' : '2.3500',
 	'fake': '0'})
 
 User.create({
@@ -36,6 +38,8 @@ User.create({
 	'sex': '2',
 	'orientation': '1',
 	'bio': 'femme hetero',
+	'lat' : '48.891210',
+	'long' : '2.322323',
 	'fake': '0'})
 	
 Notification.create({

@@ -44,6 +44,8 @@ Python 3.6
 > - main_picture (*id*)
 > - pop_score (*integer*)
 > - location (*string*)
+> - lat (*real*)
+> - long (*real*)
 > - created_at (*date*)
 > - last_connexion (*date*)
 > - status (*integer*) 0:offline 1:online
