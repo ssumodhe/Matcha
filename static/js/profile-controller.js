@@ -17,10 +17,9 @@ function successCallback(position){
 	lat = position.coords.latitude
 	long = position.coords.longitude
 	console.log("Latitude : " + lat + ", longitude : " + long);
-    // save long and lat in users
     var req = new XMLHttpRequest();
     // var username = document.getElementById('my_user_name').innerHTML;
-    var username = "ketchup";
+    var username = "hello";
     var params = `username=${username}&lat=${lat}&long=${long}`;
     req.open('POST', `http://${document.domain}:${location.port}/set_geo`, true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

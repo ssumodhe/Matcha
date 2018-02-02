@@ -70,6 +70,23 @@
     <script type="text/javascript" src="static/js/index-controller.js"></script>
 
     <script type="text/javascript">
+        function displayLocation(latitude,longitude){
+        var request = new XMLHttpRequest();
+
+        var method = 'GET';
+        var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true';
+        var async = true;
+
+        request.open(method, url, async);
+        request.onreadystatechange = function(){
+          if(request.readyState == 4 && request.status == 200){
+            var data = JSON.parse(request.responseText);
+            var address = data.results[0];
+            document.write(address.formatted_address);
+          }
+        };
+        request.send();
+        };
 
         if (navigator.geolocation)
             navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
