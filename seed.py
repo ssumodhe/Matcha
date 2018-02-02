@@ -23,12 +23,31 @@ User.create({
 	'lat' : '48.8600',
 	'long' : '2.3500',
 	'last_connexion': date.today().isoformat(),
-	'fake': '0'})
+	'fake': '0',
+	'main_picture': '1'})
 
 Picture.create({
 	'user_id': '1',
 	'data': 'hello_1.png'
 	})
+
+User.create({
+	'username': 'hello',
+	'first_name': 'Elodie',
+	'last_name': 'D',
+	'email': 'elodie@d.fr',
+	'password': generate_password_hash('QWErty123'),
+	'confirmed': '1',
+	'age': '18',
+	'sex': '2',
+	'orientation': '1',
+	'bio': 'femme hetero',
+	'lat' : '48.891210',
+	'long' : '2.322323',
+	'last_connexion': date.today().isoformat(),
+	'fake': '0',
+	'main_picture': '1'})
+
 
 for i in range(1000):
 	try:
@@ -55,34 +74,3 @@ for i in range(1000):
 		})
 	except sqlite3.IntegrityError as e:
 		print(e)
-
-User.create({
-	'username': 'ketchup',
-	'first_name': 'Thomas',
-	'last_name': 'P',
-	'email': 'thomas@payet.ru',
-	'password': generate_password_hash('QWErty123'),
-	'confirmed': '1',
-	'age': '25',
-	'sex': '1',
-	'orientation': '1',
-	'bio': 'homme hetero',
-	'lat' : '48.8600',
-	'long' : '2.3500',
-	'fake': '0'})
-
-User.create({
-	'username': 'hello',
-	'first_name': 'Elodie',
-	'last_name': 'D',
-	'email': 'elodie@d.fr',
-	'password': generate_password_hash('QWErty123'),
-	'confirmed': '1',
-	'age': '18',
-	'sex': '2',
-	'orientation': '1',
-	'bio': 'femme hetero',
-	'lat' : '48.891210',
-	'long' : '2.322323',
-	'last_connexion': date.today().isoformat(),
-	'fake': '0'})
