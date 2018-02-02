@@ -8,9 +8,7 @@
 	{% endblock css %}
 	
 	{% block title %}Home &middot; {{ super() }}{% endblock title %}
-	{% block script %}
-    <script type="text/javascript" src="{{ url_for('static', filename='js/home-controller.js') }}"></script>
-    {% endblock script %}
+	
 
 	{% block body %}
 		<p>On est sur la page Home</p>
@@ -60,6 +58,9 @@
 			</div>
 		</div>
 	{% endblock body %}
-
+	{% block script %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/home-controller.js') }}"></script>    
+    <script type="text/javascript" src="{{ url_for('static', filename='js/set_geoloc.js') }}"></script>
+    {% endblock script %}
         
 </html>
