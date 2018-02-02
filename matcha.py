@@ -38,14 +38,6 @@ def get_time_now():
 
 @app.route('/')
 def accueil():
-  ip = request.environ['REMOTE_ADDR']
-  print("IP = " + ip)
-  # reader = geolite2.reader()
-  # match = reader.get('62.210.33.168')
-  # geolite2.close()
-  # print(match is not None)
-  # print(match)
-  # print(match['location'])
   return RootController.view()
 
 @app.route('/forgotten_password', methods=['GET'])

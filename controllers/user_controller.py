@@ -8,6 +8,7 @@ from mail.reinit_mail import ReinitMail
 from flask import abort
 from werkzeug.security import generate_password_hash
 from geolite2 import geolite2
+from geopy.geocoders import Nominatim
 
 app = Flask(__name__)
 sess = Session()
@@ -72,13 +73,22 @@ class UserController:
             user = User.find_by('username', form['username'])
             user.modif('lat', form['lat'])
             user.modif('long', form['long'])
+            geolocator = Nominatim()
+            location = geolocator.reverse(""+form['lat']+", "+form['long']+"")
+            name, add = location
+            split_name = name.split(",")
+            loc = split_name[4].strip()
+            print(loc)
+            user.modif('location', loc)
         else:
             user = User.find_by('username', session['user'])
             ip = request.environ['REMOTE_ADDR']
+            print("IP  " + ip)
             reader = geolite2.reader()
-            match = reader.get('77.136.16.93')
+            match = reader.get('62.210.33.87')
             geolite2.close()
             user.modif('lat', str(match['location']['latitude']))
             user.modif('long', str(match['location']['longitude']))
+            user.modif('location', str(match['city']['names']['fr']))
         user.save()
         return "", 200

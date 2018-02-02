@@ -69,50 +69,6 @@
     {% block script %}
     <script type="text/javascript" src="static/js/index-controller.js"></script>
 
-    <script type="text/javascript">
-        function displayLocation(latitude,longitude){
-        var request = new XMLHttpRequest();
-
-        var method = 'GET';
-        var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true';
-        var async = true;
-
-        request.open(method, url, async);
-        request.onreadystatechange = function(){
-          if(request.readyState == 4 && request.status == 200){
-            var data = JSON.parse(request.responseText);
-            var address = data.results[0];
-            document.write(address.formatted_address);
-          }
-        };
-        request.send();
-        };
-
-        if (navigator.geolocation)
-            navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-        else
-            console.log("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
-            
-        function successCallback(position){
-            console.log("Latitude : " + position.coords.latitude + ", longitude : " + position.coords.longitude);
-            // save long and lat in users
-        };  
-
-        function errorCallback(error){
-            switch(error.code){
-                case error.PERMISSION_DENIED:
-                    console.log("L'utilisateur n'a pas autorisé l'accès à sa position");
-                    break;          
-                case error.POSITION_UNAVAILABLE:
-                    console.log("L'emplacement de l'utilisateur n'a pas pu être déterminé");
-                    break;
-                case error.TIMEOUT:
-                    console.log("Le service n'a pas répondu à temps");
-                    break;
-                }
-        };
-
-    </script>
     {% endblock script %}
 
 

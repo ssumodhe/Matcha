@@ -14,9 +14,10 @@ function unDisplayForm(who){
 }
 
 function successCallback(position){
-	lat = position.coords.latitude
-	long = position.coords.longitude
-	console.log("Latitude : " + lat + ", longitude : " + long);
+	lat = position.coords.latitude;
+	long = position.coords.longitude;
+    console.log("Latitude : " + lat + ", longitude : " + long);
+    
     var req = new XMLHttpRequest();
     // var username = document.getElementById('my_user_name').innerHTML;
     var username = "hello";

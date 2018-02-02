@@ -31,5 +31,3 @@ class UsersInterest(Model):
         else:
             the_info = self.search('interest_id')
             return the_info[0]
-
-    # getCreatedAt in Model
