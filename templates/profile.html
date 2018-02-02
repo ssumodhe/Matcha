@@ -4,12 +4,8 @@
 	{% extends 'layouts/default.html' %}
 	
 	{% block title %}Compte &middot; {{ super() }}{% endblock title %}
-	{% block script %}
-    <script type="text/javascript" src="{{ url_for('static', filename='js/profile-controller.js') }}"></script>
-    {% endblock script %}
 
 	{% block body %}
-	
 	<div>
 		<div id="box_picture" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('picture_1')" onmouseleave="unDisplayForm('picture_1')" {% endif %}>
 			<img src="{{ infos['picture_1'] }}"/>
@@ -295,6 +291,11 @@
 	</div>
 
 	{% endblock body %}
+
+	{% block script %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/profile-controller.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/set_geoloc.js') }}"></script>
+    {% endblock script %}
 
         
 </html>
