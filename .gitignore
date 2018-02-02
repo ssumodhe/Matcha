@@ -4,3 +4,4 @@ Matcha.db
 flask_session
 box_matcha
 .DS_Store
+*.pyc
