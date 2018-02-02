@@ -78,7 +78,6 @@ class UserController:
             name, add = location
             split_name = name.split(",")
             loc = split_name[4].strip()
-            print(loc)
             user.modif('location', loc)
         else:
             user = User.find_by('username', session['user'])

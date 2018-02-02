@@ -19,8 +19,8 @@ function successCallback(position){
     console.log("Latitude : " + lat + ", longitude : " + long);
     
     var req = new XMLHttpRequest();
-    // var username = document.getElementById('my_user_name').innerHTML;
-    var username = "hello";
+    var username = document.getElementById('my_user_name').innerHTML;
+    // var username = "hello";
     var params = `username=${username}&lat=${lat}&long=${long}`;
     req.open('POST', `http://${document.domain}:${location.port}/set_geo`, true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
