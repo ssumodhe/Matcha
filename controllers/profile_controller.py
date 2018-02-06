@@ -120,7 +120,10 @@ class ProfileController:
 				join_infos_likes = join_infos_likes + User.join('users', 'likes', 'id', 'stalker_id', str(item['stalker_id']))
 			infos['all_likes'] = join_infos_likes
 
-			return render_template('profile.html', infos=infos)
+			error = session.get('error')
+			session['error'] = None
+
+			return render_template('profile.html', infos=infos, error=error)
 		else:
 			return redirect(url_for('accueil'))
 
@@ -130,20 +133,24 @@ class ProfileController:
 		infos = form.to_dict()
 		infos.pop('username')
 		infos.pop('submit')
+
 		pprint(form)
 		print("MODIFICATIONS PAGE infos = ")
 		pprint(infos)
 		for key, value in infos.items():
 			print("KEY = " + key)
 			print("VALUE = " + value)
+			if value == "":
+				session['error'] = "Le champs modifié est vide, veuillez le remplir correctement."
+				return redirect(url_for('profile', username=modif.getUserName()))
 			if key == "bio":
 				value = html.escape(value)
-				# need to add html.unescape in /profile when infos
 			else:
 				# error if spec chars
 				print("VALUE2 = " + value)
 
 			modif.modif(key, value)
+			
 		modif.save()
 
 		return redirect(url_for('profile', username=modif.getUserName()))
@@ -159,10 +166,13 @@ class ProfileController:
 			# display error on PROFILE PAGE
 		file_to_save = file['picture']
 		if file_to_save.filename == '':
-			print('No selected file')
-			# display error on PROFILE PAGE
+			session['error'] = "Aucun fichier n'a été sélectionné."
+
+		if not allowed_file(file_to_save.filename):
+			session['error'] = "Mauvaise extension, veuillez sélectionner un autre fichier."
 			
 		if file_to_save and allowed_file(file_to_save.filename):
+			print("JE PASSE QUAND MEME ICI")
 			filename = secure_filename(file_to_save.filename)
 			user = User.find_by('username', form['username'])
 			ext = filename.rsplit('.', 1)[1].lower()

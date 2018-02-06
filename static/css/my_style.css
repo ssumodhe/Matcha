@@ -42,6 +42,10 @@ input {
     margin: 2px 0 2px 0;
 }
 
+#error{
+    background-color: rgba(199, 0, 57, 0.4);
+}
+
 #form_error{
     background-color: rgba(199, 0, 57, 0.4);
     font-size: x-small;
