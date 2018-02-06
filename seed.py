@@ -66,6 +66,7 @@ for i in range(1000):
 			'lat': str(fake.latitude()),
 			'long': str(fake.longitude()),
 			'orientation': str(random.randint(0, 2)),
+			'status': str(random.randint(0, 1)),
 			'fake': '1',
 			'bio': fake.sentence(),
 			'interests': '1',
