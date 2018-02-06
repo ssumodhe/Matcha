@@ -53,7 +53,7 @@ function magic_loop(){
         req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         req.send(params);
         magic_loop();
-    }, 20000);
+    }, 3000);
 
     setTimeout(function(){
         undisplay = document.getElementsByClassName("notifications");
@@ -63,7 +63,7 @@ function magic_loop(){
             undisplay[n].remove();
             n--;
         }
-    }, 10000)
+    }, 20000)
 }
 
 magic_loop();
