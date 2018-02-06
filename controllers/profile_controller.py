@@ -134,20 +134,22 @@ class ProfileController:
 		infos.pop('username')
 		infos.pop('submit')
 
-		pprint(form)
-		print("MODIFICATIONS PAGE infos = ")
-		pprint(infos)
 		for key, value in infos.items():
-			print("KEY = " + key)
-			print("VALUE = " + value)
 			if value == "":
 				session['error'] = "Le champs modifié est vide, veuillez le remplir correctement."
 				return redirect(url_for('profile', username=modif.getUserName()))
-
-			value = value.strip()
-			value = html.escape(value)
-
-			modif.modif(key, value)
+			if key == 'password':
+				actual_pswd = modif.getPassword()
+				hashed_pswd = check_password_hash(actual_pswd, value)
+				if hashed_pswd == False:
+					session['error'] = "Le mot de passe est incorrect."
+					return redirect(url_for('profile', username=modif.getUserName()))
+				else:
+					modif.modif(key, generate_password_hash(infos['password_new']))
+			else:
+				value = value.strip()
+				value = html.escape(value)
+				modif.modif(key, value)
 
 		modif.save()
 

@@ -68,6 +68,17 @@
 						<input type="submit" name="submit" value="Modif.">
 					</form>
 				</div>
+
+				<div class="inline" name="password" onmouseenter="displayForm('password')" onmouseleave="unDisplayForm('password')">
+					<img width="10%" height="10%" src="{{ url_for('static', filename='img/password_lock.png') }}" alt="password" title="Modifier votre mot de passe."/>
+
+					<form name="form_password" action="/profile_modifications" method="post" hidden>
+						<input type="password" name="password" placeholder="Ancien Mot de passe">
+						<input type="password" name="password_new" placeholder="Nouveau Mot de passe">
+						<input type="hidden" name="username" value="{{ infos['username'] }}">
+						<input type="submit" name="submit" value="Modif.">
+					</form>
+				</div>
 				{% endif %}
 
 				<div class="inline" name="location" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('location')" onmouseleave="unDisplayForm('location')" {% endif %}>
