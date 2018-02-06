@@ -16,16 +16,17 @@ function displayNotif(message){
     note.setAttribute("class", "notifications");
     note.innerHTML = message;
     console.log(document.body.lastChild.nodeName)
-    if (document.body.lastChild.nodeName != 'span'){
+    notif_div = document.getElementById('notif')
+    if (notif_div.lastChild.nodeName != 'span'){
         // note.setAttribute("style", "top:0;");
-        document.body.appendChild(note);
+        notif_div.appendChild(note);
     }
     else{
         // note.setAttribute("style", "top:"+(parseInt(document.body.lastChild.style.top) + parseInt(20)) +";");
         
-        document.body.insertBefore(note, document.body.lastChild);
+        notif_div.insertBefore(note, document.body.lastChild);
     }
-    // setAsSeen();
+    setAsSeen();
 }
 
 function magic_loop(){
