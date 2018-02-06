@@ -25,7 +25,7 @@ function displayNotif(message){
         
         document.body.insertBefore(note, document.body.lastChild);
     }
-    setAsSeen();
+    // setAsSeen();
 }
 
 function magic_loop(){
@@ -53,12 +53,14 @@ function magic_loop(){
         req.send(params);
         magic_loop();
     }, 20000);
+
     setTimeout(function(){
         undisplay = document.getElementsByClassName("notifications");
-        var i = 0;
-        while (undisplay[i]){
-            undisplay[i].remove();
-            i++;
+        n = undisplay.length;
+        n--;
+        while (0 <= n){
+            undisplay[n].remove();
+            n--;
         }
     }, 10000)
 }
