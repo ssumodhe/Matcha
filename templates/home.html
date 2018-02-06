@@ -3,12 +3,7 @@
 
 	{% extends 'layouts/default.html' %}
 
-	{% block css %}
-	<link rel="stylesheet" type="text/css"  href="{{ url_for('static', filename='css/home.css') }}"/>
-	{% endblock css %}
-	
 	{% block title %}Home &middot; {{ super() }}{% endblock title %}
-	
 
 	{% block body %}
 		<p>On est sur la page Home</p>

@@ -5,6 +5,10 @@
 	
 	{% block title %}Compte &middot; {{ super() }}{% endblock title %}
 
+	{% block css %}
+	<link rel="stylesheet" type="text/css"  href="{{ url_for('static', filename='css/profile.css') }}"/>
+	{% endblock css %}
+
 	{% block body %}
 	{% if error != None :%}
 	    <div id='error'>
