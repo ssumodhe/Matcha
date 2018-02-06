@@ -25,10 +25,9 @@ User.create({
 	'last_connexion': date.today().isoformat(),
 	'fake': '0',
 	'main_picture': '1'})
-
 Picture.create({
 	'user_id': '1',
-	'data': 'hello_1.png'
+	'data': 'ketchup_1.jpeg'
 	})
 
 User.create({
@@ -46,7 +45,11 @@ User.create({
 	'long' : '2.322323',
 	'last_connexion': date.today().isoformat(),
 	'fake': '0',
-	'main_picture': '1'})
+	'main_picture': '2'})
+Picture.create({
+	'user_id': '2',
+	'data': 'hello_1.png'
+	})
 
 
 for i in range(1000):
