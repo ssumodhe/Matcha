@@ -61,7 +61,7 @@ for i in range(1000):
 			'password': generate_password_hash('QWErty123'),
 			'confirmed': '1',
 			'age': str(random.randint(18, 70)),
-			'sex': str(int(random.uniform(1, 2))),
+			'sex': str(random.randint(1, 2)),
 			'location': fake.city(),
 			'lat': str(fake.latitude()),
 			'long': str(fake.longitude()),
