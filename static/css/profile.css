@@ -1,0 +1,23 @@
+div{
+	border-style: none;
+}
+
+.inline{
+	padding: 10px 10px 10px 10px;
+	border-bottom: 1px solid gainsboro;
+}
+
+form{
+	margin-left: 10px;
+}
+
+#infos_user, #box_history{
+	border-style: solid;
+	border-color: gainsboro;
+}
+
+#profile, #history_views, #box_left{
+	border-right: solid;
+	border-right-color: gainsboro; 
+	border-right-width: 2px;
+}

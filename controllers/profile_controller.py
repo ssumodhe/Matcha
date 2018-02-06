@@ -143,14 +143,12 @@ class ProfileController:
 			if value == "":
 				session['error'] = "Le champs modifié est vide, veuillez le remplir correctement."
 				return redirect(url_for('profile', username=modif.getUserName()))
-			if key == "bio":
-				value = html.escape(value)
-			else:
-				# error if spec chars
-				print("VALUE2 = " + value)
+
+			value = value.strip()
+			value = html.escape(value)
 
 			modif.modif(key, value)
-			
+
 		modif.save()
 
 		return redirect(url_for('profile', username=modif.getUserName()))
