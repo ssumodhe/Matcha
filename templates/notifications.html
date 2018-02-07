@@ -1,18 +1,8 @@
 	{% extends 'layouts/default.html' %}
 	{% block title %}Notifications &middot; {{ super() }}{% endblock title %}
+	{% block script %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/get_notifications.js') }}"></script>
+    {% endblock script %}
 
 	{% block body %}
-	<table>
-		<tr>	
-			<th width="20%"> le </th>
-			<th width="80%"> Objet </th>
-		</tr>
-		{%for notif in notes: %}
-			<tr>
-				<td>{{notif['created_at']}}</td>
-				<td><pre>{{notif['message']}}</pre></td>
-			</tr>
-
-		{% endfor%}
-	</table>
 	{% endblock body %}

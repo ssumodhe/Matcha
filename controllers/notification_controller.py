@@ -12,10 +12,7 @@ class NotificationController():
 	@staticmethod
 	def notifications():
 		if 'user' in session:
-			user = User.find_by("username", session['user'])
-			notes = Notification.where('user_id', user.getId())
-			Notification.setAsSeen(user.getId())
-			return render_template('notifications.html', notes=reversed(notes))
+			return render_template('notifications.html')
 		else:
 			return redirect(url_for('accueil'))
 
