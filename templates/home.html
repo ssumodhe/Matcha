@@ -6,7 +6,6 @@
 	{% block title %}Home &middot; {{ super() }}{% endblock title %}
 
 	{% block body %}
-		<p>On est sur la page Home</p>
 		<div id="search_found">
 			<div class="inline">
 
@@ -37,7 +36,7 @@
 				<p>RESULTATS</p>
 				{% for item in infos: %}
 					<div>
-						<p>
+						<p class="result_table">
 							<a href="/profile/{{item['username']}}">
 								<img width="5%" src="{{ item['profile_picture'] }}">
 								{{ item['username']}}
