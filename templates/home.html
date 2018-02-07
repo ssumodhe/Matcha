@@ -26,19 +26,18 @@
 				 | nombre de tags en commun : 
 					<input type="number" name="interests" min="0" max="10">
 				</p>
-				<input type="submit" name="submit">
+				<input type="submit" name="submit" value="Rechercher">
 				</form>
 
 
 			</div>
-
-			<div id="results">
 				<p>RESULTATS</p>
+			<div id="results">
 				{% for item in infos: %}
-					<div>
-						<p class="result_table">
+						<div class="result_table">
 							<a href="/profile/{{item['username']}}">
-								<img width="5%" src="{{ item['profile_picture'] }}">
+								<img width="25%" src="{{ item['profile_picture'] }}">
+								<br>
 								{{ item['username']}}
 							</a>
 							{% if item['status'] == 1%}
@@ -46,8 +45,7 @@
 							{% else: %}
 								<img width="2%" src="{{ url_for('static', filename='img/status-red.png') }}" alt="offline" title="L'utilisateur est hors ligne"/>
 							{% endif%}
-						</p>	
-					</div>
+						</div>	
 				{% endfor %}
 			</div>
 		</div>
