@@ -45,6 +45,17 @@ function createTable(){
     }
     table.appendChild(tbdy);
 
+    p = document.getElementsByTagName('p');
+    n = p.length;
+    n--;
+    for (n ; n >= 0 ; n--) {
+        str = p[n].innerHTML
+        if ( str.trim() == "Aucunes notifications pour le moment."){
+            p[n].remove();
+            break;
+        }
+    }
+
 	footer = document.getElementsByTagName('footer')
 	document.body.insertBefore(table, footer[0]);
 
