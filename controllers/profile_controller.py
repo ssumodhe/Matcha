@@ -46,44 +46,40 @@ class ProfileController:
 					return redirect(url_for('profile_not_exists'))
 				if victim.is_complete() == False:
 					return redirect(url_for('profile_not_complete'))
+
 				stalker = User.find_by('username', infos['stalker'])
-				view = {}
-				view['stalker_id'] = stalker.getId()
-				view['victim_id'] = victim.getId()
-				View.create(view)
-				notif = {}
-				notif['user_id'] = victim.getId()
-				notif['message'] = "Vu : <a href='/profile/" + stalker.getUserName() + "'>"+stalker.getUserName()+"</a> vous a rendu visite."
-				Notification.create_if(notif, stalker.getId())
-				victim.modif('pop_score', str(View.howMany('victim_id', victim.getId())))
-				victim.save()
+				if  View.find_both('stalker_id', stalker.getId(), 'victim_id', victim.getId()) == None:
+					view = {}
+					view['stalker_id'] = stalker.getId()
+					view['victim_id'] = victim.getId()
+					View.create(view)
+					notif = {}
+					notif['user_id'] = victim.getId()
+					notif['message'] = "Vu : <a href='/profile/" + stalker.getUserName() + "'>"+stalker.getUserName()+"</a> vous a rendu visite."
+					Notification.create_if(notif, stalker.getId())
+					victim.modif('pop_score', str(View.howMany('victim_id', victim.getId())))
+					victim.save()
 
 			auth = User.find_by('username', username)
-			# if auth doesn't exists redirect accueil
 
 			infos['username'] = auth.getUserName()
 			infos['first_name'] = auth.getFirstName()
 			infos['last_name'] = auth.getLastName()
 			infos['email'] = auth.getEmail()
 			infos['age'] = auth.getAge()
-			
 			if auth.getSex() == '1':
 				infos['sex'] = "Homme"
 			elif auth.getSex() == '2':
 				infos['sex'] = "Femme"
 			else:
 				infos['sex'] = auth.getSex()
-			
 			if auth.getOrientation() == '0':
 				infos['orientation'] = "Homo"
 			elif auth.getOrientation() == '1':
 				infos['orientation'] = "Hetero"
 			else:
 				infos['orientation'] = "Bi"
-			
-
 			infos['bio'] = html.unescape(auth.getBio())
-			
 			infos['interests'] = auth.getInterests()
 			infos['main_picture'] = auth.getMainPicture()
 			infos['pop_score'] = auth.getPopScore()
