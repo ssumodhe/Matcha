@@ -82,7 +82,6 @@ class UserController:
         else:
             user = User.find_by('username', session['user'])
             ip = request.environ['REMOTE_ADDR']
-            print("IP  " + ip)
             reader = geolite2.reader()
             match = reader.get('62.210.33.87')
             geolite2.close()
