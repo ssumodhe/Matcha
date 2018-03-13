@@ -224,17 +224,24 @@
 				{% endif %}
 			</div>
 
-			<div class="inline" name="interests" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('interests')" onmouseleave="unDisplayForm('interests')" {% endif %}>
+			<div class="inline" name="interests" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('interests')"  {% endif %}>
 				<div>Intérêts:</div>
 
 				<p>{{ infos['interests'] }}</p>
 				
 				{% if infos['is_user_me'] == True %}
 				<form name="form_interests" action="/profile_modifications" method="post" hidden>
-					<input type="text" name="interests" placeholder="{{ infos['interests'] }}">
+					<!-- <input type="text" name="interests" placeholder="{{ infos['interests'] }}"> -->
+					<input type="text" name="interests" list="tags">
+					<datalist id="tags">
+					{% for tag in tags: %}
+						<option value="{{tag}}" autocomplete="on"></option>	
+					{% endfor %}
+					</datalist>
 					<input type="hidden" name="username" value="{{ infos['username'] }}">
-					<input type="submit" name="submit" value="Modif.">
+					<input type="submit" name="submit" value="+">
 				</form>
+
 				{% endif %}
 			</div>
 		</div>

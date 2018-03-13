@@ -8,6 +8,9 @@
 	<link rel="stylesheet" href="https://afeld.github.io/emoji-css/emoji.css">
     <link rel="stylesheet" type="text/css"  href="{{ url_for('static', filename='css/my_style.css') }}"/>
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo-matcha.png') }}" />
+    <!-- Compiled and minified CSS -->
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> -->
+	<!-- <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous"> -->
 	{% block css %}{% endblock css %}
 
 
@@ -16,6 +19,7 @@
 </head>
 
 <body>
+	<div class="container">
 	<p hidden id="my_user_name">{{ session['user'] }}</p>
 	<h1>Bienvenue sur Matcha<br/> le site de soul_match !</h1>
     <p>Aujourd'hui nous sommes le {{date}}, c'est un bon jour pour trouver ton soul_match!</p>
@@ -27,9 +31,15 @@
 
 	<div id='notif'>
 	</div>
+	</div>
 </body>
 
 <script type="text/javascript" src="{{ url_for('static', filename='js/notification-controller.js') }}"></script>
+
+
+
+<!-- Compiled and minified JavaScript -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> -->
 
 {% block script %}
 

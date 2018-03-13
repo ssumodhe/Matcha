@@ -119,7 +119,9 @@ class ProfileController:
 			error = session.get('error')
 			session['error'] = None
 
-			return render_template('profile.html', infos=infos, error=error)
+			tags = ['#tag', '#bouffe', '#lol', '#cherchedesepérémentqqun', '#lovecats']
+
+			return render_template('profile.html', infos=infos, error=error, tags=tags)
 		else:
 			return redirect(url_for('accueil'))
 
@@ -142,6 +144,13 @@ class ProfileController:
 					return redirect(url_for('profile', username=modif.getUserName()))
 				else:
 					modif.modif(key, generate_password_hash(infos['password_new']))
+			if key == 'interests':
+				splited = value.split(" ")
+				if splited[0][0] != "#":
+					value = "#" + splited[0]
+				else:
+					value = splited[0]
+				modif.modif(key, value)
 			else:
 				value = value.strip()
 				value = html.escape(value)

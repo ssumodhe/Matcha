@@ -30,10 +30,11 @@ def make_session_permanent():
 # Passera les variables à toutes les pages.
 @app.context_processor
 def get_time_now():
-  if "/" in request.url_rule.rule:
-    return dict({'now_year': datetime.now().year, 'date': date.today().isoformat()})
-  else:
-    return dict({'now_year': datetime.now().year, 'date': date.today().isoformat(), 'name': session['user']})
+    if 'user' in session:
+      name = session['user']
+    else:
+      name = None
+    return dict({'now_year': datetime.now().year, 'date': date.today().isoformat(), 'name': name})
 
 
 @app.route('/')
