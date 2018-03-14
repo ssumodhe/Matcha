@@ -228,7 +228,13 @@
 				<div>Intérêts:</div>
 				<ul>
 				{% for item in infos['interests']:%}
-				<li>{{ item['value']}}</li>
+				<li {% if infos['is_user_me'] == True %} onmouseenter="displayForm('{{item['value']}}')"  {% endif %}>{{ item['value']}}
+				<form name="form_{{item['value']}}" action="/profile_modifications" method="post" hidden>
+					<input type="hidden" name="tag" value="{{ item['id'] }}">
+					<input type="hidden" name="username" value="{{ infos['username'] }}">
+					<input type="submit" style="border-radius: 15px; background-color: red; color: white;" name="submit" value="x">
+				</form>
+				</li>
 				{%endfor%}
 				</ul>
 				

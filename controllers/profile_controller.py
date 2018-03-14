@@ -164,6 +164,9 @@ class ProfileController:
 				print(u_int)
 				u_int = UsersInterest.create(u_int)
 				# modif.modif(key, value)
+			if key == 'tag':
+				tag = UsersInterest.find_by('interest_id', value)
+				tag.delete()
 			else:
 				value = value.strip()
 				value = html.escape(value)
