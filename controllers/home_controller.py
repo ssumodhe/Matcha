@@ -77,8 +77,8 @@ class HomeController:
 				if item['username'] == session['user']:
 					infos.remove(item)
 
-
-			return render_template('home.html', infos=infos)
+			n = len(infos)
+			return render_template('home.html', infos=infos, length=n)
 		else:
 			return redirect(url_for('accueil'))
 
@@ -146,8 +146,8 @@ class HomeController:
 				if item['username'] == session['user']:
 					infos.remove(item)
 		
-
-			return render_template('home.html', infos=infos)
+			n = len(infos)
+			return render_template('home.html', infos=infos, length=n)
 
 		else:
 			return redirect(url_for('accueil'))
