@@ -72,7 +72,6 @@ for i in range(1000):
 			'status': str(random.randint(0, 1)),
 			'fake': '1',
 			'bio': fake.sentence(),
-			'interests': '1',
 			'last_connexion': date.today().isoformat(),
 			'main_picture': '1'
 		})

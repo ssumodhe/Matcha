@@ -18,7 +18,6 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS users
     sex INTEGER,
     orientation INTEGER DEFAULT 2,
     bio VARCHAR(1024),
-    interests INTEGER,
     main_picture INTEGER,
     pop_score INTEGER DEFAULT 0,
     location VARCHAR(255),
