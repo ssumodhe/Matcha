@@ -7,6 +7,7 @@ import sqlite3
 import pprint
 
 from models.model import Model
+from models.interest import Interest
 
 db = sqlite3.connect('Matcha.db', check_same_thread=False)
 cursor = db.cursor()
@@ -31,3 +32,13 @@ class UsersInterest(Model):
         else:
             the_info = self.search('interest_id')
             return the_info[0]
+
+    @classmethod
+    def getAllInterests(self, user_id):
+        all_interests = []
+        answer = UsersInterest.where('user_id', user_id)
+        for tag in answer:
+            one = Interest.where('id', str(tag['interest_id']))
+            all_interests = all_interests + one
+        return all_interests
+

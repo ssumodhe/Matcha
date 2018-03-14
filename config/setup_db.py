@@ -88,7 +88,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS interests
     created_at DATETIME NOT NULL
     );''')
 
-cursor.execute('''CREATE TABLE IF NOT EXISTS users_interests
+cursor.execute('''CREATE TABLE IF NOT EXISTS usersinterests
     (id INTEGER PRIMARY KEY,
     user_id INTEGER NOT NULL,
     interest_id INTEGER NOT NULL,

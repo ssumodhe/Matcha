@@ -17,6 +17,8 @@ from models.block import Block
 from models.match import Match
 from models.picture import Picture
 from models.notification import Notification
+from models.interest import Interest
+from models.user_interest import UsersInterest
 
 UPLOAD_FOLDER = 'static/users_pictures'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -80,7 +82,7 @@ class ProfileController:
 			else:
 				infos['orientation'] = "Bi"
 			infos['bio'] = html.unescape(auth.getBio())
-			infos['interests'] = auth.getInterests()
+			infos['interests'] = UsersInterest.getAllInterests(auth.getId())
 			infos['main_picture'] = auth.getMainPicture()
 			infos['pop_score'] = auth.getPopScore()
 			infos['location'] = auth.getLocation()
@@ -150,7 +152,18 @@ class ProfileController:
 					value = "#" + splited[0]
 				else:
 					value = splited[0]
-				modif.modif(key, value)
+				interest = Interest.find_by('value', value)
+				if  interest == None:
+					interest = {}
+					interest['value'] = value
+					interest = Interest.create(interest)
+					
+				u_int = {}
+				u_int['user_id'] = modif.getId()
+				u_int['interest_id'] = interest.getId() 
+				print(u_int)
+				u_int = UsersInterest.create(u_int)
+				# modif.modif(key, value)
 			else:
 				value = value.strip()
 				value = html.escape(value)

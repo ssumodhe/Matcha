@@ -159,7 +159,7 @@
 	<div id="main_container">
 		<div id="box_left">
 			<div class="inline" name="age" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('age')" onmouseleave="unDisplayForm('age')" {% endif %}>
-				<div>Age:</div>
+				<div><strong>Age:</strong></div>
 
 				<p>{{ infos['age'] }}</p>
 				
@@ -226,8 +226,9 @@
 
 			<div class="inline" name="interests" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('interests')"  {% endif %}>
 				<div>Intérêts:</div>
-
-				<p>{{ infos['interests'] }}</p>
+				{% for item in infos['interests']:%}
+				<p>{{ item['value'] + ", " }}</p>
+				{%endfor%}
 				
 				{% if infos['is_user_me'] == True %}
 				<form name="form_interests" action="/profile_modifications" method="post" hidden>
