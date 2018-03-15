@@ -78,7 +78,7 @@ class MessengerController:
 				other = ""
 
 			mee = auth.getUserName()
-			print("URL = " + url)
+			print(infos)
 			return render_template('messenger.html', infos=infos, my_username=mee, other=other,display_form=display_form, url=url)
 		else:
 			return redirect(url_for('accueil'))

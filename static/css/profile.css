@@ -28,9 +28,10 @@ form{
 }
 
 .inline{
-    display: inline-flex;
+    /*display: inline-flex;*/
     margin: 0px 5px 0px 5px;
-    justify-content: center;
+    /*margin: 10% 10% 10% 10%;*/
+    /*justify-content: center;*/
 }
 
 #box_right{

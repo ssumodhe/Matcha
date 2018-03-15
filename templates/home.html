@@ -8,36 +8,31 @@
 	{% block body %}
 		<div id="search_found">
 			<div class="filters">
-
-				
 				<form name="filtres" method="post" action="/search">
-				<p>
-				age entre : 
-					<input type="number" name="age_min" min="18" max="70" onblur="checkMax('age')">
-					et :
-					<input type="number" name="age_max" max="40">
-				<p/>
-				 <p> pop_score entre : 
-					<input type="number" name="pop_score_min" step="10" min="0" max="1000" onblur="checkMax('pop_score')">
-					et :
-					<input type="number" name="pop_score_max" step="10" max="1000">
-				 </p>
-
-				 <p>localisation : 
-					<input type="number" name="location" step="10" min="0" max="1000">km autour de moi.
-				 </p>
-				 <p> nombre de tags en commun : 
-					<input type="number" name="interests" min="0" max="10">
-				</p>
-				<input type="submit" name="submit" value="Rechercher">
+					<p>age entre : 
+						<input type="number" name="age_min" min="18" max="70" onblur="checkMax('age')">
+						et :
+						<input type="number" name="age_max" max="40">
+					<p/>
+					<p> pop_score entre : 
+						<input type="number" name="pop_score_min" step="10" min="0" max="1000" onblur="checkMax('pop_score')">
+						et :
+						<input type="number" name="pop_score_max" step="10" max="1000">
+					</p>
+					<p>localisation : 
+						<input type="number" name="location" step="10" min="0" max="1000">km autour de moi.
+					</p>
+					<p> nombre de tags en commun : 
+						<input type="number" name="interests" min="0" max="10">
+					</p>
+					<input type="submit" name="submit" value="Rechercher">
 				</form>
-
-
 			</div>
-				<p>RESULTATS ({{length}})</p>
+
+			<p>Résultats ({{length}})</p>
 			<div id="results">
 				{% for item in infos: %}
-						<div class="result_table">
+						<div class="result_table"> 
 							<a href="/profile/{{item['username']}}">
 								<img width="25%" src="{{ item['profile_picture'] }}">
 								<br>

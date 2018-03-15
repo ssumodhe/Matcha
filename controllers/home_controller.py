@@ -6,6 +6,8 @@ from datetime import date, datetime
 from flask_session import Session
 from vincenty import vincenty
 from pprint import pprint
+import operator
+from operator import itemgetter
 
 import re
 import os
@@ -120,8 +122,11 @@ class HomeController:
 
 			if form['pop_score_min'] != '' and form['pop_score_max'] != '':
 				for item in infos:
-					if item['pop_score'] < form['pop_score_min'] or item['pop_score'] > form['pop_score_max']:
+					if int(item['pop_score']) < int(form['pop_score_min']) or int(item['pop_score']) > int(form['pop_score_max']):
 						infos.remove(item)
+					else:
+						print(item['pop_score'])
+				print(sorted(infos, key=operator.itemgetter('pop_score'), reverse=True))
 
 
 			if form['location'] != '':
@@ -133,6 +138,9 @@ class HomeController:
 						delta = vincenty(my_loc, else_loc)
 						if int(delta) > int(form['location']):
 							infos.remove(item)
+
+			if form['interests'] != '':
+				print(form['interests'])
 
 
 

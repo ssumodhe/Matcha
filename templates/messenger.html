@@ -12,6 +12,9 @@
 
 	{% block body %}
 	<div id="messages">
+		{%if infos == []:%}
+		<p>Vous n'avez pas encore de Match. Wait for it ! ;)</p>	
+		{%endif%}
 		<div id="who">
 		{%for item in infos:%}
 			<div onclick="defineConv('{{my_username}}', '{{item['username']}}')">

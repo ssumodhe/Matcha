@@ -174,7 +174,7 @@
 
 
 			<div class="inline" name="sex" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('sex')" onmouseleave="unDisplayForm('sex')" {% endif %}>
-				<div>Sexe:</div>
+				<div><strong>Sexe:</strong></div>
 
 				<p>{{ infos['sex'] }}</p>
 				
@@ -192,7 +192,7 @@
 			</div>
 
 			<div class="inline" name="orientation" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('orientation')" onmouseleave="unDisplayForm('orientation')" {% endif %}>
-				<div>Orientation:</div>
+				<div><strong>Orientation:</strong></div>
 
 				<p>{{ infos['orientation'] }}</p>
 				
@@ -211,7 +211,7 @@
 			</div>
 
 			<div class="inline" name="bio" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('bio')" onmouseleave="unDisplayForm('bio')" {% endif %}>
-				<div>Bio:</div>
+				<div><strong>Bio:</strong></div>
 
 				<p>{{ infos['bio'] }}</p>
 				
@@ -224,20 +224,9 @@
 				{% endif %}
 			</div>
 
-			<div class="inline" name="interests" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('interests')"  {% endif %}>
-				<div>Intérêts:</div>
-				<ul>
-				{% for item in infos['interests']:%}
-				<li {% if infos['is_user_me'] == True %} onmouseenter="displayForm('{{item['value']}}')"  {% endif %}>{{ item['value']}}
-				<form name="form_{{item['value']}}" action="/profile_modifications" method="post" hidden>
-					<input type="hidden" name="tag" value="{{ item['id'] }}">
-					<input type="hidden" name="username" value="{{ infos['username'] }}">
-					<input type="submit" style="border-radius: 15px; background-color: red; color: white;" name="submit" value="x">
-				</form>
-				</li>
-				{%endfor%}
-				</ul>
-				
+			<div class="inline" name="interests" {% if infos['is_user_me'] == True %} onmouseenter="displayForm('interests')" {% endif %}>
+				<div><strong>Intérêts:</strong></div>
+
 				{% if infos['is_user_me'] == True %}
 				<form name="form_interests" action="/profile_modifications" method="post" hidden>
 					<input type="text" name="interests" list="tags">
@@ -251,6 +240,20 @@
 				</form>
 
 				{% endif %}
+
+				<ul style="flex-direction: column; list-style: none; justify-content: space-evenly;">
+				{% for item in infos['interests']:%}
+				<li {% if infos['is_user_me'] == True %} onmouseenter="displayForm('{{item['value']}}')" onmouseleave="unDisplayForm('{{item['value']}}')"  {% endif %}>{{ item['value']}}
+				<form name="form_{{item['value']}}" action="/profile_modifications" method="post" hidden>
+					<input type="hidden" name="tag" value="{{ item['id'] }}">
+					<input type="hidden" name="username" value="{{ infos['username'] }}">
+					<input type="submit" style="border-radius: 15px; background-color: red; color: white;" name="submit" value="x">
+				</form>
+				</li>
+				{%endfor%}
+				</ul>
+				
+				
 			</div>
 		</div>
 		
