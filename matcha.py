@@ -121,6 +121,10 @@ def home():
 def search():
   return HomeController.search(request.form)
 
+@app.route('/sortby', methods=['POST'])
+def sortby():
+  return HomeController.sortby(request.form)
+
 @app.route('/messenger', methods=['GET', 'POST'])
 def messenger():
   if request.method == 'POST':

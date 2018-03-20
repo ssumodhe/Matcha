@@ -59,7 +59,9 @@ class ProfileController:
 					notif['user_id'] = victim.getId()
 					notif['message'] = "Vu : <a href='/profile/" + stalker.getUserName() + "'>"+stalker.getUserName()+"</a> vous a rendu visite."
 					Notification.create_if(notif, stalker.getId())
-					victim.modif('pop_score', str(View.howMany('victim_id', victim.getId())))
+					score = int(victim.getPopScore()) + 1
+					victim.modif('pop_score', str(score))
+					# victim.modif('pop_score', str(View.howMany('victim_id', victim.getId())))
 					victim.save()
 
 			auth = User.find_by('username', username)
@@ -85,6 +87,8 @@ class ProfileController:
 			infos['interests'] = UsersInterest.getAllInterests(auth.getId())
 			infos['main_picture'] = auth.getMainPicture()
 			infos['pop_score'] = auth.getPopScore()
+			print("auth.getPopScore()")
+			print(auth.getPopScore())
 			infos['location'] = auth.getLocation()
 			infos['last_connexion'] = auth.getLastConnexion()
 			infos['status'] = auth.getStatus()

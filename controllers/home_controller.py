@@ -94,6 +94,7 @@ class HomeController:
 					result.remove(item)
 
 			n = len(result)
+			session['result'] = result
 			return render_template('home.html', infos=result, length=n)
 		else:
 			return redirect(url_for('accueil'))
@@ -162,7 +163,6 @@ class HomeController:
 				for item in result:
 					if int(item['pop_score']) >= int(form['pop_score_min']) and int(item['pop_score']) <= int(form['pop_score_max']):
 						infos.append(item)
-				# print(sorted(infos, key=operator.itemgetter('pop_score'), reverse=True))
 
 			if form['location'] != '':
 				result = infos
@@ -201,7 +201,65 @@ class HomeController:
 					infos.remove(item)
 
 			n = len(infos)
+			session['result'] = infos
 			return render_template('home.html', infos=infos, length=n)
 		else:
 			return redirect(url_for('accueil'))
+
+	@staticmethod
+	def sortby(form):
+		if 'user' in session:
+			results = session['result']
+
+			if form['sort_by'] == 'age_d':
+				infos = sorted(results, key=itemgetter('age'), reverse=True)
+			elif form['sort_by'] == 'age_i':
+				infos = sorted(results, key=itemgetter('age'), reverse=False)
+			elif form['sort_by'] == 'pop_score_d':
+				infos = sorted(results, key=itemgetter('pop_score'), reverse=True)
+			elif form['sort_by'] == 'pop_score_i':
+				infos = sorted(results, key=itemgetter('pop_score'), reverse=False)
+			else:
+				infos = session['result']
+
+			score = 0
+			for item in infos:
+				print(item['username'] + str(item['pop_score']))
+
+
+			# print(sorted(infos, key=itemgetter('pop_score'), reverse=True))
+			n = len(infos)
+			return render_template('home.html', infos=infos, length=n)
+		else:
+			return redirect(url_for('accueil'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		

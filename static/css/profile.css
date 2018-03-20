@@ -61,6 +61,7 @@ form{
 #username, #pop_score{
     font-weight: bold;
     font-size: x-large;
+    word-wrap: break-word;
 }
 
 #first_name, #last_name{

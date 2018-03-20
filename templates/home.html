@@ -5,10 +5,15 @@
 
 	{% block title %}Home &middot; {{ super() }}{% endblock title %}
 
+	{% block css %}
+	<link rel="stylesheet" type="text/css"  href="{{ url_for('static', filename='css/home.css') }}"/>
+	{% endblock css %}
+
 	{% block body %}
 		<div id="search_found">
 			<div class="filters">
 				<form name="filtres" method="post" action="/search">
+					<span>Recherche Avancée</span>
 					<p>age entre : 
 						<input type="number" name="age_min" min="18" max="70" onblur="checkMax('age')">
 						et :
@@ -30,6 +35,23 @@
 			</div>
 
 			<p>Résultats ({{length}})</p>
+			<div class="second_part">
+			<div class="sorters">
+				<p>Filtrer les résultats par:</p>
+				<form id="sortSelection" method="post" action="/sortby">
+					<select name="sort_by" form="sortSelection">
+					  <option value="age_d">Age décroissant</option>
+					  <option value="age_i">Age croissant</option>
+					  <option value="pop_score_d">Pop_score décroissant</option>
+					  <option value="pop_score_i">Pop_score croissant</option>
+					  <option value="location_d">Localisation décroissant</option>
+					  <option value="location_i">Localisation croissant</option>
+					  <option value="interests_d">Tags décroissant</option>
+					  <option value="interests_i">Tags croissant</option>
+					</select>
+					<input type="submit" name="submit" value="Trier">
+				</form>
+			</div>
 			<div id="results">
 				{% for item in infos: %}
 						<div class="result_table"> 
@@ -45,6 +67,7 @@
 							{% endif%}
 						</div>	
 				{% endfor %}
+			</div>
 			</div>
 		</div>
 
