@@ -65,20 +65,20 @@ class HomeController:
 					if int(sex) == 1:
 						if int(item['sex']) == 1 and int(item['orientation']) == 0:
 							result.append(item)
-						if int(item['sex']) == 1 and int(item['orientation']) == 2:
+						elif int(item['sex']) == 1 and int(item['orientation']) == 2:
 							result.append(item)
-						if int(item['sex']) == 2 and int(item['orientation']) == 2:
+						elif int(item['sex']) == 2 and int(item['orientation']) == 2:
 							result.append(item)
-						if int(item['sex']) == 2 and int(item['orientation']) == 1:
+						elif int(item['sex']) == 2 and int(item['orientation']) == 1:
 							result.append(item)
 					if int(sex) == 2:
 						if int(item['sex']) == 2 and int(item['orientation']) == 0:
 							result.append(item)
-						if int(item['sex']) == 2 and int(item['orientation']) == 2:
+						elif int(item['sex']) == 2 and int(item['orientation']) == 2:
 							result.append(item)
-						if int(item['sex']) == 1 and int(item['orientation']) == 2:
+						elif int(item['sex']) == 1 and int(item['orientation']) == 2:
 							result.append(item)
-						if int(item['sex']) == 1 and int(item['orientation']) == 1:
+						elif int(item['sex']) == 1 and int(item['orientation']) == 1:
 							result.append(item)
 
 			for item in result:
@@ -208,9 +208,34 @@ class HomeController:
 
 	@staticmethod
 	def sortby(form):
+		def add_location():
+			infos = session['result']
+			me = User.find_by('username', session['user'])
+			my_loc = (float(me.getLat()), float(me.getLong()))
+			for item in infos:
+				other = User.find_by('username', item['username'])
+				else_loc = (float(other.getLat()), float(other.getLong()))
+				delta = vincenty(my_loc, else_loc)
+				item['delta'] = delta
+			session['result'] = infos
+
+		def add_tags():
+			infos = session['result']
+			me = User.find_by('username', session['user'])
+			my_tags = UsersInterest.where('user_id', me.getId())
+			for item in infos:
+				tags = 0
+				else_tags = UsersInterest.where('user_id', str(item['id']))
+				for tag_else in else_tags:
+					for tag_me in my_tags:
+						if tag_else['interest_id'] == tag_me['interest_id']:
+							tags = tags + 1
+				item['tags'] = tags
+			session['result'] = infos
+
+
 		if 'user' in session:
 			results = session['result']
-
 			if form['sort_by'] == 'age_d':
 				infos = sorted(results, key=itemgetter('age'), reverse=True)
 			elif form['sort_by'] == 'age_i':
@@ -219,12 +244,24 @@ class HomeController:
 				infos = sorted(results, key=itemgetter('pop_score'), reverse=True)
 			elif form['sort_by'] == 'pop_score_i':
 				infos = sorted(results, key=itemgetter('pop_score'), reverse=False)
+			elif form['sort_by'] == 'location_d':
+				add_location()
+				results = session['result']
+				infos = sorted(results, key=itemgetter('delta'), reverse=True)
+			elif form['sort_by'] == 'location_i':
+				add_location()
+				results = session['result']
+				infos = sorted(results, key=itemgetter('delta'), reverse=False)
+			elif form['sort_by'] == 'interests_d':
+				add_tags()
+				results = session['result']
+				infos = sorted(results, key=itemgetter('tags'), reverse=True)
+			elif form['sort_by'] == 'interests_i':
+				add_tags()
+				results = session['result']
+				infos = sorted(results, key=itemgetter('tags'), reverse=False)
 			else:
 				infos = session['result']
-
-			score = 0
-			for item in infos:
-				print(item['username'] + str(item['pop_score']))
 
 
 			# print(sorted(infos, key=itemgetter('pop_score'), reverse=True))
@@ -232,8 +269,7 @@ class HomeController:
 			return render_template('home.html', infos=infos, length=n)
 		else:
 			return redirect(url_for('accueil'))
-
-
+	
 
 
 

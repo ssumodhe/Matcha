@@ -61,6 +61,7 @@ class ProfileController:
 					Notification.create_if(notif, stalker.getId())
 					score = int(victim.getPopScore()) + 1
 					victim.modif('pop_score', str(score))
+					# if no Fakers
 					# victim.modif('pop_score', str(View.howMany('victim_id', victim.getId())))
 					victim.save()
 
@@ -87,8 +88,6 @@ class ProfileController:
 			infos['interests'] = UsersInterest.getAllInterests(auth.getId())
 			infos['main_picture'] = auth.getMainPicture()
 			infos['pop_score'] = auth.getPopScore()
-			print("auth.getPopScore()")
-			print(auth.getPopScore())
 			infos['location'] = auth.getLocation()
 			infos['last_connexion'] = auth.getLastConnexion()
 			infos['status'] = auth.getStatus()
