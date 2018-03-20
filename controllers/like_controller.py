@@ -69,15 +69,17 @@ class LikeController:
 		stalker = User.find_by('username', form['stalker'])
 		victim = User.find_by('username', form['victim'])
 		unlike = Like.find_both('stalker_id', stalker.getId(), 'victim_id', victim.getId())
+		infos = {}
 		if Match.is_match(stalker.getId(), victim.getId()) == True:
 			match = Match.find_both('user1_id', stalker.getId(),'user2_id', victim.getId())
 			if match == None:
 				match = Match.find_both('user1_id', victim.getId(),'user2_id', stalker.getId())
 			Message.delete_where('match_id', match.getId())
 			match.delete()
-		infos = {}
+			infos['message'] = "UnMatch : Vous avez été Unlike par <a href='/profile/" + stalker.getUserName() + "'>"+stalker.getUserName()+"</a> alors que vous étiez matché!"
+		else:
+			infos['message'] = "Unlike : Vous avez été Unlike par <a href='/profile/" + stalker.getUserName() + "'>"+stalker.getUserName()+"</a>"
 		infos['user_id'] = victim.getId()
-		infos['message'] = "Unlike : Vous avez été Unlike par <a href='/profile/" + stalker.getUserName() + "'>"+stalker.getUserName()+"</a>"
 		notif = Notification.create_if(infos, stalker.getId())
 		unlike.delete()
 		return redirect(url_for('profile', username=form['victim']))

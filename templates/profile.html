@@ -113,6 +113,9 @@
 					<input type="hidden" name="victim" value="{{ infos['username'] }}">
 				</form>
 				{% endif %}
+				{% if infos['is_user_me'] == False and infos['he_liked_me'] == True: %}
+				<p><strong>Cette personne vous a liké !</strong></p>
+				{% endif %}
 				
 				<p id="last_connexion">{{ infos['last_connexion'] }}</p>
 				{% if infos['status'] == '1': %}

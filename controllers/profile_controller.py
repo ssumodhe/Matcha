@@ -103,6 +103,8 @@ class ProfileController:
 			if infos['is_user_me'] == False:
 				stalker = User.find_by('username', infos['stalker'])
 				infos['has_liked'] = Like.exists('stalker_id', stalker.getId(), 'victim_id', auth.getId())
+				infos['he_liked_me'] = Like.exists('stalker_id', auth.getId(), 'victim_id', stalker.getId())
+
 				infos['has_blocked'] = Block.exists('by_id', stalker.getId(), 'blocked_id', auth.getId())
 				nb_picture = Picture.howMany('user_id', stalker.getId())
 				if nb_picture == 0:
