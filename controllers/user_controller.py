@@ -8,7 +8,8 @@ from mail.reinit_mail import ReinitMail
 from flask import abort
 from werkzeug.security import generate_password_hash
 from geolite2 import geolite2
-from geopy.geocoders import Nominatim
+from geopy.geocoders import GoogleV3
+import os
 
 app = Flask(__name__)
 sess = Session()
@@ -73,12 +74,10 @@ class UserController:
             user = User.find_by('username', form['username'])
             user.modif('lat', form['lat'])
             user.modif('long', form['long'])
-            geolocator = Nominatim()
-            location = geolocator.reverse(""+form['lat']+", "+form['long']+"")
-            name, add = location
-            split_name = name.split(",")
-            loc = split_name[4].strip()
-            user.modif('location', loc)
+            api_key = str(os.environ['GOOGLE_API_KEY'])
+            geolocator = GoogleV3(api_key=api_key)
+            location = geolocator.reverse(form['lat']+", "+form['long'])
+            user.modif('location', str(location[4]))
         else:
             user = User.find_by('username', session['user'])
             ip = request.environ['REMOTE_ADDR']
