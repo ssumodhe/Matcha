@@ -3,6 +3,7 @@ Find your soul_match ! ;)
 
 # Usage 
 Python 3.6
+GOOGLE_API_KEY='your_api_key' python matcha.py
 
 ### Routes
 - `/signup-in`
