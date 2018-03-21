@@ -32,10 +32,8 @@ class User(Model):
         dbData = cursor.fetchone()
         db.commit()
         cursor.close()
-        # pprint(dbData)
-        # virer if last_connexion == None?
         for key, value in dbData.items():
-            if value == None:
+            if value == None and key != 'main_picture':
                 return False
         return True
 

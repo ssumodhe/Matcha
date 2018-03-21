@@ -40,6 +40,7 @@ class HomeController:
 		if 'user' in session:
 			auth = User.find_by('username', session['user'])
 			if auth.is_complete() == False:
+				session['error'] = "Vous devez remplir toutes vos informations (Age, intérêts, etc)."
 				return redirect(url_for('profile', username=session['user']))
 			orientation = auth.getOrientation()
 			sex = auth.getSex()

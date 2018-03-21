@@ -15,6 +15,9 @@ from config import setup_db
 from geolite2 import geolite2
 import pprint
 
+from models.user import User
+from models.notification import Notification
+
 app = Flask(__name__)
 sess = Session()
 app.secret_key = 'super secret pswd'
@@ -32,9 +35,12 @@ def make_session_permanent():
 def get_time_now():
     if 'user' in session:
       name = session['user']
+      user = User.find_by('username', session['user'])
+      nb_unseen = Notification.getNbUnseen(user.getId())
     else:
       name = None
-    return dict({'now_year': datetime.now().year, 'date': date.today().isoformat(), 'name': name})
+      nb_unseen = None
+    return dict({'now_year': datetime.now().year, 'date': date.today().isoformat(), 'name': name, 'nb_unseen': nb_unseen})
 
 
 @app.route('/')

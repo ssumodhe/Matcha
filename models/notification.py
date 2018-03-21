@@ -54,3 +54,13 @@ class Notification(Model):
 		cursor.close()
 		pass
 
+	@classmethod
+	def getNbUnseen(self, user_id):
+		unseen = self.where('user_id', user_id)
+		nb = 0
+		for item in unseen:
+			if item['seen'] == 0:
+				nb += 1
+		return nb
+
+
