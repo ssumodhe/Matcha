@@ -2,8 +2,14 @@
 Find your soul_match ! ;)
 
 # Usage 
-Python 3.6
-GOOGLE_API_KEY='your_api_key' python matcha.py
+```bash
+$> make
+$> virtualenv matcha_box
+$> source matcha_box/bin/activate
+$> pip install -r requirements.txt
+$> GOOGLE_API_KEY='your_api_key' python matcha.py
+
+```
 
 ### Routes
 - `/signup-in`
