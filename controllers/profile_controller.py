@@ -5,6 +5,9 @@ from werkzeug.utils import secure_filename
 from datetime import date, datetime
 from flask_session import Session
 from pprint import pprint
+import pathlib
+from pathlib import Path
+from pathlib import Path
 
 import re
 import os
@@ -188,8 +191,7 @@ class ProfileController:
 			return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 		if 'picture' not in file:
-			print('No file part')
-			# display error on PROFILE PAGE
+			session['error'] = "Aucun fichier n'a été sélectionné."
 		file_to_save = file['picture']
 		if file_to_save.filename == '':
 			session['error'] = "Aucun fichier n'a été sélectionné."
@@ -198,11 +200,11 @@ class ProfileController:
 			session['error'] = "Mauvaise extension, veuillez sélectionner un autre fichier."
 			
 		if file_to_save and allowed_file(file_to_save.filename):
-			print("JE PASSE QUAND MEME ICI")
 			filename = secure_filename(file_to_save.filename)
 			user = User.find_by('username', form['username'])
 			ext = filename.rsplit('.', 1)[1].lower()
 			filename = user.getUserName() + "_" + form['number'] + "." + ext
+			pathlib.Path('static/users_pictures').mkdir(parents=True, exist_ok=True)	
 			path_to_upload = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 			file_to_save.save(path_to_upload)
 			
