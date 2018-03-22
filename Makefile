@@ -1,7 +1,7 @@
 DB_NAME = Matcha.db
 USERS_PIC = static/users_pictures
 
-all: drop setup seed
+all: setup seed
 
 setup: 
 	@echo "db setup"
@@ -21,3 +21,4 @@ drop:
 	@echo "db droped"
 	@rm $(DB_NAME)
 
+re: drop all
