@@ -6,6 +6,7 @@ all: drop setup seed
 setup: 
 	@echo "db setup"
 	@python config/setup_db.py
+	@mkdir static/users_pictures
 
 seed:
 	@echo "db seed"
